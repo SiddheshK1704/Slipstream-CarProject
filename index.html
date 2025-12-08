@@ -695,7 +695,7 @@
                             
                             <!-- Image card on right - UPDATED FOR GLASS EFFECT -->
                             <div class="image-card">
-                                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
+                                <img src=".\assets\images\Ferrari-LaFerrari.jpg" 
                                      alt="Supercar Collection" 
                                      class="section-image">
                             </div>
@@ -709,7 +709,7 @@
                         <div class="inner-cards-container">
                             <!-- Image card on LEFT - UPDATED FOR GLASS EFFECT -->
                             <div class="image-card">
-                                <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
+                                <img src=".\assets\images\918Spyder.jpg" 
                                      alt="Car Comparison" 
                                      class="section-image">
                             </div>
@@ -749,7 +749,7 @@
                             
                             <!-- Image card on right - UPDATED FOR GLASS EFFECT -->
                             <div class="image-card">
-                                <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
+                                <img src=".\assets\images\McLaren-P1-61892.avif" 
                                      alt="Dream Garage" 
                                      class="section-image">
                             </div>
@@ -979,69 +979,65 @@
             });
             
             // Image cycling for cards
-            const sectionImages = [
-                // Explore section images
-                [
-                    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-                    "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-                    "https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
-                ],
-                // Compare section images
-                [
-                    "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-                    "https://images.unsplash.com/photo-1621395101797-7e7b00c9b6ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-                    "https://images.unsplash.com/photo-1563720223488-8f2f62a6e71a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
-                ],
-                // Garage section images
-                [
-                    "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-                    "https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-                    "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
-                ]
-            ];
+            // const sectionImages = [
+            //     // Explore section images
+            //     [
+            //         ".\assets\images\Ferrari-LaFerrari.jpg"
+            //     ],
+            //     // Compare section images
+            //     [
+            //         ".\assets\images\918Spyder.jpg"
+            //     ],
+            //     // Garage section images
+            //     [
+            //         "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+            //         "https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+            //         "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+            //     ]
+            // ];
             
-            let currentImageIndexes = [0, 0, 0];
-            const imageCards = document.querySelectorAll('.image-card');
+            // let currentImageIndexes = [0, 0, 0];
+            // const imageCards = document.querySelectorAll('.image-card');
             
-            function cycleImage(sectionIndex) {
-                currentImageIndexes[sectionIndex] = 
-                    (currentImageIndexes[sectionIndex] + 1) % sectionImages[sectionIndex].length;
+            // function cycleImage(sectionIndex) {
+            //     currentImageIndexes[sectionIndex] = 
+            //         (currentImageIndexes[sectionIndex] + 1) % sectionImages[sectionIndex].length;
                 
-                const imgElement = imageCards[sectionIndex].querySelector('.section-image');
-                imgElement.style.opacity = '0';
+            //     const imgElement = imageCards[sectionIndex].querySelector('.section-image');
+            //     imgElement.style.opacity = '0';
                 
-                setTimeout(() => {
-                    imgElement.src = sectionImages[sectionIndex][currentImageIndexes[sectionIndex]];
-                    imgElement.style.opacity = '1';
-                }, 300);
-            }
+            //     setTimeout(() => {
+            //         imgElement.src = sectionImages[sectionIndex][currentImageIndexes[sectionIndex]];
+            //         imgElement.style.opacity = '1';
+            //     }, 300);
+            // }
             
             // Auto-cycle images every 5 seconds
-            setInterval(() => {
-                sections.forEach((section, index) => {
-                    if (index > 0) { // Skip hero section (index 0)
-                        const rect = section.getBoundingClientRect();
-                        if (rect.top >= 0 && rect.top <= window.innerHeight) {
-                            cycleImage(index - 1);
-                        }
-                    }
-                });
-            }, 5000);
+            // setInterval(() => {
+            //     sections.forEach((section, index) => {
+            //         if (index > 0) { // Skip hero section (index 0)
+            //             const rect = section.getBoundingClientRect();
+            //             if (rect.top >= 0 && rect.top <= window.innerHeight) {
+            //                 cycleImage(index - 1);
+            //             }
+            //         }
+            //     });
+            // }, 5000);
             
             // Manual cycling on image hover
-            imageCards.forEach((card, index) => {
-                let cycleTimeout;
+            // imageCards.forEach((card, index) => {
+            //     let cycleTimeout;
                 
-                card.addEventListener('mouseenter', () => {
-                    cycleTimeout = setTimeout(() => {
-                        cycleImage(index);
-                    }, 2000);
-                });
+            //     card.addEventListener('mouseenter', () => {
+            //         cycleTimeout = setTimeout(() => {
+            //             cycleImage(index);
+            //         }, 2000);
+            //     });
                 
-                card.addEventListener('mouseleave', () => {
-                    clearTimeout(cycleTimeout);
-                });
-            });
+            //     card.addEventListener('mouseleave', () => {
+            //         clearTimeout(cycleTimeout);
+            //     });
+            // });
         });
     </script>
 </body>

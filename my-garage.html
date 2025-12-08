@@ -7,7 +7,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Caesar+Dressing&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -18,9 +18,114 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             background: #000;
             color: white;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+        
+        .garage-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(45deg, #000 0%, #111 50%, #000 100%);
+            animation: bgPulse 20s infinite alternate;
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .shape:nth-child(1) {
+            width: 300px;
+            height: 150px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            background: rgba(255, 107, 0, 0.05);
+        }
+        
+        .shape:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 5s;
+            background: rgba(255, 0, 0, 0.05);
+        }
+        
+        .shape:nth-child(3) {
+            width: 250px;
+            height: 100px;
+            bottom: 30%;
+            left: 15%;
+            animation-delay: 10s;
+            background: rgba(255, 215, 0, 0.05);
+        }
+        
+        .shape:nth-child(4) {
+            width: 150px;
+            height: 250px;
+            bottom: 20%;
+            right: 5%;
+            animation-delay: 15s;
+            background: rgba(0, 150, 255, 0.05);
+        }
+        
+        @keyframes bgPulse {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-30px) rotate(5deg);
+            }
+            66% {
+                transform: translateY(15px) rotate(-5deg);
+            }
+        }
+        
+        /* Content overlay */
+        .content-overlay {
+            position: relative;
+            z-index: 1;
         }
         
         .caesar-font {
@@ -28,62 +133,194 @@
             letter-spacing: 3px;
         }
         
+        /* Glass theme cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.4), 
+                transparent);
+        }
+        
         .garage-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
         
         .garage-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
         }
         
         .stat-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
             padding: 1.5rem;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
         
         .stat-card:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
         }
         
         .brand-badge {
-            padding: 0.25rem 0.75rem;
+            padding: 0.4rem 1rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .porsche-badge { background: #cc0000; color: white; }
-        .ferrari-badge { background: #ff2800; color: white; }
-        .lamborghini-badge { background: #ffd700; color: black; }
-        .mclaren-badge { background: #ff8000; color: white; }
-        .bugatti-badge { background: #000000; color: #e8d800; border: 1px solid #e8d800; }
-        .koenigsegg-badge { background: #0000cc; color: white; }
-        
-        .heart-icon {
-            color: #ef4444;
-            animation: pulse 2s infinite;
+        .porsche-badge { 
+            background: rgba(204, 0, 0, 0.2); 
+            color: #ff4444;
+            border-color: rgba(204, 0, 0, 0.3);
+        }
+        .ferrari-badge { 
+            background: rgba(255, 40, 0, 0.2); 
+            color: #ff2800;
+            border-color: rgba(255, 40, 0, 0.3);
+        }
+        .lamborghini-badge { 
+            background: rgba(255, 215, 0, 0.2); 
+            color: #ffd700;
+            border-color: rgba(255, 215, 0, 0.3);
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        /* Car image styling */
+        .car-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.5s ease;
+        }
+        
+        .garage-card:hover .car-image {
+            transform: scale(1.03);
+        }
+        
+        /* Stats styling */
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        
+        .power-text {
+            color: #ff4444;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+        }
+        
+        .price-text {
+            color: #44ff44;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(68, 255, 68, 0.3);
+        }
+        
+        /* Navigation enhancement */
+        nav {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Footer enhancement */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Title styling */
+        .main-title {
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Developer intro styling */
+        .developer-intro {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Number animations */
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b00, #ff0000, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s infinite alternate;
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body class="min-h-screen">
+    <!-- Animated Background -->
+    <div class="background-container">
+        <div class="garage-bg"></div>
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+    
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50 px-6 py-4">
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="index.html" class="caesar-font text-3xl text-white font-bold">SLIPSTREAM</a>
             <div class="hidden md:flex items-center space-x-8">
@@ -112,88 +349,259 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="pt-32 pb-20 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <h1 class="text-5xl md:text-6xl font-bold mb-6">My Dream Garage</h1>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                    A curated collection of automotive perfection. These are the machines that fuel my passion and represent the pinnacle of automotive engineering.
-                </p>
-            </div>
-            
-            <!-- Developer Intro -->
-            <div class="bg-gradient-to-r from-gray-900 to-black rounded-2xl p-8 mb-12 border border-white/10">
-                <div class="flex items-center mb-6">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center mr-4">
-                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                        </svg>
+    <!-- Main Content -->
+    <div class="content-overlay">
+        <section class="pt-32 pb-20 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6 main-title">My Dream Garage</h1>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        A curated collection of automotive perfection. These are the machines that fuel my passion and represent the pinnacle of automotive engineering.
+                    </p>
+                </div>
+                
+                <!-- Developer Intro -->
+                <div class="developer-intro rounded-2xl p-8 mb-12 glass-card">
+                    <div class="flex flex-col md:flex-row items-center mb-6">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center mr-6 mb-4 md:mb-0">
+                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="text-center md:text-left">
+                            <h3 class="text-2xl font-bold">The Developer's Collection</h3>
+                            <p class="text-gray-400">Personally selected by the creator of Slipstream</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-2xl font-bold">The Developer's Collection</h3>
-                        <p class="text-gray-400">Personally selected by the creator of Slipstream</p>
+                    <p class="text-gray-300 text-lg leading-relaxed text-center md:text-left">
+                        Each car in this garage represents a milestone in automotive history, a perfect blend of art and engineering that pushes the boundaries of what's possible. From track-focused monsters to luxurious grand tourers, these are the cars that define excellence.
+                    </p>
+                </div>
+                
+                <!-- Cars Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16" id="garageCars">
+                    <!-- Cars will be loaded here by JavaScript -->
+                </div>
+                
+                <!-- Garage Stats -->
+                <div class="mt-12">
+                    <h2 class="text-3xl font-bold text-center mb-8 main-title">Garage Statistics</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="garageStats">
+                        <!-- Stats will be loaded here by JavaScript -->
                     </div>
                 </div>
-                <p class="text-gray-300 text-lg leading-relaxed">
-                    Each car in this garage represents a milestone in automotive history, a perfect blend of art and engineering that pushes the boundaries of what's possible. From track-focused monsters to luxurious grand tourers, these are the cars that define excellence.
-                </p>
             </div>
-            
-            <!-- Cars Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12" id="garageCars">
-                <!-- Cars will be loaded here by JavaScript -->
-            </div>
-            
-            <!-- Garage Stats -->
-            <div class="mt-12">
-                <h2 class="text-3xl font-bold text-center mb-8">Garage Statistics</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="garageStats">
-                    <!-- Stats will be loaded here by JavaScript -->
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="bg-black text-white py-12 px-6 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="caesar-font text-3xl font-bold mb-4">SLIPSTREAM</h3>
-                    <p class="text-gray-400">For the love of automotive excellence</p>
+        <!-- Footer -->
+        <footer class="py-12 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="caesar-font text-3xl font-bold mb-4">SLIPSTREAM</h3>
+                        <p class="text-gray-400">For the love of automotive excellence</p>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
+                        <a href="explore.html" class="text-gray-400 hover:text-white transition-colors">Explore</a>
+                        <a href="compare.html" class="text-gray-400 hover:text-white transition-colors">Compare</a>
+                        <a href="my-garage.html" class="text-white">My Garage</a>
+                    </div>
                 </div>
-                <div class="flex space-x-6">
-                    <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
-                    <a href="explore.html" class="text-gray-400 hover:text-white transition-colors">Explore</a>
-                    <a href="compare.html" class="text-gray-400 hover:text-white transition-colors">Compare</a>
-                    <a href="my-garage.html" class="text-white">My Garage</a>
+                <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                    <p>© 2024 Slipstream. Built with passion for automotive enthusiasts worldwide.</p>
+                    <p class="mt-2">This garage represents my personal automotive dreams and aspirations.</p>
                 </div>
             </div>
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-                <p>© 2024 Slipstream. Built with passion for automotive enthusiasts worldwide.</p>
-                <p class="mt-2">This garage represents my personal automotive dreams and aspirations.</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 
     <!-- JavaScript -->
-    <script src="js/garage.js"></script>
     <script>
-        // Mobile menu toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        });
-        
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const menuBtn = document.getElementById('mobileMenuBtn');
-            const menu = document.getElementById('mobileMenu');
-            
-            if (!menuBtn.contains(event.target) && !menu.contains(event.target)) {
-                menu.classList.add('hidden');
+        // The three selected dream cars
+        const dreamCars = [
+            {
+                id: 1,
+                name: "Porsche 911 Turbo S",
+                brand: "Porsche",
+                year: "2026",
+                power: "701",
+                powerUnit: "HP",
+                price: "272100",
+                image: "./assets/images/porsche-911-turbo-s.png",
+                description: "The ultimate expression of the 911 philosophy, combining everyday usability with track performance.",
+                specs: {
+                    "0-60 mph": "2.6s",
+                    "Top Speed": "205 mph",
+                    "Engine": "3.8L Twin-Turbo Flat-6",
+                    "Torque": "750 Nm",
+                    "Transmission": "8-speed PDK",
+                    "Drivetrain": "AWD"
+                },
+                whyChosen: "Perfect balance of daily usability and track performance"
+            },
+            {
+                id: 2,
+                name: "Ferrari 812 Superfast",
+                brand: "Ferrari",
+                year: "2023",
+                power: "789",
+                powerUnit: "HP",
+                price: "340000",
+                image: "./assets/images/ferrari-812s.png",
+                description: "Front-engine V12 grand tourer delivering extreme power, razor-sharp handling, and unmistakable Italian design.",
+                specs: {
+                    "0-60 mph": "2.9s",
+                    "Top Speed": "211 mph",
+                    "Engine": "6.5L V12",
+                    "Torque": "718 Nm",
+                    "Transmission": "7-speed Dual-Clutch",
+                    "Drivetrain": "RWD"
+                },
+                whyChosen: "The last of the naturally aspirated V12 Ferraris"
+            },
+            {
+                id: 3,
+                name: "Huracán Performante",
+                brand: "Lamborghini",
+                year: "2022",
+                power: "631",
+                powerUnit: "HP",
+                price: "274000",
+                image: "./assets/images/lambo-huracanp.png",
+                description: "The perfect balance between lifestyle and track-focused performance.",
+                specs: {
+                    "0-60 mph": "2.9s",
+                    "Top Speed": "202 mph",
+                    "Engine": "5.2L V10",
+                    "Torque": "600 Nm",
+                    "Transmission": "7-speed Dual-Clutch",
+                    "Drivetrain": "AWD"
+                },
+                whyChosen: "Pure V10 emotion with track-ready performance"
             }
+        ];
+
+        // Calculate garage statistics
+        function calculateStats() {
+            const totalPower = dreamCars.reduce((sum, car) => sum + parseInt(car.power), 0);
+            const totalPrice = dreamCars.reduce((sum, car) => sum + parseInt(car.price), 0);
+            const avgPower = Math.round(totalPower / dreamCars.length);
+            const brands = [...new Set(dreamCars.map(car => car.brand))];
+            const avgYear = Math.round(dreamCars.reduce((sum, car) => sum + parseInt(car.year), 0) / dreamCars.length);
+            
+            return {
+                totalPower,
+                totalPrice,
+                avgPower,
+                brandCount: brands.length,
+                carCount: dreamCars.length,
+                avgYear
+            };
+        }
+
+        // Format price
+        function formatPrice(price) {
+            const numPrice = parseInt(price);
+            if (numPrice >= 1000000) {
+                return `$${(numPrice / 1000000).toFixed(1)}M`;
+            }
+            return `$${numPrice.toLocaleString()}`;
+        }
+
+        // Initialize garage
+        document.addEventListener('DOMContentLoaded', function() {
+            const stats = calculateStats();
+            
+            // Populate cars grid
+            const garageCars = document.getElementById('garageCars');
+            garageCars.innerHTML = dreamCars.map(car => `
+                <div class="garage-card p-6">
+                    <div class="relative mb-6">
+                        <span class="brand-badge ${car.brand.toLowerCase()}-badge absolute top-4 left-4 z-10">${car.brand}</span>
+                        <img src="${car.image}" alt="${car.name}" class="car-image">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">${car.name}</h3>
+                    
+                    <div class="mb-4">
+                        <div class="stat-item">
+                            <span class="text-gray-400">Year:</span>
+                            <span class="font-semibold">${car.year}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="text-gray-400">Power:</span>
+                            <span class="power-text">${car.power} ${car.powerUnit}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="text-gray-400">Price:</span>
+                            <span class="price-text">${formatPrice(car.price)}</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-4">${car.description}</p>
+                    
+                    <div class="mt-4 pt-4 border-t border-white/10">
+                        <h4 class="font-semibold text-orange-500 mb-2">Why This Car:</h4>
+                        <p class="text-gray-400 text-sm">${car.whyChosen}</p>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-white/10">
+                        <h4 class="font-semibold mb-2 text-sm text-gray-400 uppercase tracking-wider">Key Specs:</h4>
+                        <div class="grid grid-cols-2 gap-2">
+                            ${Object.entries(car.specs).slice(0, 4).map(([key, value]) => `
+                                <div class="text-center p-2 bg-white/5 rounded-lg">
+                                    <div class="text-xs text-gray-400">${key}</div>
+                                    <div class="font-semibold text-sm">${value}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Populate stats
+            const garageStats = document.getElementById('garageStats');
+            garageStats.innerHTML = `
+                <div class="stat-card text-center">
+                    <div class="stat-number">${stats.totalPower}</div>
+                    <div class="text-gray-400 mt-2">Total Power (HP)</div>
+                    <div class="text-sm text-gray-500 mt-1">Combined output</div>
+                </div>
+                
+                <div class="stat-card text-center">
+                    <div class="stat-number">${formatPrice(stats.totalPrice)}</div>
+                    <div class="text-gray-400 mt-2">Total Value</div>
+                    <div class="text-sm text-gray-500 mt-1">Dream garage worth</div>
+                </div>
+                
+                <div class="stat-card text-center">
+                    <div class="stat-number">${stats.avgPower}</div>
+                    <div class="text-gray-400 mt-2">Average Power (HP)</div>
+                    <div class="text-sm text-gray-500 mt-1">Per car</div>
+                </div>
+                
+                <div class="stat-card text-center">
+                    <div class="stat-number">${stats.carCount}</div>
+                    <div class="text-gray-400 mt-2">Cars in Garage</div>
+                    <div class="text-sm text-gray-500 mt-1">Curated collection</div>
+                </div>
+            `;
+            
+            // Mobile menu toggle
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                const menu = document.getElementById('mobileMenu');
+                menu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const menuBtn = document.getElementById('mobileMenuBtn');
+                const menu = document.getElementById('mobileMenu');
+                
+                if (!menuBtn.contains(event.target) && !menu.contains(event.target)) {
+                    menu.classList.add('hidden');
+                }
+            });
         });
     </script>
 </body>

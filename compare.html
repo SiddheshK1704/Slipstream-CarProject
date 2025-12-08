@@ -7,7 +7,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Caesar+Dressing&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -17,10 +17,52 @@
             box-sizing: border-box;
         }
         
+        /* Background Image System */
+        .page-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+        
+        .bg-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2; /* Adjust this value for desired opacity */
+            filter: brightness(0.8) contrast(1.1);
+        }
+        
+        .bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(0, 0, 0, 0.9) 0%,
+                rgba(0, 0, 0, 0.7) 50%,
+                rgba(0, 0, 0, 0.9) 100%
+            );
+            z-index: -1;
+        }
+        
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             background: #000;
             color: white;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        /* Add this class to make content stand out against background */
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
         }
         
         .caesar-font {
@@ -28,27 +70,44 @@
             letter-spacing: 3px;
         }
         
+        /* Glass theme */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
         .comparison-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
         
         .comparison-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
         
         .car-selector {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
             border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
             transition: all 0.3s ease;
         }
         
         .car-selector:hover {
             border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
         
         .progress-bar {
@@ -61,6 +120,7 @@
         .progress-fill {
             height: 100%;
             transition: width 0.5s ease;
+            border-radius: 4px;
         }
         
         .vs-badge {
@@ -79,17 +139,144 @@
             font-size: 1.5rem;
             z-index: 10;
             box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+            backdrop-filter: blur(4px);
         }
         
         .winner {
             border: 2px solid #10b981;
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .car-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-glass {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        
+        .car-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .car-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .car-item.selected {
+            border: 2px solid #ff6b00;
+            background: rgba(255, 107, 0, 0.1);
+            box-shadow: 0 0 20px rgba(255, 107, 0, 0.2);
+        }
+        
+        .brand-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .power-text {
+            color: #ff4444;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+        }
+        
+        .price-text {
+            color: #44ff44;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(68, 255, 68, 0.3);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Modal scrollbar */
+        #carsGrid::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #carsGrid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+        
+        #carsGrid::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+        
+        #carsGrid::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Navigation enhancement for background */
+        nav {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Footer enhancement for background */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Main title styling */
+        .main-title {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Subtle animation for VS badge */
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                box-shadow: 0 0 30px rgba(255, 107, 0, 0.7);
+            }
+        }
+        
+        .vs-badge {
+            animation: pulse 2s infinite ease-in-out;
         }
     </style>
 </head>
 <body class="min-h-screen">
+    <!-- Background Image -->
+    <div class="page-background">
+        <!-- ADD YOUR IMAGE HERE: Replace 'compare-bg.jpg' with your image filename -->
+        <img src="./assets/images/nissan-gtr.png" alt="Background" class="bg-image">
+        <div class="bg-overlay"></div>
+    </div>
+    
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50 px-6 py-4">
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="index.html" class="caesar-font text-3xl text-white font-bold">SLIPSTREAM</a>
             <div class="hidden md:flex items-center space-x-8">
@@ -119,120 +306,1036 @@
     </nav>
 
     <!-- Main Content -->
-    <section class="pt-32 pb-20 px-6">
-        <div class="max-w-7xl mx-auto">
-            <h1 class="text-5xl md:text-6xl font-bold text-center mb-6">Compare Automotive Titans</h1>
-            <p class="text-xl text-gray-400 text-center max-w-3xl mx-auto mb-12">
-                Pit the world's greatest cars against each other. See how they stack up in performance, design, and innovation.
-            </p>
-            
-            <!-- Car Selection -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                <!-- Car 1 Selector -->
-                <div class="car-selector rounded-2xl p-6 cursor-pointer" id="car1Selector">
-                    <div class="flex flex-col items-center justify-center h-64" id="car1Placeholder">
-                        <svg class="w-16 h-16 text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                        <p class="text-gray-400 text-lg">Click to select first car</p>
+    <div class="content-wrapper">
+        <section class="pt-32 pb-20 px-6">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-5xl md:text-6xl font-bold text-center mb-6 main-title">Explore Head-to-Head Comparisons</h1>
+                <p class="text-xl text-gray-300 text-center max-w-3xl mx-auto mb-12">
+                    Compare the world's greatest cars against each other. See how they stack up in performance, design, and innovation.
+                </p>
+                
+                <!-- Car Selection -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    <!-- Car 1 Selector -->
+                    <div class="car-selector rounded-2xl p-6 cursor-pointer" id="car1Selector">
+                        <div class="flex flex-col items-center justify-center h-64" id="car1Placeholder">
+                            <svg class="w-16 h-16 text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            <p class="text-gray-400 text-lg">Click to select first car</p>
+                        </div>
+                        <div class="hidden" id="car1Selected">
+                            <!-- Car 1 content will be loaded here -->
+                        </div>
                     </div>
-                    <div class="hidden" id="car1Selected">
-                        <!-- Car 1 content will be loaded here -->
+                    
+                    <!-- Car 2 Selector -->
+                    <div class="car-selector rounded-2xl p-6 cursor-pointer" id="car2Selector">
+                        <div class="flex flex-col items-center justify-center h-64" id="car2Placeholder">
+                            <svg class="w-16 h-16 text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            <p class="text-gray-400 text-lg">Click to select second car</p>
+                        </div>
+                        <div class="hidden" id="car2Selected">
+                            <!-- Car 2 content will be loaded here -->
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Car 2 Selector -->
-                <div class="car-selector rounded-2xl p-6 cursor-pointer" id="car2Selector">
-                    <div class="flex flex-col items-center justify-center h-64" id="car2Placeholder">
-                        <svg class="w-16 h-16 text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                <!-- VS Badge -->
+                <div class="relative mb-20">
+                    <div class="vs-badge">VS</div>
+                </div>
+                
+                <!-- Comparison Results -->
+                <div class="mt-12" id="comparisonResults">
+                    <!-- Results will be loaded here -->
+                    <div class="text-center text-gray-400 py-12 glass-card p-8">
+                        <svg class="w-20 h-20 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <p class="text-gray-400 text-lg">Click to select second car</p>
-                    </div>
-                    <div class="hidden" id="car2Selected">
-                        <!-- Car 2 content will be loaded here -->
+                        <p class="text-xl">Select two cars to compare their specifications</p>
+                        <p class="text-gray-500 mt-2">Choose from our collection of 30+ legendary cars</p>
                     </div>
                 </div>
             </div>
-            
-            <!-- VS Badge -->
-            <div class="relative">
-                <div class="vs-badge">VS</div>
-            </div>
-            
-            <!-- Comparison Results -->
-            <div class="mt-12" id="comparisonResults">
-                <!-- Results will be loaded here -->
-                <div class="text-center text-gray-500 py-12">
-                    <p class="text-xl">Select two cars to compare their specifications</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Car Selection Modal -->
-    <div id="carModal" class="fixed inset-0 bg-black/90 z-50 hidden overflow-y-auto">
-        <div class="min-h-screen px-4 py-12">
-            <div class="max-w-6xl mx-auto">
-                <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-3xl font-bold">Select a Car</h2>
-                    <button id="closeModal" class="text-white hover:text-gray-300 text-2xl">
-                        &times;
-                    </button>
-                </div>
-                
-                <!-- Search and Filter -->
-                <div class="mb-8">
-                    <input type="text" id="carSearch" placeholder="Search cars..." class="w-full px-6 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-white/40">
-                </div>
-                
-                <!-- Brands Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="carsGrid">
-                    <!-- Cars will be loaded here -->
+        <!-- Car Selection Modal -->
+        <div id="carModal" class="fixed inset-0 bg-black/90 z-50 hidden overflow-y-auto modal-glass">
+            <div class="min-h-screen px-4 pt-24 pb-12">
+                <div class="max-w-6xl mx-auto">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-3xl font-bold">Select a Car for Comparison</h2>
+                        <button id="closeModal" class="text-white hover:text-gray-300 text-2xl bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                            &times;
+                        </button>
+                    </div>
+                    
+                    <!-- Search and Filter -->
+                    <div class="mb-8">
+                        <input type="text" id="carSearch" placeholder="Search cars by name, brand, or specifications..." class="w-full px-6 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="mb-6 flex items-center justify-between">
+                        <p class="text-gray-400">Showing <span id="carCount">30</span> legendary cars</p>
+                        <div class="flex space-x-4">
+                            <button id="filterAll" class="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium">All</button>
+                            <button id="filterSuper" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-medium transition-all">Supercars</button>
+                            <button id="filterHyper" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-medium transition-all">Hypercars</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Cars Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="carsGrid">
+                        <!-- Cars will be loaded here by JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Footer -->
+        <footer class="py-12 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="caesar-font text-3xl font-bold mb-4">SLIPSTREAM</h3>
+                        <p class="text-gray-400">For the love of automotive excellence ~ By Siddhesh Khankhoje</p>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
+                        <a href="explore.html" class="text-gray-400 hover:text-white transition-colors">Explore</a>
+                        <a href="compare.html" class="text-white">Compare</a>
+                        <a href="my-garage.html" class="text-gray-400 hover:text-white transition-colors">My Garage</a>
+                    </div>
+                </div>
+                <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                    <p>© Slipstream 2025. Built with passion for automotive enthusiasts worldwide, by Siddhesh Khankhoje.</p>
+                    <p>All images are for demonstration purposes.</p>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-black text-white py-12 px-6 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="caesar-font text-3xl font-bold mb-4">SLIPSTREAM</h3>
-                    <p class="text-gray-400">For the love of automotive excellence</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
-                    <a href="explore.html" class="text-gray-400 hover:text-white transition-colors">Explore</a>
-                    <a href="compare.html" class="text-white">Compare</a>
-                    <a href="my-garage.html" class="text-gray-400 hover:text-white transition-colors">My Garage</a>
-                </div>
-            </div>
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-                <p>© 2024 Slipstream. Built with passion for automotive enthusiasts worldwide.</p>
-            </div>
-        </div>
-    </footer>
-
     <!-- JavaScript -->
-    <script src="js/compare.js"></script>
     <script>
-        // Mobile menu toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        });
-        
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const menuBtn = document.getElementById('mobileMenuBtn');
-            const menu = document.getElementById('mobileMenu');
+        // Car data - All cars from explore page
+        const allCars = [
+            // Porsche Cars
+            {
+                id: 1,
+                name: "911 Turbo S",
+                brand: "Porsche",
+                year: "2026",
+                power: "701",
+                powerUnit: "HP",
+                price: "272100",
+                image: "./assets/images/porsche-911-turbo-s.png",
+                type: "supercar",
+                description: "The ultimate expression of the 911 philosophy, combining everyday usability with track performance.",
+                specs: {
+                    "0-60 mph": "2.6s",
+                    "Top Speed": "205 mph",
+                    "Engine": "3.8L Twin-Turbo Flat-6",
+                    "Torque": "750 Nm"
+                }
+            },
+            {
+                id: 2,
+                name: "911 GT3 RS",
+                brand: "Porsche",
+                year: "2025",
+                power: "518",
+                powerUnit: "HP",
+                price: "250300",
+                image: "./assets/images/porsche-gt3.png",
+                type: "supercar",
+                description: "Track-focused masterpiece with motorsport-derived technology for ultimate performance.",
+                specs: {
+                    "0-60 mph": "3.0s",
+                    "Top Speed": "184 mph",
+                    "Engine": "4.0L Flat-6",
+                    "Torque": "470 Nm"
+                }
+            },
+            {
+                id: 3,
+                name: "Taycan Turbo GT",
+                brand: "Porsche",
+                year: "2025",
+                power: "1092",
+                powerUnit: "HP",
+                price: "239400",
+                image: "./assets/images/porsche-taycan-t.png",
+                type: "hypercar",
+                description: "The electric sports car that proves zero emissions can still deliver heart-pounding performance.",
+                specs: {
+                    "0-60 mph": "2.1s",
+                    "Top Speed": "180 mph",
+                    "Battery": "93.4 kWh",
+                    "Range": "280 miles"
+                }
+            },
+            {
+                id: 4,
+                name: "Panamera Turbo",
+                brand: "Porsche",
+                year: "2025",
+                power: "493",
+                powerUnit: "HP",
+                price: "226500",
+                image: "./assets/images/porsche-panamera-t.png",
+                type: "supercar",
+                description: "Luxury sports sedan that combines executive comfort with supercar performance.",
+                specs: {
+                    "0-60 mph": "3.5s",
+                    "Top Speed": "190 mph",
+                    "Engine": "4.0L Twin-Turbo V8",
+                    "Torque": "660 Nm"
+                }
+            },
+            {
+                id: 5,
+                name: "718 Cayman GT4 RS",
+                brand: "Porsche",
+                year: "2023",
+                power: "500",
+                powerUnit: "HP",
+                price: "145000",
+                image: "./assets/images/porsche-cayman.png",
+                type: "supercar",
+                description: "The most extreme mid-engine Porsche, with motorsport DNA in every component.",
+                specs: {
+                    "0-60 mph": "3.2s",
+                    "Top Speed": "196 mph",
+                    "Engine": "4.0L Flat-6",
+                    "Torque": "450 Nm"
+                }
+            },
             
-            if (!menuBtn.contains(event.target) && !menu.contains(event.target)) {
-                menu.classList.add('hidden');
+            // Ferrari Cars
+            {
+                id: 6,
+                name: "SF90 Stradale",
+                brand: "Ferrari",
+                year: "2025",
+                power: "986",
+                powerUnit: "HP",
+                price: "594000",
+                image: "./assets/images/ferrari-sf90.png",
+                type: "hypercar",
+                description: "Ferrari's first series-production PHEV, blending V8 power with electric motors.",
+                specs: {
+                    "0-60 mph": "2.5s",
+                    "Top Speed": "211 mph",
+                    "Engine": "4.0L Twin-Turbo V8 + 3 Motors",
+                    "Torque": "800 Nm"
+                }
+            },
+            {
+                id: 7,
+                name: "296 GTB",
+                brand: "Ferrari",
+                year: "2025",
+                power: "818",
+                powerUnit: "HP",
+                price: "346950",
+                image: "./assets/images/ferrari-296.png",
+                type: "hypercar",
+                description: "The new V6 hybrid supercar that redefines driving pleasure and performance.",
+                specs: {
+                    "0-60 mph": "2.9s",
+                    "Top Speed": "205 mph",
+                    "Engine": "3.0L Twin-Turbo V6 + Electric",
+                    "Torque": "740 Nm"
+                }
+            },
+            {
+                id: 8,
+                name: "Roma",
+                brand: "Ferrari",
+                year: "2024",
+                power: "612",
+                powerUnit: "HP",
+                price: "260000",
+                image: "./assets/images/ferrari-roma.png",
+                type: "supercar",
+                description: "A front-engined V8 coupe that celebrates la dolce vita with timeless elegance.",
+                specs: {
+                    "0-60 mph": "3.4s",
+                    "Top Speed": "199 mph",
+                    "Engine": "3.9L Twin-Turbo V8",
+                    "Torque": "760 Nm"
+                }
+            },
+            {
+                id: 9,
+                name: "F8 Tributo",
+                brand: "Ferrari",
+                year: "2023",
+                power: "711",
+                powerUnit: "HP",
+                price: "300000",
+                image: "./assets/images/ferrari-f8.png",
+                type: "supercar",
+                description: "The most powerful V8 Ferrari ever, paying tribute to the legendary V8 engine.",
+                specs: {
+                    "0-60 mph": "2.9s",
+                    "Top Speed": "211 mph",
+                    "Engine": "3.9L Twin-Turbo V8",
+                    "Torque": "770 Nm"
+                }
+            },
+            {
+                id: 10,
+                name: "812 Superfast",
+                brand: "Ferrari",
+                year: "2023",
+                power: "789",
+                powerUnit: "HP",
+                price: "340000",
+                image: "./assets/images/ferrari-812s.png",
+                type: "hypercar",
+                description: "Front-engine V12 grand tourer delivering extreme power, razor-sharp handling, and unmistakable Italian design.",
+                specs: {
+                    "0-60 mph": "2.9s",
+                    "Top Speed": "211 mph",
+                    "Engine": "6.5L V12",
+                    "Torque": "718 Nm"
+                }
+            },
+            
+            // Lamborghini Cars
+            {
+                id: 11,
+                name: "Huracán STO",
+                brand: "Lamborghini",
+                year: "2024",
+                power: "631",
+                powerUnit: "HP",
+                price: "344000",
+                image: "./assets/images/lambo-huracan.png",
+                type: "supercar",
+                description: "Street-legal race car derived from Lamborghini's Super Trofeo and GT3 race cars.",
+                specs: {
+                    "0-60 mph": "3.0s",
+                    "Top Speed": "193 mph",
+                    "Engine": "5.2L V10",
+                    "Torque": "565 Nm"
+                }
+            },
+            {
+                id: 12,
+                name: "Revuelto",
+                brand: "Lamborghini",
+                year: "2024",
+                power: "1001",
+                powerUnit: "HP",
+                price: "608000",
+                image: "./assets/images/lambo-revuelto.png",
+                type: "hypercar",
+                description: "The first V12 hybrid super sports car, ushering in a new era for Lamborghini.",
+                specs: {
+                    "0-60 mph": "2.5s",
+                    "Top Speed": "217 mph",
+                    "Engine": "6.5L V12 + 3 Motors",
+                    "Torque": "725 Nm"
+                }
+            },
+            {
+                id: 13,
+                name: "Aventador SVJ",
+                brand: "Lamborghini",
+                year: "2022",
+                power: "759",
+                powerUnit: "HP",
+                price: "517000",
+                image: "./assets/images/lambo-aventador.png",
+                type: "hypercar",
+                description: "The ultimate Aventador, holding the Nürburgring production car lap record.",
+                specs: {
+                    "0-60 mph": "2.8s",
+                    "Top Speed": "217 mph",
+                    "Engine": "6.5L V12",
+                    "Torque": "720 Nm"
+                }
+            },
+            {
+                id: 14,
+                name: "Huracán Performante",
+                brand: "Lamborghini",
+                year: "2022",
+                power: "631",
+                powerUnit: "HP",
+                price: "274000",
+                image: "./assets/images/lambo-huracanp.png",
+                type: "supercar",
+                description: "The perfect balance between lifestyle and track-focused performance.",
+                specs: {
+                    "0-60 mph": "2.9s",
+                    "Top Speed": "202 mph",
+                    "Engine": "5.2L V10",
+                    "Torque": "600 Nm"
+                }
+            },
+            {
+                id: 15,
+                name: "Urus S",
+                brand: "Lamborghini",
+                year: "2024",
+                power: "657",
+                powerUnit: "HP",
+                price: "235000",
+                image: "./assets/images/lambo-urus.png",
+                type: "supercar",
+                description: "The world's first Super SUV, combining super sports car DNA with everyday versatility.",
+                specs: {
+                    "0-60 mph": "3.5s",
+                    "Top Speed": "190 mph",
+                    "Engine": "4.0L Twin-Turbo V8",
+                    "Torque": "850 Nm"
+                }
+            },
+            
+            // McLaren Cars
+            {
+                id: 16,
+                name: "Artura",
+                brand: "McLaren",
+                year: "2024",
+                power: "671",
+                powerUnit: "HP",
+                price: "237500",
+                image: "./assets/images/mclaren-artura.png",
+                type: "supercar",
+                description: "McLaren's next-generation supercar with all-new V6 hybrid powertrain.",
+                specs: {
+                    "0-60 mph": "3.0s",
+                    "Top Speed": "205 mph",
+                    "Engine": "3.0L Twin-Turbo V6 + Electric",
+                    "Torque": "720 Nm"
+                }
+            },
+            {
+                id: 17,
+                name: "720S",
+                brand: "McLaren",
+                year: "2024",
+                power: "710",
+                powerUnit: "HP",
+                price: "305000",
+                image: "./assets/images/mclaren-720s.png",
+                type: "supercar",
+                description: "The definitive super-series model, combining extreme performance with day-to-day usability.",
+                specs: {
+                    "0-60 mph": "2.8s",
+                    "Top Speed": "212 mph",
+                    "Engine": "4.0L Twin-Turbo V8",
+                    "Torque": "770 Nm"
+                }
+            },
+            {
+                id: 18,
+                name: "765LT",
+                brand: "McLaren",
+                year: "2023",
+                power: "755",
+                powerUnit: "HP",
+                price: "358000",
+                image: "./assets/images/mclaren-765lt.png",
+                type: "supercar",
+                description: "The most extreme and engaging LT model ever, focused on track performance.",
+                specs: {
+                    "0-60 mph": "2.7s",
+                    "Top Speed": "205 mph",
+                    "Engine": "4.0L Twin-Turbo V8",
+                    "Torque": "800 Nm"
+                }
+            },
+            {
+                id: 19,
+                name: "Senna",
+                brand: "McLaren",
+                year: "2023",
+                power: "789",
+                powerUnit: "HP",
+                price: "1000000",
+                image: "./assets/images/mclaren-senna.png",
+                type: "hypercar",
+                description: "The ultimate track-focused hypercar, designed without compromise for circuit performance.",
+                specs: {
+                    "0-60 mph": "2.8s",
+                    "Top Speed": "211 mph",
+                    "Engine": "4.0L Twin-Turbo V8",
+                    "Torque": "800 Nm"
+                }
+            },
+            {
+                id: 20,
+                name: "P1",
+                brand: "McLaren",
+                year: "2015",
+                power: "903",
+                powerUnit: "HP",
+                price: "1350000",
+                image: "./assets/images/mclaren-p1.png",
+                type: "hypercar",
+                description: "The groundbreaking hypercar that defined a generation, part of the legendary 'Holy Trinity'.",
+                specs: {
+                    "0-60 mph": "2.8s",
+                    "Top Speed": "217 mph",
+                    "Engine": "3.8L Twin-Turbo V8 + Electric",
+                    "Torque": "900 Nm"
+                }
+            },
+            
+            // Bugatti Cars
+            {
+                id: 21,
+                name: "Chiron Super Sport",
+                brand: "Bugatti",
+                year: "2024",
+                power: "1577",
+                powerUnit: "HP",
+                price: "3900000",
+                image: "./assets/images/bugatti-chiron.png",
+                type: "hypercar",
+                description: "The ultimate hyper sports car, focused on extreme speed and luxury.",
+                specs: {
+                    "0-60 mph": "2.4s",
+                    "Top Speed": "273 mph",
+                    "Engine": "8.0L Quad-Turbo W16",
+                    "Torque": "1600 Nm"
+                }
+            },
+            {
+                id: 22,
+                name: "Divo",
+                brand: "Bugatti",
+                year: "2023",
+                power: "1479",
+                powerUnit: "HP",
+                price: "5800000",
+                image: "./assets/images/bugatti-divo.png",
+                type: "hypercar",
+                description: "A handling-focused hypercar with extreme aerodynamic capabilities.",
+                specs: {
+                    "0-60 mph": "2.4s",
+                    "Top Speed": "236 mph",
+                    "Engine": "8.0L Quad-Turbo W16",
+                    "Torque": "1600 Nm"
+                }
+            },
+            {
+                id: 23,
+                name: "Bolide",
+                brand: "Bugatti",
+                year: "2024",
+                power: "1824",
+                powerUnit: "HP",
+                price: "4700000",
+                image: "./assets/images/bugatti-bolide.png",
+                type: "hypercar",
+                description: "Track-only hypercar pushing the boundaries of performance and technology.",
+                specs: {
+                    "0-60 mph": "2.2s",
+                    "Top Speed": "310 mph",
+                    "Engine": "8.0L Quad-Turbo W16",
+                    "Torque": "1850 Nm"
+                }
+            },
+            {
+                id: 24,
+                name: "Veyron 16.4",
+                brand: "Bugatti",
+                year: "2015",
+                power: "1184",
+                powerUnit: "HP",
+                price: "2500000",
+                image: "./assets/images/bugatti-veyron.png",
+                type: "hypercar",
+                description: "The car that redefined hypercars, first to break 400 km/h barrier.",
+                specs: {
+                    "0-60 mph": "2.5s",
+                    "Top Speed": "254 mph",
+                    "Engine": "8.0L Quad-Turbo W16",
+                    "Torque": "1500 Nm"
+                }
+            },
+            {
+                id: 25,
+                name: "Centodieci",
+                brand: "Bugatti",
+                year: "2022",
+                power: "1577",
+                powerUnit: "HP",
+                price: "9000000",
+                image: "./assets/images/bugatti-centodieci.png",
+                type: "hypercar",
+                description: "Exclusive limited edition paying homage to the legendary EB110.",
+                specs: {
+                    "0-60 mph": "2.4s",
+                    "Top Speed": "236 mph",
+                    "Engine": "8.0L Quad-Turbo W16",
+                    "Torque": "1600 Nm"
+                }
+            },
+            
+            // Koenigsegg Cars
+            {
+                id: 26,
+                name: "Jesko Absolut",
+                brand: "Koenigsegg",
+                year: "2024",
+                power: "1600",
+                powerUnit: "HP",
+                price: "3000000",
+                image: "./assets/images/koenigsegg-jesko.png",
+                type: "hypercar",
+                description: "The ultimate speed machine, designed to break the 500 km/h barrier.",
+                specs: {
+                    "0-60 mph": "2.5s",
+                    "Top Speed": "330 mph",
+                    "Engine": "5.0L Twin-Turbo V8",
+                    "Torque": "1500 Nm"
+                }
+            },
+            {
+                id: 27,
+                name: "Gemera",
+                brand: "Koenigsegg",
+                year: "2024",
+                power: "1700",
+                powerUnit: "HP",
+                price: "1700000",
+                image: "./assets/images/koenigsegg-gemera.png",
+                type: "hypercar",
+                description: "The world's first Mega-GT, seating four adults in hypercar luxury.",
+                specs: {
+                    "0-60 mph": "1.9s",
+                    "Top Speed": "248 mph",
+                    "Engine": "2.0L Twin-Turbo 3-Cyl + 3 Motors",
+                    "Torque": "3500 Nm"
+                }
+            },
+            {
+                id: 28,
+                name: "Regera",
+                brand: "Koenigsegg",
+                year: "2023",
+                power: "1500",
+                powerUnit: "HP",
+                price: "2000000",
+                image: "./assets/images/koenigsegg-regera.png",
+                type: "hypercar",
+                description: "Revolutionary hypercar without gearbox, using direct drive technology.",
+                specs: {
+                    "0-60 mph": "2.8s",
+                    "Top Speed": "249 mph",
+                    "Engine": "5.0L Twin-Turbo V8 + 3 Motors",
+                    "Torque": "2000 Nm"
+                }
+            },
+            {
+                id: 29,
+                name: "Agera RS",
+                brand: "Koenigsegg",
+                year: "2017",
+                power: "1160",
+                powerUnit: "HP",
+                price: "2500000",
+                image: "./assets/images/koenigsegg-agera.png",
+                type: "hypercar",
+                description: "The record-breaking hypercar that set multiple world speed records.",
+                specs: {
+                    "0-60 mph": "2.8s",
+                    "Top Speed": "278 mph",
+                    "Engine": "5.0L Twin-Turbo V8",
+                    "Torque": "1280 Nm"
+                }
+            },
+            {
+                id: 30,
+                name: "CC850",
+                brand: "Koenigsegg",
+                year: "2023",
+                power: "1185",
+                powerUnit: "HP",
+                price: "3600000",
+                image: "./assets/images/koenigsegg-cc850.png",
+                type: "hypercar",
+                description: "Celebrating 20 years of Koenigsegg with manual gearbox option on a hypercar.",
+                specs: {
+                    "0-60 mph": "2.8s",
+                    "Top Speed": "280 mph",
+                    "Engine": "5.0L Twin-Turbo V8",
+                    "Torque": "1385 Nm"
+                }
             }
+        ];
+
+        // Global variables
+        let currentSelector = null;
+        let selectedCar1 = null;
+        let selectedCar2 = null;
+
+        // DOM Elements
+        const carModal = document.getElementById('carModal');
+        const closeModal = document.getElementById('closeModal');
+        const carSearch = document.getElementById('carSearch');
+        const carsGrid = document.getElementById('carsGrid');
+        const car1Selector = document.getElementById('car1Selector');
+        const car2Selector = document.getElementById('car2Selector');
+        const car1Placeholder = document.getElementById('car1Placeholder');
+        const car2Placeholder = document.getElementById('car2Placeholder');
+        const car1Selected = document.getElementById('car1Selected');
+        const car2Selected = document.getElementById('car2Selected');
+        const comparisonResults = document.getElementById('comparisonResults');
+        const carCount = document.getElementById('carCount');
+        const filterAll = document.getElementById('filterAll');
+        const filterSuper = document.getElementById('filterSuper');
+        const filterHyper = document.getElementById('filterHyper');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            populateCarsGrid();
+            
+            // Event listeners for car selectors
+            car1Selector.addEventListener('click', () => openCarModal('car1'));
+            car2Selector.addEventListener('click', () => openCarModal('car2'));
+            
+            // Modal close
+            closeModal.addEventListener('click', closeCarModal);
+            carModal.addEventListener('click', (e) => {
+                if (e.target === carModal) closeCarModal();
+            });
+            
+            // Search functionality
+            carSearch.addEventListener('input', filterCars);
+            
+            // Filter buttons
+            filterAll.addEventListener('click', () => filterCarsByType('all'));
+            filterSuper.addEventListener('click', () => filterCarsByType('supercar'));
+            filterHyper.addEventListener('click', () => filterCarsByType('hypercar'));
+            
+            // Mobile menu toggle
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                const menu = document.getElementById('mobileMenu');
+                menu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const menuBtn = document.getElementById('mobileMenuBtn');
+                const menu = document.getElementById('mobileMenu');
+                
+                if (!menuBtn.contains(event.target) && !menu.contains(event.target)) {
+                    menu.classList.add('hidden');
+                }
+            });
         });
+
+        // Populate cars grid
+        function populateCarsGrid(filteredCars = allCars) {
+            carsGrid.innerHTML = '';
+            carCount.textContent = filteredCars.length;
+            
+            filteredCars.forEach(car => {
+                const carItem = document.createElement('div');
+                carItem.className = 'car-item p-4';
+                carItem.dataset.id = car.id;
+                carItem.innerHTML = `
+                    <div class="relative">
+                        <span class="brand-badge">${car.brand}</span>
+                        <img src="${car.image}" alt="${car.name}" class="car-image">
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">${car.name}</h3>
+                    <div class="space-y-2 mb-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Year:</span>
+                            <span class="font-semibold">${car.year}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Power:</span>
+                            <span class="power-text">${car.power} ${car.powerUnit}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Price:</span>
+                            <span class="price-text">${formatPrice(car.price)}</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm">${car.description}</p>
+                `;
+                
+                carItem.addEventListener('click', () => selectCar(car));
+                carsGrid.appendChild(carItem);
+            });
+        }
+
+        // Format price
+        function formatPrice(price) {
+            const numPrice = parseInt(price);
+            if (numPrice >= 1000000) {
+                return `$${(numPrice / 1000000).toFixed(1)}M`;
+            }
+            return `$${numPrice.toLocaleString()}`;
+        }
+
+        // Open car modal
+        function openCarModal(selector) {
+            currentSelector = selector;
+            carModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close car modal
+        function closeCarModal() {
+            carModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            currentSelector = null;
+        }
+
+        // Select car
+        function selectCar(car) {
+            if (currentSelector === 'car1') {
+                selectedCar1 = car;
+                updateSelectedCarDisplay('car1', car);
+            } else if (currentSelector === 'car2') {
+                selectedCar2 = car;
+                updateSelectedCarDisplay('car2', car);
+            }
+            
+            closeCarModal();
+            
+            // If both cars are selected, show comparison
+            if (selectedCar1 && selectedCar2) {
+                compareCars();
+            }
+        }
+
+        // Update selected car display
+        function updateSelectedCarDisplay(position, car) {
+            const placeholder = document.getElementById(`${position}Placeholder`);
+            const selectedDiv = document.getElementById(`${position}Selected`);
+            
+            placeholder.classList.add('hidden');
+            selectedDiv.classList.remove('hidden');
+            
+            selectedDiv.innerHTML = `
+                <div class="flex flex-col h-full">
+                    <div class="relative mb-4">
+                        <span class="brand-badge">${car.brand}</span>
+                        <img src="${car.image}" alt="${car.name}" class="w-full h-48 object-cover rounded-lg">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">${car.name}</h3>
+                    <div class="space-y-2 mb-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Year:</span>
+                            <span class="font-semibold">${car.year}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Power:</span>
+                            <span class="power-text">${car.power} ${car.powerUnit}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Price:</span>
+                            <span class="price-text">${formatPrice(car.price)}</span>
+                        </div>
+                    </div>
+                    <button class="mt-auto px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-all" onclick="openCarModal('${position}')">
+                        Change Car
+                    </button>
+                </div>
+            `;
+        }
+
+        // Compare cars
+        function compareCars() {
+            if (!selectedCar1 || !selectedCar2) return;
+            
+            // Calculate winners for each category
+            const powerWinner = parseInt(selectedCar1.power) > parseInt(selectedCar2.power) ? 'car1' : 'car2';
+            const priceWinner = parseInt(selectedCar1.price) < parseInt(selectedCar2.price) ? 'car1' : 'car2';
+            const yearWinner = parseInt(selectedCar1.year) > parseInt(selectedCar2.year) ? 'car1' : 'car2';
+            
+            // Calculate percentage differences
+            const powerDiff = Math.abs(parseInt(selectedCar1.power) - parseInt(selectedCar2.power));
+            const avgPower = (parseInt(selectedCar1.power) + parseInt(selectedCar2.power)) / 2;
+            const powerPercentage = Math.round((powerDiff / avgPower) * 100);
+            
+            const priceDiff = Math.abs(parseInt(selectedCar1.price) - parseInt(selectedCar2.price));
+            const avgPrice = (parseInt(selectedCar1.price) + parseInt(selectedCar2.price)) / 2;
+            const pricePercentage = Math.round((priceDiff / avgPrice) * 100);
+            
+            comparisonResults.innerHTML = `
+                <div class="glass-card p-8">
+                    <h2 class="text-3xl font-bold mb-8 text-center">Head-to-Head Comparison</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold mb-2 text-orange-500">${powerPercentage}%</div>
+                            <div class="text-gray-400">Power Difference</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold mb-2 ${priceWinner === 'car1' ? 'text-green-500' : 'text-red-500'}">${formatPrice(Math.abs(priceDiff))}</div>
+                            <div class="text-gray-400">Price Difference</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold mb-2">${Math.abs(parseInt(selectedCar1.year) - parseInt(selectedCar2.year))}</div>
+                            <div class="text-gray-400">Year Difference</div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Power Comparison -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold">Power (${selectedCar1.powerUnit})</span>
+                                <span class="text-gray-400">Higher is better</span>
+                            </div>
+                            <div class="relative">
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-gradient-to-r from-red-500 to-orange-500" style="width: ${(parseInt(selectedCar1.power) / 2000) * 100}%"></div>
+                                </div>
+                                <div class="progress-bar mt-2">
+                                    <div class="progress-fill bg-gradient-to-r from-red-500 to-orange-500" style="width: ${(parseInt(selectedCar2.power) / 2000) * 100}%"></div>
+                                </div>
+                                <div class="flex justify-between mt-2">
+                                    <span class="${powerWinner === 'car1' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${selectedCar1.power} ${selectedCar1.powerUnit}</span>
+                                    <span class="${powerWinner === 'car2' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${selectedCar2.power} ${selectedCar2.powerUnit}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Price Comparison -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold">Price</span>
+                                <span class="text-gray-400">Lower is better</span>
+                            </div>
+                            <div class="relative">
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-gradient-to-r from-green-500 to-blue-500" style="width: ${Math.min(100, (parseInt(selectedCar1.price) / 10000000) * 100)}%"></div>
+                                </div>
+                                <div class="progress-bar mt-2">
+                                    <div class="progress-fill bg-gradient-to-r from-green-500 to-blue-500" style="width: ${Math.min(100, (parseInt(selectedCar2.price) / 10000000) * 100)}%"></div>
+                                </div>
+                                <div class="flex justify-between mt-2">
+                                    <span class="${priceWinner === 'car1' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${formatPrice(selectedCar1.price)}</span>
+                                    <span class="${priceWinner === 'car2' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${formatPrice(selectedCar2.price)}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Year Comparison -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold">Year</span>
+                                <span class="text-gray-400">Newer is better</span>
+                            </div>
+                            <div class="relative">
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-gradient-to-r from-purple-500 to-pink-500" style="width: ${((parseInt(selectedCar1.year) - 2015) / 15) * 100}%"></div>
+                                </div>
+                                <div class="progress-bar mt-2">
+                                    <div class="progress-fill bg-gradient-to-r from-purple-500 to-pink-500" style="width: ${((parseInt(selectedCar2.year) - 2015) / 15) * 100}%"></div>
+                                </div>
+                                <div class="flex justify-between mt-2">
+                                    <span class="${yearWinner === 'car1' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${selectedCar1.year}</span>
+                                    <span class="${yearWinner === 'car2' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${selectedCar2.year}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Detailed Specs -->
+                    <div class="mt-12">
+                        <h3 class="text-2xl font-bold mb-6">Detailed Specifications</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-4">
+                                <h4 class="text-xl font-semibold text-orange-500">${selectedCar1.name}</h4>
+                                ${Object.entries(selectedCar1.specs || {}).map(([key, value]) => `
+                                    <div class="flex justify-between py-2 border-b border-white/10">
+                                        <span class="text-gray-400">${key}:</span>
+                                        <span class="font-semibold">${value}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="space-y-4">
+                                <h4 class="text-xl font-semibold text-orange-500">${selectedCar2.name}</h4>
+                                ${Object.entries(selectedCar2.specs || {}).map(([key, value]) => `
+                                    <div class="flex justify-between py-2 border-b border-white/10">
+                                        <span class="text-gray-400">${key}:</span>
+                                        <span class="font-semibold">${value}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Overall Verdict -->
+                    <div class="mt-12 p-6 bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-xl border border-orange-500/20">
+                        <h3 class="text-2xl font-bold mb-4">Overall Verdict</h3>
+                        <p class="text-gray-300">
+                            ${getVerdict(selectedCar1, selectedCar2, powerWinner, priceWinner, yearWinner)}
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Get verdict text
+        function getVerdict(car1, car2, powerWinner, priceWinner, yearWinner) {
+            const powerCar = powerWinner === 'car1' ? car1 : car2;
+            const priceCar = priceWinner === 'car1' ? car1 : car2;
+            const yearCar = yearWinner === 'car1' ? car1 : car2;
+            
+            const powerDiff = Math.abs(parseInt(car1.power) - parseInt(car2.power));
+            const priceDiff = Math.abs(parseInt(car1.price) - parseInt(car2.price));
+            
+            let verdict = `The ${powerCar.name} has ${powerDiff} ${powerCar.powerUnit} more power, making it the performance champion. `;
+            
+            if (priceCar.name !== powerCar.name) {
+                verdict += `However, the ${priceCar.name} offers better value at ${formatPrice(priceDiff)} less. `;
+            } else {
+                verdict += `It also represents better value with its price advantage. `;
+            }
+            
+            if (yearCar.name !== powerCar.name && yearCar.name !== priceCar.name) {
+                verdict += `The ${yearCar.name} is the newer model with more modern technology.`;
+            }
+            
+            return verdict + " The choice ultimately depends on whether you prioritize raw performance, value for money, or the latest technology.";
+        }
+
+        // Filter cars by search
+        function filterCars() {
+            const searchTerm = carSearch.value.toLowerCase();
+            const filteredCars = allCars.filter(car => 
+                car.name.toLowerCase().includes(searchTerm) ||
+                car.brand.toLowerCase().includes(searchTerm) ||
+                car.description.toLowerCase().includes(searchTerm) ||
+                car.year.includes(searchTerm)
+            );
+            populateCarsGrid(filteredCars);
+        }
+
+        // Filter cars by type
+        function filterCarsByType(type) {
+            let filteredCars;
+            if (type === 'all') {
+                filteredCars = allCars;
+            } else {
+                filteredCars = allCars.filter(car => car.type === type);
+            }
+            populateCarsGrid(filteredCars);
+            
+            // Update active filter button
+            [filterAll, filterSuper, filterHyper].forEach(btn => btn.classList.remove('bg-orange-500'));
+            document.getElementById(`filter${type.charAt(0).toUpperCase() + type.slice(1)}`).classList.add('bg-orange-500');
+        }
     </script>
 </body>
 </html>

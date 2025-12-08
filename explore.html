@@ -7,7 +7,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Caesar+Dressing&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -18,9 +18,10 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             background: #000;
             color: white;
+            overflow-x: hidden;
         }
         
         .caesar-font {
@@ -28,44 +29,214 @@
             letter-spacing: 3px;
         }
         
+        /* Brand Background */
+        .brand-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            transition: opacity 0.8s ease-in-out;
+        }
+        
+        .brand-bg-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.25; /* Vintage feel with low opacity */
+            filter: sepia(0.3) contrast(1.1);
+        }
+        
+        /* Brand Overlay */
+        .brand-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                rgba(0,0,0,0.9) 0%, 
+                rgba(0,0,0,0.6) 50%, 
+                rgba(0,0,0,0.9) 100%);
+            z-index: -1;
+        }
+        
+        /* Glass card effect */
         .car-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
         }
         
+        .car-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.4), 
+                transparent);
+        }
+        
+        /* Hover effect with slight tilt */
         .car-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
         }
         
+        /* Brand logos */
         .brand-logo {
             filter: grayscale(100%);
             opacity: 0.7;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid transparent;
         }
         
         .brand-logo:hover {
-            filter: grayscale(0%);
-            opacity: 1;
-            transform: scale(1.1);
+            filter: grayscale(50%);
+            opacity: 0.9;
+            transform: scale(1.08);
+            background: rgba(255, 255, 255, 0.1);
         }
         
         .brand-logo.active {
             filter: grayscale(0%);
             opacity: 1;
             transform: scale(1.05);
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-img {
+            width: 100%;
+            height: 40px; /* Fixed height for consistency */
+            object-fit: contain;
+            object-position: center;
         }
         
         .hidden {
             display: none;
         }
+        
+        /* Section headers - UPDATED: No underline, consistent color, centered */
+        .section-title {
+            display: block;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #ffffff; /* Consistent white color for all brands */
+            font-weight: 600;
+            font-size: 2.5rem; /* Slightly larger for emphasis */
+            letter-spacing: 1px;
+        }
+        
+        /* Card image styling */
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            transition: transform 0.5s ease;
+        }
+        
+        .car-card:hover .card-image {
+            transform: scale(1.05);
+        }
+        
+        /* Stats styling */
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* Power indicator */
+        .power-indicator {
+            color: #ff4444;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+        }
+        
+        /* Price indicator */
+        .price-indicator {
+            color: #44ff44;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(68, 255, 68, 0.3);
+        }
+        
+        /* Main title styling */
+        .main-title {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .main-subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+        }
     </style>
 </head>
 <body class="min-h-screen">
+    <!-- Brand Background Images -->
+    <div class="brand-background" id="brandBackground">
+        <!-- Porsche Background -->
+        <div class="brand-bg-content active" data-brand="porsche">
+            <img src="./assets/images/VintageP911.jpg" alt="Vintage Porsche" class="brand-bg-image">
+            <div class="brand-overlay"></div>
+        </div>
+        
+        <!-- Ferrari Background -->
+        <div class="brand-bg-content" data-brand="ferrari">
+            <img src="./assets/images/VintageF40.png" alt="Vintage Ferrari" class="brand-bg-image">
+            <div class="brand-overlay"></div>
+        </div>
+        
+        <!-- Lamborghini Background -->
+        <div class="brand-bg-content" data-brand="lamborghini">
+            <img src="./assets/images/VintageLDiablo.png" alt="Vintage Lamborghini" class="brand-bg-image">
+            <div class="brand-overlay"></div>
+        </div>
+        
+        <!-- McLaren Background -->
+        <div class="brand-bg-content" data-brand="mclaren">
+            <img src="./assets/images/VintageMF1.png" alt="Vintage McLaren" class="brand-bg-image">
+            <div class="brand-overlay"></div>
+        </div>
+        
+        <!-- Bugatti Background -->
+        <div class="brand-bg-content" data-brand="bugatti">
+            <img src="./assets/images/VintageBEB110.png" alt="Vintage Bugatti" class="brand-bg-image">
+            <div class="brand-overlay"></div>
+        </div>
+        
+        <!-- Koenigsegg Background -->
+        <div class="brand-bg-content" data-brand="koenigsegg">
+            <img src="./assets/images/VintageKCC8S.png" alt="Vintage Koenigsegg" class="brand-bg-image">
+            <div class="brand-overlay"></div>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
@@ -97,151 +268,150 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-12 px-6">
+    <section class="pt-32 pb-12 px-6 relative z-10">
         <div class="max-w-7xl mx-auto">
-            <h1 class="text-5xl md:text-6xl font-bold text-center mb-6">Explore Automotive Legends</h1>
-            <p class="text-xl text-gray-400 text-center max-w-3xl mx-auto mb-8">
-                Dive into the world's most iconic car brands and discover their legendary models.
-                Select a brand to explore their top 5 most famous models.
+            <h1 class="text-5xl md:text-6xl font-bold text-center mb-6 main-title">Explore Automotive Legends</h1>
+            <p class="text-xl text-gray-300 text-center max-w-3xl mx-auto mb-8 main-subtitle">
+                Dive into the world's most iconic car brands. Select a brand to explore their legendary models.
             </p>
             
             <!-- Brand Selector -->
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-12">
-                <button class="brand-logo active p-4 bg-white/5 rounded-lg" data-brand="porsche">
-                    <img src="https://cdn.worldvectorlogo.com/logos/porsche-1.svg" alt="Porsche" class="w-full h-12 object-contain">
-                    <p class="text-center mt-2 text-sm">Porsche</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
+                <button class="brand-logo active" data-brand="porsche">
+                    <img src="./assets/logos/Porsche.png" alt="Porsche" class="logo-img">
+                    <p class="text-center mt-2 text-sm font-medium">Porsche</p>
                 </button>
-                <button class="brand-logo p-4 bg-white/5 rounded-lg" data-brand="ferrari">
-                    <img src="https://cdn.worldvectorlogo.com/logos/ferrari-9.svg" alt="Ferrari" class="w-full h-12 object-contain">
-                    <p class="text-center mt-2 text-sm">Ferrari</p>
+                <button class="brand-logo" data-brand="ferrari">
+                    <img src="./assets/logos/Ferrari.png" alt="Ferrari" class="logo-img">
+                    <p class="text-center mt-2 text-sm font-medium">Ferrari</p>
                 </button>
-                <button class="brand-logo p-4 bg-white/5 rounded-lg" data-brand="lamborghini">
-                    <img src="https://cdn.worldvectorlogo.com/logos/lamborghini-1.svg" alt="Lamborghini" class="w-full h-12 object-contain">
-                    <p class="text-center mt-2 text-sm">Lamborghini</p>
+                <button class="brand-logo" data-brand="lamborghini">
+                    <img src="./assets/logos/Lamborghini.png" alt="Lamborghini" class="logo-img">
+                    <p class="text-center mt-2 text-sm font-medium">Lamborghini</p>
                 </button>
-                <button class="brand-logo p-4 bg-white/5 rounded-lg" data-brand="mclaren">
-                    <img src="https://cdn.worldvectorlogo.com/logos/mclaren.svg" alt="McLaren" class="w-full h-12 object-contain">
-                    <p class="text-center mt-2 text-sm">McLaren</p>
+                <button class="brand-logo" data-brand="mclaren">
+                    <img src="./assets/logos/Mclaren.png" alt="McLaren" class="logo-img">
+                    <p class="text-center mt-2 text-sm font-medium">McLaren</p>
                 </button>
-                <button class="brand-logo p-4 bg-white/5 rounded-lg" data-brand="bugatti">
-                    <img src="https://cdn.worldvectorlogo.com/logos/bugatti-1.svg" alt="Bugatti" class="w-full h-12 object-contain">
-                    <p class="text-center mt-2 text-sm">Bugatti</p>
+                <button class="brand-logo" data-brand="bugatti">
+                    <img src="./assets/logos/Bugatti.png" alt="Bugatti" class="logo-img">
+                    <p class="text-center mt-2 text-sm font-medium">Bugatti</p>
                 </button>
-                <button class="brand-logo p-4 bg-white/5 rounded-lg" data-brand="koenigsegg">
-                    <img src="https://cdn.worldvectorlogo.com/logos/koenigsegg.svg" alt="Koenigsegg" class="w-full h-12 object-contain">
-                    <p class="text-center mt-2 text-sm">Koenigsegg</p>
+                <button class="brand-logo" data-brand="koenigsegg">
+                    <img src="./assets/logos/Koenigsegg.png" alt="Koenigsegg" class="logo-img">
+                    <p class="text-center mt-2 text-sm font-medium">Koenigsegg</p>
                 </button>
             </div>
         </div>
     </section>
 
     <!-- Cars Grid -->
-    <section class="pb-20 px-6">
+    <section class="pb-20 px-6 relative z-10">
         <div class="max-w-7xl mx-auto">
             <!-- Porsche Section (Default) -->
             <div id="porsche" class="cars-section">
-                <h2 class="text-3xl font-bold mb-8 text-center">Porsche - Top 5 Models</h2>
+                <h2 class="section-title">Porsche</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Car 1 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="911 Turbo S" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/porsche-911-turbo-s.png" alt="911 Turbo S" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">911 Turbo S</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="font-semibold">2026</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">640 HP</span>
+                                <span class="power-indicator">701 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$216,100</span>
+                                <span class="price-indicator">$272,100</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The ultimate expression of the 911 philosophy, combining everyday usability with track performance.</p>
                     </div>
                     
                     <!-- Car 2 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="911 GT3 RS" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/porsche-gt3.png" alt="911 GT3 RS" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">911 GT3 RS</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="font-semibold">2025</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">518 HP</span>
+                                <span class="power-indicator">518 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$241,300</span>
+                                <span class="price-indicator">$250,300</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">Track-focused masterpiece with motorsport-derived technology for ultimate performance.</p>
                     </div>
                     
                     <!-- Car 3 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Taycan Turbo S" class="w-full h-48 object-cover rounded-lg mb-4">
-                        <h3 class="text-2xl font-bold mb-2">Taycan Turbo S</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                    <div class="car-card">
+                        <img src="./assets/images/porsche-taycan-t.png" alt="Taycan Turbo S" class="card-image">
+                        <h3 class="text-2xl font-bold mb-2">Taycan Turbo GT</h3>
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="font-semibold">2025</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">750 HP</span>
+                                <span class="power-indicator">1092 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$210,000</span>
+                                <span class="price-indicator">$239,400</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The electric sports car that proves zero emissions can still deliver heart-pounding performance.</p>
                     </div>
                     
                     <!-- Car 4 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1519245659620-e859806a8d3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Panamera Turbo S" class="w-full h-48 object-cover rounded-lg mb-4">
-                        <h3 class="text-2xl font-bold mb-2">Panamera Turbo S</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                    <div class="car-card">
+                        <img src="./assets/images/porsche-panamera-t.png" alt="Panamera Turbo S" class="card-image">
+                        <h3 class="text-2xl font-bold mb-2">Panamera Turbo</h3>
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="font-semibold">2025</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">620 HP</span>
+                                <span class="power-indicator">493 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$195,000</span>
+                                <span class="price-indicator">$226,500</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">Luxury sports sedan that combines executive comfort with supercar performance.</p>
                     </div>
                     
                     <!-- Car 5 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="718 Cayman GT4 RS" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/porsche-cayman.png" alt="718 Cayman GT4 RS" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">718 Cayman GT4 RS</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="font-semibold">2023</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">493 HP</span>
+                                <span class="power-indicator">500 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$160,000</span>
+                                <span class="price-indicator">$145,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The most extreme mid-engine Porsche, with motorsport DNA in every component.</p>
@@ -251,219 +421,219 @@
 
             <!-- Ferrari Section -->
             <div id="ferrari" class="cars-section hidden">
-                <h2 class="text-3xl font-bold mb-8 text-center">Ferrari - Top 5 Models</h2>
+                <h2 class="section-title">Ferrari</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Car 1 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SF90 Stradale" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/ferrari-sf90.png" alt="SF90 Stradale" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">SF90 Stradale</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="font-semibold">2025</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">986 HP</span>
+                                <span class="power-indicator">986 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$625,000</span>
+                                <span class="price-indicator">$594,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">Ferrari's first series-production PHEV, blending V8 power with electric motors.</p>
                     </div>
                     
                     <!-- Car 2 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="296 GTB" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/ferrari-296.png" alt="296 GTB" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">296 GTB</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="font-semibold">2025</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">818 HP</span>
+                                <span class="power-indicator">818 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$350,000</span>
+                                <span class="price-indicator">$346,950</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The new V6 hybrid supercar that redefines driving pleasure and performance.</p>
                     </div>
                     
                     <!-- Car 3 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Roma" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/ferrari-roma.png" alt="Roma" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Roma</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2024</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">612 HP</span>
+                                <span class="power-indicator">612 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$250,000</span>
+                                <span class="price-indicator">$260,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">A front-engined V8 coupe that celebrates la dolce vita with timeless elegance.</p>
                     </div>
                     
                     <!-- Car 4 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="F8 Tributo" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/ferrari-f8.png" alt="F8 Tributo" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">F8 Tributo</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2023</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">710 HP</span>
+                                <span class="power-indicator">711 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$300,000</span>
+                                <span class="price-indicator">$300,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The most powerful V8 Ferrari ever, paying tribute to the legendary V8 engine.</p>
                     </div>
                     
                     <!-- Car 5 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Portofino M" class="w-full h-48 object-cover rounded-lg mb-4">
-                        <h3 class="text-2xl font-bold mb-2">Portofino M</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                    <div class="car-card">
+                        <img src="./assets/images/ferrari-812s.png" alt="Portofino M" class="card-image">
+                        <h3 class="text-2xl font-bold mb-2">812 Superfast</h3>
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="font-semibold">2023</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">612 HP</span>
+                                <span class="power-indicator">789 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$230,000</span>
+                                <span class="price-indicator">$340,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The perfect GT spider for every occasion, combining performance with open-top freedom.</p>
+                        <p class="text-gray-300 text-sm">The Ferrari 812 Superfast is a front-engine V12 grand tourer delivering extreme power, razor-sharp handling, and unmistakable Italian design.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Lamborghini Section -->
             <div id="lamborghini" class="cars-section hidden">
-                <h2 class="text-3xl font-bold mb-8 text-center">Lamborghini - Top 5 Models</h2>
+                <h2 class="section-title">Lamborghini</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Car 1 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Huracán STO" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/lambo-huracan.png" alt="Huracán STO" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Huracán STO</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2024</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">631 HP</span>
+                                <span class="power-indicator">631 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$331,000</span>
+                                <span class="price-indicator">$344,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">Street-legal race car derived from Lamborghini's Super Trofeo and GT3 race cars.</p>
                     </div>
                     
                     <!-- Car 2 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Revuelto" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/lambo-revuelto.png" alt="Revuelto" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Revuelto</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2024</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,001 HP</span>
+                                <span class="power-indicator">1,001 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$600,000</span>
+                                <span class="price-indicator">$608,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The first V12 hybrid super sports car, ushering in a new era for Lamborghini.</p>
                     </div>
                     
                     <!-- Car 3 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Aventador SVJ" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/lambo-aventador.png" alt="Aventador SVJ" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Aventador SVJ</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="font-semibold">2022</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">759 HP</span>
+                                <span class="power-indicator">759 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$517,000</span>
+                                <span class="price-indicator">$517,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The ultimate Aventador, holding the Nürburgring production car lap record.</p>
                     </div>
                     
                     <!-- Car 4 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Huracán Tecnica" class="w-full h-48 object-cover rounded-lg mb-4">
-                        <h3 class="text-2xl font-bold mb-2">Huracán Tecnica</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                    <div class="car-card">
+                        <img src="./assets/images/lambo-huracanp.png" alt="Huracán Tecnica" class="card-image">
+                        <h3 class="text-2xl font-bold mb-2">Huracán Performante</h3>
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="font-semibold">2022</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">631 HP</span>
+                                <span class="power-indicator">631 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$274,000</span>
+                                <span class="price-indicator">$274,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The perfect balance between lifestyle and track-focused performance.</p>
                     </div>
                     
                     <!-- Car 5 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Urus S" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/lambo-urus.png" alt="Urus S" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Urus S</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2024</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">657 HP</span>
+                                <span class="power-indicator">657 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$235,000</span>
+                                <span class="price-indicator">$235,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The world's first Super SUV, combining super sports car DNA with everyday versatility.</p>
@@ -473,108 +643,108 @@
 
             <!-- McLaren Section -->
             <div id="mclaren" class="cars-section hidden">
-                <h2 class="text-3xl font-bold mb-8 text-center">McLaren - Top 5 Models</h2>
+                <h2 class="section-title">McLaren</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Car 1 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1621395102010-6af7c613c2c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Artura" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/mclaren-artura.png" alt="Artura" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Artura</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2024</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">671 HP</span>
+                                <span class="power-indicator">671 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$237,500</span>
+                                <span class="price-indicator">$237,500</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">McLaren's next-generation supercar with all-new V6 hybrid powertrain.</p>
                     </div>
                     
                     <!-- Car 2 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1621395101797-7e7b00c9b6ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="720S" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/mclaren-720s.png" alt="720S" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">720S</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2024</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">710 HP</span>
+                                <span class="power-indicator">710 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$305,000</span>
+                                <span class="price-indicator">$305,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The definitive super-series model, combining extreme performance with day-to-day usability.</p>
                     </div>
                     
                     <!-- Car 3 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="765LT" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/mclaren-765lt.png" alt="765LT" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">765LT</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2023</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">755 HP</span>
+                                <span class="power-indicator">755 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$358,000</span>
+                                <span class="price-indicator">$358,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The most extreme and engaging LT model ever, focused on track performance.</p>
                     </div>
                     
                     <!-- Car 4 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Senna" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/mclaren-senna.png" alt="Senna" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Senna</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2023</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">789 HP</span>
+                                <span class="power-indicator">789 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$1,000,000</span>
+                                <span class="price-indicator">$1,000,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The ultimate track-focused hypercar, designed without compromise for circuit performance.</p>
                     </div>
                     
                     <!-- Car 5 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1507136566006-cfc505b114fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="P1" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/mclaren-p1.png" alt="P1" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">P1</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2015</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">903 HP</span>
+                                <span class="power-indicator">903 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$1,350,000</span>
+                                <span class="price-indicator">$1,350,000</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The groundbreaking hypercar that defined a generation, part of the legendary "Holy Trinity".</p>
@@ -584,108 +754,108 @@
 
             <!-- Bugatti Section -->
             <div id="bugatti" class="cars-section hidden">
-                <h2 class="text-3xl font-bold mb-8 text-center">Bugatti - Top 5 Models</h2>
+                <h2 class="section-title">Bugatti</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Car 1 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1563720223488-8f2f62a6e71a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Chiron Super Sport" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/bugatti-chiron.png" alt="Chiron Super Sport" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Chiron Super Sport</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2024</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,577 HP</span>
+                                <span class="power-indicator">1,577 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$3.9M</span>
+                                <span class="price-indicator">$3.9M</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The ultimate hyper sports car, focused on extreme speed and luxury.</p>
                     </div>
                     
                     <!-- Car 2 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1621395102010-6af7c613c2c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Divo" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/bugatti-divo.png" alt="Divo" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Divo</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2023</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,479 HP</span>
+                                <span class="power-indicator">1,479 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$5.8M</span>
+                                <span class="price-indicator">$5.8M</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">A handling-focused hypercar with extreme aerodynamic capabilities.</p>
                     </div>
                     
                     <!-- Car 3 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bolide" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/bugatti-bolide.png" alt="Bolide" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Bolide</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2024</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,824 HP</span>
+                                <span class="power-indicator">1,824 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$4.7M</span>
+                                <span class="price-indicator">$4.7M</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">Track-only hypercar pushing the boundaries of performance and technology.</p>
                     </div>
                     
                     <!-- Car 4 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Veyron 16.4" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/bugatti-veyron.png" alt="Veyron 16.4" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Veyron 16.4</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2015</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,184 HP</span>
+                                <span class="power-indicator">1,184 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$2.5M</span>
+                                <span class="price-indicator">$2.5M</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The car that redefined hypercars, first to break 400 km/h barrier.</p>
                     </div>
                     
                     <!-- Car 5 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1519245659620-e859806a8d3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Centodieci" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/bugatti-centodieci.png" alt="Centodieci" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Centodieci</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2022</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,577 HP</span>
+                                <span class="power-indicator">1,577 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$9.0M</span>
+                                <span class="price-indicator">$9.0M</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">Exclusive limited edition paying homage to the legendary EB110.</p>
@@ -695,108 +865,108 @@
 
             <!-- Koenigsegg Section -->
             <div id="koenigsegg" class="cars-section hidden">
-                <h2 class="text-3xl font-bold mb-8 text-center">Koenigsegg - Top 5 Models</h2>
+                <h2 class="section-title">Koenigsegg</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Car 1 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Jesko Absolut" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/koenigsegg-jesko.png" alt="Jesko Absolut" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Jesko Absolut</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2024</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,600 HP</span>
+                                <span class="power-indicator">1,600 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$3.0M</span>
+                                <span class="price-indicator">$3.0M</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The ultimate speed machine, designed to break the 500 km/h barrier.</p>
                     </div>
                     
                     <!-- Car 2 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gemera" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/koenigsegg-gemera.png" alt="Gemera" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Gemera</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2024</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,700 HP</span>
+                                <span class="power-indicator">1,700 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$1.7M</span>
+                                <span class="price-indicator">$1.7M</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The world's first Mega-GT, seating four adults in hypercar luxury.</p>
                     </div>
                     
                     <!-- Car 3 -->
-                    <div class="car-card rounded-2xl p-6">
-                        <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Regera" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/koenigsegg-regera.png" alt="Regera" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Regera</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2023</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,500 HP</span>
+                                <span class="power-indicator">1,500 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$2.0M</span>
+                                <span class="price-indicator">$2.0M</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">Revolutionary hypercar without gearbox, using direct drive technology.</p>
                     </div>
                     
                     <!-- Car 4 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Agera RS" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/koenigsegg-agera.png" alt="Agera RS" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">Agera RS</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2017</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,160 HP</span>
+                                <span class="power-indicator">1,160 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$2.5M</span>
+                                <span class="price-indicator">$2.5M</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">The record-breaking hypercar that set multiple world speed records.</p>
                     </div>
                     
                     <!-- Car 5 -->
-                    <div class="car-card rounded-2xl p-6 md:col-span-2 lg:col-span-1">
-                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CC850" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <div class="car-card">
+                        <img src="./assets/images/koenigsegg-cc850.png" alt="CC850" class="card-image">
                         <h3 class="text-2xl font-bold mb-2">CC850</h3>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex justify-between">
+                        <div class="mb-4">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Year:</span>
                                 <span class="font-semibold">2023</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Power:</span>
-                                <span class="font-semibold text-red-400">1,185 HP</span>
+                                <span class="power-indicator">1,185 HP</span>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="stat-item">
                                 <span class="text-gray-400">Price:</span>
-                                <span class="font-semibold text-green-400">$3.6M</span>
+                                <span class="price-indicator">$3.6M</span>
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">Celebrating 20 years of Koenigsegg with manual gearbox option on a hypercar.</p>
@@ -807,12 +977,12 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-black text-white py-12 px-6 border-t border-gray-800">
+    <footer class="bg-black/90 backdrop-blur-sm text-white py-12 px-6 border-t border-gray-800 relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-6 md:mb-0">
                     <h3 class="caesar-font text-3xl font-bold mb-4">SLIPSTREAM</h3>
-                    <p class="text-gray-400">For the love of automotive excellence</p>
+                    <p class="text-gray-400">For the love of automotive excellence ~ By Siddhesh Khankhoje</p>
                 </div>
                 <div class="flex space-x-6">
                     <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
@@ -822,16 +992,18 @@
                 </div>
             </div>
             <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-                <p>© 2024 Slipstream. Built with passion for automotive enthusiasts worldwide.</p>
+                <p>© Slipstream 2025. Built with passion for automotive enthusiasts worldwide, by Siddhesh Khankhoje.</p>
+                <p class="mt-2">All images are for demonstration purposes.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Brand selector functionality
         document.addEventListener('DOMContentLoaded', function() {
             const brandButtons = document.querySelectorAll('.brand-logo');
             const carSections = document.querySelectorAll('.cars-section');
+            const brandBackgrounds = document.querySelectorAll('.brand-bg-content');
+            const brandOverlay = document.getElementById('brandBackground');
             
             // Set Porsche as default active
             let activeBrand = 'porsche';
@@ -844,14 +1016,10 @@
                     // Remove active class from all buttons
                     brandButtons.forEach(btn => {
                         btn.classList.remove('active');
-                        btn.classList.remove('bg-white/10');
-                        btn.classList.add('bg-white/5');
                     });
                     
                     // Add active class to clicked button
                     this.classList.add('active');
-                    this.classList.remove('bg-white/5');
-                    this.classList.add('bg-white/10');
                     
                     // Hide all car sections
                     carSections.forEach(section => {
@@ -862,12 +1030,37 @@
                     document.getElementById(brand).classList.remove('hidden');
                     activeBrand = brand;
                     
-                    // Smooth scroll to cars
-                    document.querySelector('#porsche').scrollIntoView({
-                        behavior: 'smooth'
+                    // Update background
+                    updateBackground(brand);
+                    
+                    // Smooth scroll to cars section
+                    document.querySelector('.cars-section:not(.hidden)').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                 });
             });
+            
+            // Function to update background
+            function updateBackground(brand) {
+                // Hide all backgrounds
+                brandBackgrounds.forEach(bg => {
+                    bg.classList.remove('active');
+                    bg.style.opacity = '0';
+                });
+                
+                // Show selected brand background
+                const activeBg = document.querySelector(`.brand-bg-content[data-brand="${brand}"]`);
+                if (activeBg) {
+                    setTimeout(() => {
+                        activeBg.classList.add('active');
+                        activeBg.style.opacity = '1';
+                    }, 50);
+                }
+            }
+            
+            // Initialize with Porsche background
+            updateBackground('porsche');
             
             // Mobile menu toggle
             document.getElementById('mobileMenuBtn').addEventListener('click', function() {
@@ -895,6 +1088,18 @@
                             behavior: 'smooth'
                         });
                     }
+                });
+            });
+            
+            // Add some interactive effects to cards
+            const cards = document.querySelectorAll('.car-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
                 });
             });
         });

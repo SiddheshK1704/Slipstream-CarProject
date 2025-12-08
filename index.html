@@ -7,7 +7,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Caesar+Dressing&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -18,15 +18,18 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             overflow-x: hidden;
+            background: #000;
+            color: white;
         }
         
-        .cursive-font {
-            font-family: 'Cedarville Cursive', cursive;
+        .caesar-font {
+            font-family: 'Caesar Dressing', cursive;
+            letter-spacing: 3px;
         }
         
-        /* Water effect canvas */
+        /* Loading screen styles */
         #waterCanvas {
             position: absolute;
             top: 0;
@@ -36,7 +39,6 @@
             pointer-events: none;
         }
         
-        /* Loading screen */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -44,109 +46,577 @@
             width: 100%;
             height: 100vh;
             background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             z-index: 1000;
             transition: opacity 1s ease-out;
         }
         
         .loading-image {
+            position: absolute;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.7;
-            position: absolute;
-            top: 0;
-            left: 0;
+            opacity: 0.9;
+            z-index: 1;
         }
         
         .loading-content {
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 10;
-            text-align: center;
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10%;
         }
         
-        .loading-title {
-            font-size: 5rem;
+        .text-container {
+            text-align: right;
+            max-width: 500px;
+        }
+        
+        .title {
+            font-family: 'Caesar Dressing', cursive;
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 6px;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.6);
+            font-weight: 400;
+            line-height: 1;
+            text-transform: uppercase;
+            height: 5rem;
+            display: flex;
+            justify-content: flex-end;
+            overflow: hidden;
+        }
+        
+        .title span {
+            display: inline-block;
+            position: relative;
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        .title span::before {
+            content: attr(data-letter);
+            position: absolute;
+            top: 100%;
+            left: 0;
+        }
+        
+        .title:hover span {
+            transform: translateY(-100%);
+        }
+        
+        .title:hover span:nth-child(1) { transition-delay: 0.00s; }
+        .title:hover span:nth-child(2) { transition-delay: 0.03s; }
+        .title:hover span:nth-child(3) { transition-delay: 0.06s; }
+        .title:hover span:nth-child(4) { transition-delay: 0.09s; }
+        .title:hover span:nth-child(5) { transition-delay: 0.12s; }
+        .title:hover span:nth-child(6) { transition-delay: 0.15s; }
+        .title:hover span:nth-child(7) { transition-delay: 0.18s; }
+        .title:hover span:nth-child(8) { transition-delay: 0.21s; }
+        .title:hover span:nth-child(9) { transition-delay: 0.24s; }
+        .title:hover span:nth-child(10) { transition-delay: 0.27s; }
+        
+        .loading-subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
             margin-bottom: 2rem;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 350px;
+            line-height: 1.5;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+            margin-left: auto;
+            text-align: justify;
+            text-align-last: right;
         }
         
-        .arrow-down {
+        .arrow-right {
             width: 50px;
             height: 50px;
-            margin: 2rem auto 0;
             cursor: pointer;
-            transition: transform 0.3s ease;
-            animation: bounce 2s infinite;
+            transition: all 0.3s ease;
+            animation: bounceRight 2s infinite;
+            display: block;
+            stroke-width: 2px;
+            margin-left: auto;
         }
         
-        .arrow-down:hover {
-            transform: scale(1.2);
+        .arrow-right:hover {
+            transform: translateX(8px);
         }
         
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
+        @keyframes bounceRight {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(0);}
+            40% {transform: translateX(8px);}
+            60% {transform: translateX(4px);}
         }
         
-        /* Parallax sections */
-        .parallax-section {
+        /* Hide scrollbar during loading */
+        .no-scroll {
+            overflow: hidden;
+        }
+        
+        /* Navigation hover underline animation */
+        .nav-link {
             position: relative;
+            text-decoration: none;
+            padding-bottom: 4px;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, #ff0000, #ff6b00);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Main background with Revuelto - NO DARK OVERLAY */
+        .main-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .background-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4; /* Reduced opacity so text is readable */
+        }
+        
+        /* Main content container */
+        .main-container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Sticky sections container */
+        .sticky-container {
+            position: relative;
+            height: 500vh; /* 5 sections × 100vh each */
+        }
+        
+        .sticky-section {
+            position: sticky;
+            top: 0;
             height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        /* Outer glass card */
+        .outer-glass-card {
+            background: rgba(0, 0, 0, 0.5); /* More transparent background */
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            max-width: 1400px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Two inner cards container */
+        .inner-cards-container {
+            display: flex;
+            gap: 2rem;
+            align-items: stretch;
+            height: 600px;
+        }
+        
+        /* Text card - UPDATED FOR GLASS EFFECT */
+        .text-card {
+            flex: 0 0 400px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .text-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        /* Image card - UPDATED FOR GLASS EFFECT */
+        .image-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 1rem;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
         
-        .parallax-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .section-image {
             width: 100%;
-            height: 120%;
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-            transition: transform 0.1s ease-out;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.5s ease;
         }
         
-        /* Hide scrollbar */
-        .no-scroll {
-            overflow: hidden;
+        .section-image:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Hero section specific */
+        .hero-glass-card {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Title highlight animation */
+        .title-highlight {
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .title-highlight:hover {
+            text-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .title-highlight::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #ff0000, #ff6b00);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .title-highlight:hover::after {
+            transform: scaleX(1);
+        }
+        
+        /* Custom button styles */
+        .button {
+            width: 140px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            background: rgba(161, 255, 20, 0.9);
+            border-radius: 30px;
+            color: rgb(19, 19, 19);
+            font-weight: 600;
+            border: none;
+            position: relative;
+            cursor: pointer;
+            transition-duration: .2s;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.116);
+            padding-left: 15px;
+            transition-duration: .5s;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .svgIcon {
+            height: 20px;
+            transition-duration: 1.5s;
+        }
+        
+        .button:hover {
+            background: rgba(192, 255, 20, 0.9);
+            transition-duration: .5s;
+        }
+        
+        .button:active {
+            transform: scale(0.97);
+            transition-duration: .2s;
+        }
+        
+        .button:hover .svgIcon {
+            transform: rotate(250deg);
+            transition-duration: 1.5s;
+        }
+        
+        /* Compare section specific - Image on LEFT, Text on RIGHT */
+        /* Compare section specific - Image on LEFT, Text on RIGHT */
+        .compare-section .inner-cards-container {
+            flex-direction: row; /* Changed from row-reverse */
+        }
+
+        .compare-section .image-card {
+            order: 1;
+        }
+
+        .compare-section .text-card {
+            order: 2;
+        }
+        
+        /* Section indicators */
+        .section-indicator {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+        
+        .indicator-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .indicator-dot.active {
+            background: #ff6b00;
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.2);
+        }
+        
+        /* About section separate */
+        .about-section {
+            position: relative;
+            background: #000;
+            padding: 6rem 2rem;
+            z-index: 10;
+        }
+        
+        /* Responsive design for loading screen */
+        @media (max-width: 1024px) {
+            .loading-content {
+                padding-right: 5%;
+            }
+            
+            .title {
+                font-size: 3.5rem;
+                height: 4rem;
+            }
+            
+            .loading-subtitle {
+                text-align-last: center;
+            }
+            
+            .inner-cards-container {
+                height: 500px;
+            }
+            
+            .text-card {
+                flex: 0 0 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .loading-content {
+                justify-content: center;
+                padding-right: 0;
+                text-align: center;
+            }
+            
+            .text-container {
+                max-width: 90%;
+                text-align: center;
+            }
+            
+            .title {
+                font-size: 3rem;
+                height: 3.5rem;
+                letter-spacing: 4px;
+                justify-content: center;
+            }
+            
+            .loading-subtitle {
+                font-size: 1rem;
+                max-width: 100%;
+                text-align: justify;
+                text-align-last: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .arrow-right {
+                margin: 0 auto;
+                transform: rotate(90deg);
+                width: 45px;
+                height: 45px;
+            }
+            
+            @keyframes bounceRight {
+                0%, 20%, 50%, 80%, 100% {transform: rotate(90deg) translateY(0);}
+                40% {transform: rotate(90deg) translateY(-8px);}
+                60% {transform: rotate(90deg) translateY(-4px);}
+            }
+            
+            .arrow-right:hover {
+                transform: rotate(90deg) translateY(-4px);
+            }
+            
+            /* Landing page responsive */
+            .sticky-section {
+                padding: 1rem;
+            }
+            
+            .outer-glass-card, .hero-glass-card {
+                padding: 2rem;
+            }
+            
+            .inner-cards-container {
+                flex-direction: column;
+                height: auto;
+                gap: 1.5rem;
+            }
+            
+            .compare-section .inner-cards-container {
+                flex-direction: column;
+            }
+            
+            .text-card, .image-card {
+                width: 100%;
+                flex: none;
+            }
+            
+            .text-card {
+                height: auto;
+                min-height: 300px;
+            }
+            
+            .image-card {
+                height: 300px;
+            }
+            
+            .section-indicator {
+                display: none;
+            }
+            
+            .about-section {
+                padding: 4rem 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2.5rem;
+                height: 3rem;
+                letter-spacing: 3px;
+            }
+            
+            .loading-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .arrow-right {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .outer-glass-card, .hero-glass-card {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body class="no-scroll">
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
-        <img src=".\assets\images\b&wHuracan.jpg" alt="Lamborghini Huracan" class="loading-image">
+        <img src="./assets/images/b&wHuracan.jpg" alt="Lamborghini Huracan" class="loading-image">
         <canvas id="waterCanvas"></canvas>
         <div class="loading-content">
-            <h1 class="loading-title cursive-font">Slipstream</h1>
-            <svg class="arrow-down" id="enterArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
+            <div class="text-container">
+                <h1 class="title">
+                    <span data-letter="S">S</span>
+                    <span data-letter="L">L</span>
+                    <span data-letter="I">I</span>
+                    <span data-letter="P">P</span>
+                    <span data-letter="S">S</span>
+                    <span data-letter="T">T</span>
+                    <span data-letter="R">R</span>
+                    <span data-letter="E">E</span>
+                    <span data-letter="A">A</span>
+                    <span data-letter="M">M</span>
+                </h1>
+                <p class="loading-subtitle">
+                    A celebration of speed and design. Explore legendary cars, compare performance, and visit my hand-picked dream garage.
+                </p>
+                <svg class="arrow-right" id="enterArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </div>
         </div>
     </div>
 
     <!-- Main Content (hidden initially) -->
     <div id="mainContent" class="hidden">
+        <!-- Revuelto Background - NO DARK OVERLAY -->
+        <div class="main-background">
+            <!-- Add your Revuelto image path here -->
+            <img src="./assets/images/spafrancorchamps.png" alt="Lamborghini Revuelto" class="background-image">
+        </div>
+        
         <!-- Navigation -->
         <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50 px-6 py-4">
             <div class="max-w-7xl mx-auto flex items-center justify-between">
-                <a href="index.html" class="cursive-font text-3xl text-white font-bold">Slipstream</a>
+                <a href="index.html" class="caesar-font text-3xl text-white font-bold">SLIPSTREAM</a>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="explore.html" class="text-white/80 hover:text-white transition-colors">Explore</a>
-                    <a href="compare.html" class="text-white/80 hover:text-white transition-colors">Compare</a>
-                    <a href="my-garage.html" class="text-white/80 hover:text-white transition-colors">My Garage</a>
-                    <a href="#about" class="text-white/80 hover:text-white transition-colors">About</a>
+                    <a href="#hero" class="nav-link text-white/80 hover:text-white transition-colors">Home</a>
+                    <a href="#explore" class="nav-link text-white/80 hover:text-white transition-colors">Explore</a>
+                    <a href="#compare" class="nav-link text-white/80 hover:text-white transition-colors">Compare</a>
+                    <a href="#garage" class="nav-link text-white/80 hover:text-white transition-colors">My Garage</a>
+                    <a href="#about" class="nav-link text-white/80 hover:text-white transition-colors">About</a>
                 </div>
                 <!-- Mobile menu button -->
                 <button id="mobileMenuBtn" class="md:hidden text-white">
@@ -158,81 +628,142 @@
             <!-- Mobile menu -->
             <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-4 p-4 rounded-lg">
                 <div class="flex flex-col space-y-4">
-                    <a href="explore.html" class="text-white/80 hover:text-white transition-colors">Explore</a>
-                    <a href="compare.html" class="text-white/80 hover:text-white transition-colors">Compare</a>
-                    <a href="my-garage.html" class="text-white/80 hover:text-white transition-colors">My Garage</a>
+                    <a href="#hero" class="text-white/80 hover:text-white transition-colors">Home</a>
+                    <a href="#explore" class="text-white/80 hover:text-white transition-colors">Explore</a>
+                    <a href="#compare" class="text-white/80 hover:text-white transition-colors">Compare</a>
+                    <a href="#garage" class="text-white/80 hover:text-white transition-colors">My Garage</a>
                     <a href="#about" class="text-white/80 hover:text-white transition-colors">About</a>
                 </div>
             </div>
         </nav>
 
-        <!-- Hero Section -->
-        <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black px-6 pt-20">
-            <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
-                    Where <span class="text-red-500">Passion</span> Meets
-                    <span class="text-yellow-500">Performance</span>
-                </h1>
-                <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-                    Cars are more than machines; they're the embodiment of human ingenuity, 
-                    a testament to our relentless pursuit of speed, design, and freedom. 
-                    From the roar of the engine to the sleek lines of a masterpiece on wheels.
-                </p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="explore.html" class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full transition-all transform hover:scale-105">
-                        Explore Models
-                    </a>
-                    <a href="compare.html" class="px-8 py-3 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all hover:bg-white/10">
-                        Compare Cars
-                    </a>
-                </div>
+        <!-- Main Container -->
+        <div class="main-container">
+            <!-- Section indicators -->
+            <div class="section-indicator">
+                <div class="indicator-dot active" data-section="hero"></div>
+                <div class="indicator-dot" data-section="explore"></div>
+                <div class="indicator-dot" data-section="compare"></div>
+                <div class="indicator-dot" data-section="garage"></div>
             </div>
-        </section>
 
-        <!-- Parallax Sections -->
-        <div id="parallaxContainer">
-            <!-- Explore Parallax -->
-            <section class="parallax-section" id="exploreParallax">
-                <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
-                <div class="text-center text-white z-10">
-                    <h2 class="text-5xl font-bold mb-6">Explore Legends</h2>
-                    <p class="text-xl mb-8 max-w-xl mx-auto">Discover the most iconic models from the world's greatest manufacturers.</p>
-                    <a href="explore.html" class="inline-block px-8 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors">
-                        Start Exploring
-                    </a>
-                </div>
-            </section>
+            <!-- Sticky Sections Container -->
+            <div class="sticky-container">
+                <!-- Hero Section -->
+                <section id="hero" class="sticky-section">
+                    <div class="hero-glass-card">
+                        <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
+                            <span class="title-highlight">Where Passion</span> 
+                            <span class="text-red-500"> Meets </span>
+                            <span class="title-highlight">Performance</span>
+                        </h1>
+                        <p class="text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed">
+                            Cars are more than machines; they're the embodiment of human ingenuity, 
+                            a testament to our relentless pursuit of speed, design, and freedom. 
+                            From the roar of the engine to the sleek lines of a masterpiece on wheels.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#explore" class="button">
+                                <svg class="svgIcon" viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path>
+                                </svg>
+                                Explore
+                            </a>
+                            <a href="#compare" class="px-8 py-3 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all hover:bg-white/10">
+                                Compare Cars
+                            </a>
+                        </div>
+                    </div>
+                </section>
 
-            <!-- Compare Parallax -->
-            <section class="parallax-section" id="compareParallax">
-                <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
-                <div class="text-center text-white z-10">
-                    <h2 class="text-5xl font-bold mb-6">Compare Titans</h2>
-                    <p class="text-xl mb-8 max-w-xl mx-auto">Pit the greatest machines against each other. See how they stack up.</p>
-                    <a href="compare.html" class="inline-block px-8 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white/20 transition-colors">
-                        Compare Now
-                    </a>
-                </div>
-            </section>
+                <!-- Explore Section -->
+                <section id="explore" class="sticky-section">
+                    <div class="outer-glass-card">
+                        <div class="inner-cards-container">
+                            <!-- Text card on left - UPDATED FOR GLASS EFFECT -->
+                            <div class="text-card">
+                                <h2 class="text-4xl font-bold mb-4">Explore Legends</h2>
+                                <p class="text-gray-300 mb-6 text-lg">
+                                    Discover the most iconic models from the world's greatest manufacturers. 
+                                    From timeless classics to cutting-edge hypercars, immerse yourself in 
+                                    automotive excellence.
+                                </p>
+                                <a href="explore.html" class="mt-auto px-6 py-3 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-semibold rounded-full transition-all transform hover:scale-105 inline-block w-fit">
+                                    Start Exploring
+                                </a>
+                            </div>
+                            
+                            <!-- Image card on right - UPDATED FOR GLASS EFFECT -->
+                            <div class="image-card">
+                                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
+                                     alt="Supercar Collection" 
+                                     class="section-image">
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-            <!-- Garage Parallax -->
-            <section class="parallax-section" id="garageParallax">
-                <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
-                <div class="text-center text-white z-10">
-                    <h2 class="text-5xl font-bold mb-6">My Dream Garage</h2>
-                    <p class="text-xl mb-8 max-w-xl mx-auto">A curated collection of automotive perfection. My personal favorites.</p>
-                    <a href="my-garage.html" class="inline-block px-8 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-full transition-colors">
-                        Visit Garage
-                    </a>
-                </div>
-            </section>
+                <!-- Compare Section - IMAGE ON LEFT, TEXT ON RIGHT -->
+                <section id="compare" class="sticky-section compare-section">
+                    <div class="outer-glass-card">
+                        <div class="inner-cards-container">
+                            <!-- Image card on LEFT - UPDATED FOR GLASS EFFECT -->
+                            <div class="image-card">
+                                <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
+                                     alt="Car Comparison" 
+                                     class="section-image">
+                            </div>
+                            
+                            <!-- Text card on RIGHT - UPDATED FOR GLASS EFFECT -->
+                            <div class="text-card">
+                                <h2 class="text-4xl font-bold mb-4">Compare Titans</h2>
+                                <p class="text-gray-300 mb-6 text-lg">
+                                    Pit the greatest machines against each other. See how they stack up 
+                                    in performance, design, and innovation. Make informed decisions about 
+                                    automotive excellence.
+                                </p>
+                                <a href="compare.html" class="mt-auto px-6 py-3 border-2 border-white hover:bg-white/10 text-white font-semibold rounded-full transition-all transform hover:scale-105 inline-block w-fit">
+                                    Compare Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Garage Section -->
+                <section id="garage" class="sticky-section">
+                    <div class="outer-glass-card">
+                        <div class="inner-cards-container">
+                            <!-- Text card on left - UPDATED FOR GLASS EFFECT -->
+                            <div class="text-card">
+                                <h2 class="text-4xl font-bold mb-4">My Dream Garage</h2>
+                                <p class="text-gray-300 mb-6 text-lg">
+                                    A curated collection of automotive perfection. My personal favorites 
+                                    and ultimate dream cars that represent the pinnacle of engineering 
+                                    and design.
+                                </p>
+                                <a href="my-garage.html" class="mt-auto px-6 py-3 bg-gradient-to-r from-yellow-600 to-orange-500 hover:from-yellow-700 hover:to-orange-600 text-white font-semibold rounded-full transition-all transform hover:scale-105 inline-block w-fit">
+                                    Visit Garage
+                                </a>
+                            </div>
+                            
+                            <!-- Image card on right - UPDATED FOR GLASS EFFECT -->
+                            <div class="image-card">
+                                <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
+                                     alt="Dream Garage" 
+                                     class="section-image">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
 
-        <!-- About Section -->
-        <section id="about" class="py-20 bg-gradient-to-b from-black to-gray-900 px-6">
+        <!-- About Section (Separate) -->
+        <section id="about" class="about-section">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-4xl font-bold text-white text-center mb-12">A Little Something About Me</h2>
-                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-white/10">
+                <div class="outer-glass-card">
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
                         Since I was a child, the sound of a roaring engine and the sight of sleek automotive designs have captivated my soul. Cars represent more than transportation—they're moving art, engineering marvels, and symbols of human achievement.
                     </p>
@@ -250,18 +781,19 @@
         </section>
 
         <!-- Footer -->
-        <footer class="bg-black text-white py-12 px-6">
+        <footer class="bg-black text-white py-12 px-6 border-t border-gray-800">
             <div class="max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="mb-6 md:mb-0">
-                        <h3 class="cursive-font text-3xl font-bold mb-4">Slipstream</h3>
+                        <h3 class="caesar-font text-3xl font-bold mb-4">SLIPSTREAM</h3>
                         <p class="text-gray-400">For the love of automotive excellence</p>
                     </div>
                     <div class="flex space-x-6">
-                        <a href="explore.html" class="text-gray-400 hover:text-white transition-colors">Explore</a>
-                        <a href="compare.html" class="text-gray-400 hover:text-white transition-colors">Compare</a>
-                        <a href="my-garage.html" class="text-gray-400 hover:text-white transition-colors">My Garage</a>
-                        <a href="#about" class="text-gray-400 hover:text-white transition-colors">About</a>
+                        <a href="#hero" class="nav-link text-gray-400 hover:text-white transition-colors">Home</a>
+                        <a href="explore.html" class="nav-link text-gray-400 hover:text-white transition-colors">Explore</a>
+                        <a href="compare.html" class="nav-link text-gray-400 hover:text-white transition-colors">Compare</a>
+                        <a href="my-garage.html" class="nav-link text-gray-400 hover:text-white transition-colors">My Garage</a>
+                        <a href="#about" class="nav-link text-gray-400 hover:text-white transition-colors">About</a>
                     </div>
                 </div>
                 <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
@@ -272,38 +804,243 @@
         </footer>
     </div>
 
-    <!-- JavaScript Files -->
-    <script src="js/loading.js"></script>
-    <script src="js/parallax.js"></script>
+    <!-- JavaScript -->
     <script>
-        // Mobile menu toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const menuBtn = document.getElementById('mobileMenuBtn');
-            const menu = document.getElementById('mobileMenu');
+        // Loading Screen Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const mainContent = document.getElementById('mainContent');
+            const enterArrow = document.getElementById('enterArrow');
+            const waterCanvas = document.getElementById('waterCanvas');
+            const ctx = waterCanvas.getContext('2d');
             
-            if (!menuBtn.contains(event.target) && !menu.contains(event.target)) {
-                menu.classList.add('hidden');
+            // Set canvas dimensions
+            function resizeCanvas() {
+                waterCanvas.width = window.innerWidth;
+                waterCanvas.height = window.innerHeight;
             }
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                if (this.getAttribute('href') === '#') return;
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            
+            // Water effect variables
+            const drops = [];
+            const dropCount = 100;
+            
+            // Create water drops
+            for (let i = 0; i < dropCount; i++) {
+                drops.push({
+                    x: Math.random() * waterCanvas.width,
+                    y: Math.random() * waterCanvas.height,
+                    radius: Math.random() * 2 + 1,
+                    speed: Math.random() * 1 + 0.5,
+                    opacity: Math.random() * 0.3 + 0.1
+                });
+            }
+            
+            // Animate water drops
+            function animateWater() {
+                ctx.clearRect(0, 0, waterCanvas.width, waterCanvas.height);
                 
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#about') {
-                    document.querySelector(targetId).scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                drops.forEach(drop => {
+                    // Draw drop
+                    ctx.beginPath();
+                    ctx.arc(drop.x, drop.y, drop.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${drop.opacity})`;
+                    ctx.fill();
+                    
+                    // Move drop
+                    drop.y += drop.speed;
+                    
+                    // Reset drop if it goes off screen
+                    if (drop.y > waterCanvas.height) {
+                        drop.y = 0;
+                        drop.x = Math.random() * waterCanvas.width;
+                    }
+                });
+                
+                requestAnimationFrame(animateWater);
+            }
+            
+            // Start water animation
+            animateWater();
+            
+            // Enter site on arrow click
+            function enterSite() {
+                // Fade out loading screen
+                loadingScreen.style.opacity = '0';
+                
+                // Enable scrolling
+                document.body.classList.remove('no-scroll');
+                
+                // Show main content after fade out
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    mainContent.classList.remove('hidden');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                }, 1000);
+            }
+            
+            enterArrow.addEventListener('click', enterSite);
+            
+            // Auto-enter after 8 seconds
+            setTimeout(() => {
+                enterSite();
+            }, 8000);
+            
+            // Keyboard support (Enter key)
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && loadingScreen.style.display !== 'none') {
+                    enterSite();
                 }
+            });
+            
+            // Mobile tap anywhere to enter
+            loadingScreen.addEventListener('touchend', function(e) {
+                if (e.target === loadingScreen) {
+                    enterSite();
+                }
+            });
+            
+            // Mobile menu toggle
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                const menu = document.getElementById('mobileMenu');
+                menu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const menuBtn = document.getElementById('mobileMenuBtn');
+                const menu = document.getElementById('mobileMenu');
+                
+                if (!menuBtn.contains(event.target) && !menu.contains(event.target)) {
+                    menu.classList.add('hidden');
+                }
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Sticky section indicator logic
+            const sections = document.querySelectorAll('.sticky-section');
+            const indicators = document.querySelectorAll('.indicator-dot');
+            
+            function updateIndicator() {
+                const scrollPosition = window.scrollY + window.innerHeight / 2;
+                
+                sections.forEach((section, index) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        indicators.forEach(indicator => indicator.classList.remove('active'));
+                        indicators[index].classList.add('active');
+                    }
+                });
+                
+                // Special case for About section
+                const aboutSection = document.getElementById('about');
+                const aboutTop = aboutSection.offsetTop;
+                
+                if (scrollPosition >= aboutTop - window.innerHeight / 2) {
+                    indicators.forEach(indicator => indicator.classList.remove('active'));
+                }
+            }
+            
+            // Update indicator on scroll
+            window.addEventListener('scroll', updateIndicator);
+            window.addEventListener('resize', updateIndicator);
+            updateIndicator(); // Initial call
+            
+            // Click indicator to scroll to section
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    sections[index].scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                });
+            });
+            
+            // Image cycling for cards
+            const sectionImages = [
+                // Explore section images
+                [
+                    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+                    "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+                    "https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                ],
+                // Compare section images
+                [
+                    "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+                    "https://images.unsplash.com/photo-1621395101797-7e7b00c9b6ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+                    "https://images.unsplash.com/photo-1563720223488-8f2f62a6e71a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                ],
+                // Garage section images
+                [
+                    "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+                    "https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+                    "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                ]
+            ];
+            
+            let currentImageIndexes = [0, 0, 0];
+            const imageCards = document.querySelectorAll('.image-card');
+            
+            function cycleImage(sectionIndex) {
+                currentImageIndexes[sectionIndex] = 
+                    (currentImageIndexes[sectionIndex] + 1) % sectionImages[sectionIndex].length;
+                
+                const imgElement = imageCards[sectionIndex].querySelector('.section-image');
+                imgElement.style.opacity = '0';
+                
+                setTimeout(() => {
+                    imgElement.src = sectionImages[sectionIndex][currentImageIndexes[sectionIndex]];
+                    imgElement.style.opacity = '1';
+                }, 300);
+            }
+            
+            // Auto-cycle images every 5 seconds
+            setInterval(() => {
+                sections.forEach((section, index) => {
+                    if (index > 0) { // Skip hero section (index 0)
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top >= 0 && rect.top <= window.innerHeight) {
+                            cycleImage(index - 1);
+                        }
+                    }
+                });
+            }, 5000);
+            
+            // Manual cycling on image hover
+            imageCards.forEach((card, index) => {
+                let cycleTimeout;
+                
+                card.addEventListener('mouseenter', () => {
+                    cycleTimeout = setTimeout(() => {
+                        cycleImage(index);
+                    }, 2000);
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    clearTimeout(cycleTimeout);
+                });
             });
         });
     </script>

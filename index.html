@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slipstream - Car Enthusiasts Hub</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .cursive-font {
+            font-family: 'Cedarville Cursive', cursive;
+        }
+        
+        /* Water effect canvas */
+        #waterCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        /* Loading screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease-out;
+        }
+        
+        .loading-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .loading-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+        }
+        
+        .loading-title {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .arrow-down {
+            width: 50px;
+            height: 50px;
+            margin: 2rem auto 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+        
+        .arrow-down:hover {
+            transform: scale(1.2);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+        
+        /* Parallax sections */
+        .parallax-section {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            transition: transform 0.1s ease-out;
+        }
+        
+        /* Hide scrollbar */
+        .no-scroll {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="no-scroll">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src=".\assets\images\b&wHuracan.jpg" alt="Lamborghini Huracan" class="loading-image">
+        <canvas id="waterCanvas"></canvas>
+        <div class="loading-content">
+            <h1 class="loading-title cursive-font">Slipstream</h1>
+            <svg class="arrow-down" id="enterArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Main Content (hidden initially) -->
+    <div id="mainContent" class="hidden">
+        <!-- Navigation -->
+        <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50 px-6 py-4">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <a href="index.html" class="cursive-font text-3xl text-white font-bold">Slipstream</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="explore.html" class="text-white/80 hover:text-white transition-colors">Explore</a>
+                    <a href="compare.html" class="text-white/80 hover:text-white transition-colors">Compare</a>
+                    <a href="my-garage.html" class="text-white/80 hover:text-white transition-colors">My Garage</a>
+                    <a href="#about" class="text-white/80 hover:text-white transition-colors">About</a>
+                </div>
+                <!-- Mobile menu button -->
+                <button id="mobileMenuBtn" class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-4 p-4 rounded-lg">
+                <div class="flex flex-col space-y-4">
+                    <a href="explore.html" class="text-white/80 hover:text-white transition-colors">Explore</a>
+                    <a href="compare.html" class="text-white/80 hover:text-white transition-colors">Compare</a>
+                    <a href="my-garage.html" class="text-white/80 hover:text-white transition-colors">My Garage</a>
+                    <a href="#about" class="text-white/80 hover:text-white transition-colors">About</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black px-6 pt-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
+                    Where <span class="text-red-500">Passion</span> Meets
+                    <span class="text-yellow-500">Performance</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                    Cars are more than machines; they're the embodiment of human ingenuity, 
+                    a testament to our relentless pursuit of speed, design, and freedom. 
+                    From the roar of the engine to the sleek lines of a masterpiece on wheels.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="explore.html" class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full transition-all transform hover:scale-105">
+                        Explore Models
+                    </a>
+                    <a href="compare.html" class="px-8 py-3 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all hover:bg-white/10">
+                        Compare Cars
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parallax Sections -->
+        <div id="parallaxContainer">
+            <!-- Explore Parallax -->
+            <section class="parallax-section" id="exploreParallax">
+                <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="text-center text-white z-10">
+                    <h2 class="text-5xl font-bold mb-6">Explore Legends</h2>
+                    <p class="text-xl mb-8 max-w-xl mx-auto">Discover the most iconic models from the world's greatest manufacturers.</p>
+                    <a href="explore.html" class="inline-block px-8 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors">
+                        Start Exploring
+                    </a>
+                </div>
+            </section>
+
+            <!-- Compare Parallax -->
+            <section class="parallax-section" id="compareParallax">
+                <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="text-center text-white z-10">
+                    <h2 class="text-5xl font-bold mb-6">Compare Titans</h2>
+                    <p class="text-xl mb-8 max-w-xl mx-auto">Pit the greatest machines against each other. See how they stack up.</p>
+                    <a href="compare.html" class="inline-block px-8 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white/20 transition-colors">
+                        Compare Now
+                    </a>
+                </div>
+            </section>
+
+            <!-- Garage Parallax -->
+            <section class="parallax-section" id="garageParallax">
+                <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="text-center text-white z-10">
+                    <h2 class="text-5xl font-bold mb-6">My Dream Garage</h2>
+                    <p class="text-xl mb-8 max-w-xl mx-auto">A curated collection of automotive perfection. My personal favorites.</p>
+                    <a href="my-garage.html" class="inline-block px-8 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-full transition-colors">
+                        Visit Garage
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-gradient-to-b from-black to-gray-900 px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-white text-center mb-12">A Little Something About Me</h2>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-white/10">
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                        Since I was a child, the sound of a roaring engine and the sight of sleek automotive designs have captivated my soul. Cars represent more than transportation—they're moving art, engineering marvels, and symbols of human achievement.
+                    </p>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                        I built Slipstream to share this passion with fellow enthusiasts. This site is a tribute to the machines that push boundaries, break records, and inspire dreams. Whether it's the raw power of a supercar or the elegant lines of a classic, each vehicle tells a story.
+                    </p>
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        Join me in celebrating automotive excellence. Let's explore, compare, and dream together. Because for people like us, cars aren't just a hobby—they're a way of life.
+                    </p>
+                    <div class="mt-10 pt-8 border-t border-white/10">
+                        <p class="text-gray-400 italic">"The car has become the carapace, the protective and aggressive shell, of urban and suburban man." — Marshall McLuhan</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-black text-white py-12 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="cursive-font text-3xl font-bold mb-4">Slipstream</h3>
+                        <p class="text-gray-400">For the love of automotive excellence</p>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="explore.html" class="text-gray-400 hover:text-white transition-colors">Explore</a>
+                        <a href="compare.html" class="text-gray-400 hover:text-white transition-colors">Compare</a>
+                        <a href="my-garage.html" class="text-gray-400 hover:text-white transition-colors">My Garage</a>
+                        <a href="#about" class="text-gray-400 hover:text-white transition-colors">About</a>
+                    </div>
+                </div>
+                <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                    <p>© 2024 Slipstream. Built with passion for automotive enthusiasts worldwide.</p>
+                    <p class="mt-2">All images are for demonstration purposes.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/loading.js"></script>
+    <script src="js/parallax.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const menu = document.getElementById('mobileMenu');
+            
+            if (!menuBtn.contains(event.target) && !menu.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') === '#') return;
+                
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#about') {
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

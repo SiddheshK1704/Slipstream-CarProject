@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dream Garage - Slipstream</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: white;
+        }
+        
+        .cursive-font {
+            font-family: 'Cedarville Cursive', cursive;
+        }
+        
+        .garage-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .garage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+        
+        .brand-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .porsche-badge { background: #cc0000; color: white; }
+        .ferrari-badge { background: #ff2800; color: white; }
+        .lamborghini-badge { background: #ffd700; color: black; }
+        .mclaren-badge { background: #ff8000; color: white; }
+        .bugatti-badge { background: #000000; color: #e8d800; border: 1px solid #e8d800; }
+        .koenigsegg-badge { background: #0000cc; color: white; }
+        
+        .heart-icon {
+            color: #ef4444;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="cursive-font text-3xl text-white font-bold">Slipstream</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a>
+                <a href="explore.html" class="text-white/80 hover:text-white transition-colors">Explore</a>
+                <a href="compare.html" class="text-white/80 hover:text-white transition-colors">Compare</a>
+                <a href="my-garage.html" class="text-white font-semibold">My Garage</a>
+                <a href="index.html#about" class="text-white/80 hover:text-white transition-colors">About</a>
+            </div>
+            <!-- Mobile menu button -->
+            <button id="mobileMenuBtn" class="md:hidden text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-4 p-4 rounded-lg">
+            <div class="flex flex-col space-y-4">
+                <a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a>
+                <a href="explore.html" class="text-white/80 hover:text-white transition-colors">Explore</a>
+                <a href="compare.html" class="text-white/80 hover:text-white transition-colors">Compare</a>
+                <a href="my-garage.html" class="text-white font-semibold">My Garage</a>
+                <a href="index.html#about" class="text-white/80 hover:text-white transition-colors">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">My Dream Garage</h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    A curated collection of automotive perfection. These are the machines that fuel my passion and represent the pinnacle of automotive engineering.
+                </p>
+            </div>
+            
+            <!-- Developer Intro -->
+            <div class="bg-gradient-to-r from-gray-900 to-black rounded-2xl p-8 mb-12 border border-white/10">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center mr-4">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">The Developer's Collection</h3>
+                        <p class="text-gray-400">Personally selected by the creator of Slipstream</p>
+                    </div>
+                </div>
+                <p class="text-gray-300 text-lg leading-relaxed">
+                    Each car in this garage represents a milestone in automotive history, a perfect blend of art and engineering that pushes the boundaries of what's possible. From track-focused monsters to luxurious grand tourers, these are the cars that define excellence.
+                </p>
+            </div>
+            
+            <!-- Cars Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12" id="garageCars">
+                <!-- Cars will be loaded here by JavaScript -->
+            </div>
+            
+            <!-- Garage Stats -->
+            <div class="mt-12">
+                <h2 class="text-3xl font-bold text-center mb-8">Garage Statistics</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="garageStats">
+                    <!-- Stats will be loaded here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12 px-6 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="cursive-font text-3xl font-bold mb-4">Slipstream</h3>
+                    <p class="text-gray-400">For the love of automotive excellence</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
+                    <a href="explore.html" class="text-gray-400 hover:text-white transition-colors">Explore</a>
+                    <a href="compare.html" class="text-gray-400 hover:text-white transition-colors">Compare</a>
+                    <a href="my-garage.html" class="text-white">My Garage</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                <p>© 2024 Slipstream. Built with passion for automotive enthusiasts worldwide.</p>
+                <p class="mt-2">This garage represents my personal automotive dreams and aspirations.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/garage.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const menu = document.getElementById('mobileMenu');
+            
+            if (!menuBtn.contains(event.target) && !menu.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

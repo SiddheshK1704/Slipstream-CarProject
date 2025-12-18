@@ -35,7 +35,8 @@ This project is driven by passion — inspired by Formula 1, performance enginee
 ---
 
 ## 📁 Project Structure
-```slipstream/
+```
+slipstream/
 │
 ├── index.html # Landing page
 ├── explore.html # Explore cars by brand

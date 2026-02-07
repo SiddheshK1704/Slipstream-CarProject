@@ -10,6 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Caesar+Dressing&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Preload critical images -->
+    <link rel="preload" href="./assets/images/b&wHuracan.jpg" as="image">
+    <link rel="preload" href="./assets/images/spafrancorchamps.png" as="image">
+    <link rel="preload" href="./assets/images/Ferrari-LaFerrari.jpg" as="image">
+    <link rel="preload" href="./assets/images/918Spyder.jpg" as="image">
+    <link rel="preload" href="./assets/images/mclarenP1.jpg" as="image">
     <style>
         * {
             margin: 0;
@@ -77,7 +83,7 @@
             text-align: right;
             max-width: 500px;
         }
-        
+    
         .title {
             font-family: 'Caesar Dressing', cursive;
             font-size: 4.5rem;
@@ -91,25 +97,28 @@
             display: flex;
             justify-content: flex-end;
             overflow: hidden;
+            cursor: pointer; /* Add this line */
         }
-        
+
         .title span {
             display: inline-block;
             position: relative;
+            transform: translateY(0);
             transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        
+
         .title span::before {
             content: attr(data-letter);
             position: absolute;
             top: 100%;
             left: 0;
         }
-        
+
+        /* Change this selector */
         .title:hover span {
             transform: translateY(-100%);
         }
-        
+
         .title:hover span:nth-child(1) { transition-delay: 0.00s; }
         .title:hover span:nth-child(2) { transition-delay: 0.03s; }
         .title:hover span:nth-child(3) { transition-delay: 0.06s; }
@@ -197,7 +206,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.4; /* Reduced opacity so text is readable */
+            opacity: 0.4;
         }
         
         /* Main content container */
@@ -209,7 +218,7 @@
         /* Sticky sections container */
         .sticky-container {
             position: relative;
-            height: 500vh; /* 5 sections × 100vh each */
+            height: 500vh;
         }
         
         .sticky-section {
@@ -219,16 +228,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1rem;
         }
         
         /* Outer glass card */
         .outer-glass-card {
-            background: rgba(0, 0, 0, 0.5); /* More transparent background */
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
-            padding: 3rem;
+            border-radius: 20px;
+            padding: 1.5rem;
             position: relative;
             z-index: 2;
             transition: all 0.3s ease;
@@ -240,19 +249,20 @@
         /* Two inner cards container */
         .inner-cards-container {
             display: flex;
-            gap: 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
             align-items: stretch;
-            height: 600px;
+            height: auto;
         }
         
-        /* Text card - UPDATED FOR GLASS EFFECT */
+        /* Text card */
         .text-card {
-            flex: 0 0 400px;
+            width: 100%;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 2.5rem;
+            border-radius: 16px;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -267,13 +277,13 @@
             background: rgba(255, 255, 255, 0.15);
         }
         
-        /* Image card - UPDATED FOR GLASS EFFECT */
+        /* Image card */
         .image-card {
-            flex: 1;
+            width: 100%;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 1rem;
             overflow: hidden;
             display: flex;
@@ -284,7 +294,7 @@
         
         .section-image {
             width: 100%;
-            height: 100%;
+            height: 250px;
             object-fit: cover;
             border-radius: 12px;
             transition: transform 0.5s ease;
@@ -299,8 +309,8 @@
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
-            padding: 3rem;
+            border-radius: 20px;
+            padding: 1.5rem;
             position: relative;
             z-index: 2;
             transition: all 0.3s ease;
@@ -387,35 +397,21 @@
             transition-duration: 1.5s;
         }
         
-        /* Compare section specific - Image on LEFT, Text on RIGHT */
-        /* Compare section specific - Image on LEFT, Text on RIGHT */
-        .compare-section .inner-cards-container {
-            flex-direction: row; /* Changed from row-reverse */
-        }
-
-        .compare-section .image-card {
-            order: 1;
-        }
-
-        .compare-section .text-card {
-            order: 2;
-        }
-        
         /* Section indicators */
         .section-indicator {
             position: fixed;
-            left: 2rem;
+            left: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            display: flex;
+            display: none;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.75rem;
             z-index: 100;
         }
         
         .indicator-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.2);
             border: 2px solid transparent;
@@ -433,34 +429,94 @@
         .about-section {
             position: relative;
             background: #000;
-            padding: 6rem 2rem;
+            padding: 4rem 1rem;
             z-index: 10;
         }
         
-        /* Responsive design for loading screen */
-        @media (max-width: 1024px) {
-            .loading-content {
-                padding-right: 5%;
+        /* GitHub link styles */
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .github-logo {
+            width: 20px;
+            height: 20px;
+            color: white; /* For SVG */
+        }
+        
+        /* Mobile optimizations */
+        @media (min-width: 768px) {
+            .sticky-section {
+                padding: 2rem;
             }
             
-            .title {
-                font-size: 3.5rem;
-                height: 4rem;
-            }
-            
-            .loading-subtitle {
-                text-align-last: center;
+            .outer-glass-card, .hero-glass-card {
+                padding: 3rem;
+                border-radius: 24px;
             }
             
             .inner-cards-container {
+                flex-direction: row;
+                gap: 2rem;
                 height: 500px;
             }
             
             .text-card {
                 flex: 0 0 350px;
+                border-radius: 20px;
+                padding: 2.5rem;
+            }
+            
+            .image-card {
+                flex: 1;
+                height: auto;
+            }
+            
+            .section-image {
+                height: 100%;
+            }
+            
+            .section-indicator {
+                display: flex;
+                left: 2rem;
+            }
+            
+            .about-section {
+                padding: 6rem 2rem;
             }
         }
         
+        @media (min-width: 1024px) {
+            .inner-cards-container {
+                height: 600px;
+            }
+            
+            .text-card {
+                flex: 0 0 400px;
+            }
+            
+            .title {
+                font-size: 4.5rem;
+                height: 5rem;
+            }
+        }
+        
+        /* Loading screen responsive */
         @media (max-width: 768px) {
             .loading-content {
                 justify-content: center;
@@ -505,47 +561,6 @@
             .arrow-right:hover {
                 transform: rotate(90deg) translateY(-4px);
             }
-            
-            /* Landing page responsive */
-            .sticky-section {
-                padding: 1rem;
-            }
-            
-            .outer-glass-card, .hero-glass-card {
-                padding: 2rem;
-            }
-            
-            .inner-cards-container {
-                flex-direction: column;
-                height: auto;
-                gap: 1.5rem;
-            }
-            
-            .compare-section .inner-cards-container {
-                flex-direction: column;
-            }
-            
-            .text-card, .image-card {
-                width: 100%;
-                flex: none;
-            }
-            
-            .text-card {
-                height: auto;
-                min-height: 300px;
-            }
-            
-            .image-card {
-                height: 300px;
-            }
-            
-            .section-indicator {
-                display: none;
-            }
-            
-            .about-section {
-                padding: 4rem 1rem;
-            }
         }
         
         @media (max-width: 480px) {
@@ -563,9 +578,20 @@
                 width: 40px;
                 height: 40px;
             }
-            
-            .outer-glass-card, .hero-glass-card {
-                padding: 1.5rem;
+        }
+        
+        /* Optimize image loading */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Ensure smooth animations */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
@@ -573,21 +599,21 @@
 <body class="no-scroll">
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
-        <img src="./assets/images/b&wHuracan.jpg" alt="Lamborghini Huracan" class="loading-image">
+        <img src="./assets/images/b&wHuracan.jpg" alt="Lamborghini Huracan" class="loading-image" loading="eager" fetchpriority="high">
         <canvas id="waterCanvas"></canvas>
         <div class="loading-content">
             <div class="text-container">
-                <h1 class="title">
-                    <span data-letter="S">S</span>
-                    <span data-letter="L">L</span>
-                    <span data-letter="I">I</span>
-                    <span data-letter="P">P</span>
-                    <span data-letter="S">S</span>
-                    <span data-letter="T">T</span>
-                    <span data-letter="R">R</span>
-                    <span data-letter="E">E</span>
-                    <span data-letter="A">A</span>
-                    <span data-letter="M">M</span>
+                <h1 class="title" id="mainTitle">
+                    <span class="letter" data-letter="S">S</span>
+                    <span class="letter" data-letter="L">L</span>
+                    <span class="letter" data-letter="I">I</span>
+                    <span class="letter" data-letter="P">P</span>
+                    <span class="letter" data-letter="S">S</span>
+                    <span class="letter" data-letter="T">T</span>
+                    <span class="letter" data-letter="R">R</span>
+                    <span class="letter" data-letter="E">E</span>
+                    <span class="letter" data-letter="A">A</span>
+                    <span class="letter" data-letter="M">M</span>
                 </h1>
                 <p class="loading-subtitle">
                     A celebration of speed and design. Explore legendary cars, compare performance, and visit my hand-picked dream garage.
@@ -603,15 +629,14 @@
     <div id="mainContent" class="hidden">
         <!-- Revuelto Background - NO DARK OVERLAY -->
         <div class="main-background">
-            <!-- Add your Revuelto image path here -->
-            <img src="./assets/images/spafrancorchamps.png" alt="Lamborghini Revuelto" class="background-image">
+            <img src="./assets/images/spafrancorchamps.png" alt="Lamborghini Revuelto" class="background-image" loading="lazy" decoding="async">
         </div>
         
         <!-- Navigation -->
-        <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50 px-6 py-4">
+        <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50 px-4 py-3 md:px-6 md:py-4">
             <div class="max-w-7xl mx-auto flex items-center justify-between">
-                <a href="index.html" class="caesar-font text-3xl text-white font-bold">SLIPSTREAM</a>
-                <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="caesar-font text-2xl md:text-3xl text-white font-bold">SLIPSTREAM</a>
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
                     <a href="#hero" class="nav-link text-white/80 hover:text-white transition-colors">Home</a>
                     <a href="#explore" class="nav-link text-white/80 hover:text-white transition-colors">Explore</a>
                     <a href="#compare" class="nav-link text-white/80 hover:text-white transition-colors">Compare</a>
@@ -619,20 +644,20 @@
                     <a href="#about" class="nav-link text-white/80 hover:text-white transition-colors">About</a>
                 </div>
                 <!-- Mobile menu button -->
-                <button id="mobileMenuBtn" class="md:hidden text-white">
+                <button id="mobileMenuBtn" class="md:hidden text-white p-1">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
             </div>
             <!-- Mobile menu -->
-            <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-4 p-4 rounded-lg">
-                <div class="flex flex-col space-y-4">
-                    <a href="#hero" class="text-white/80 hover:text-white transition-colors">Home</a>
-                    <a href="#explore" class="text-white/80 hover:text-white transition-colors">Explore</a>
-                    <a href="#compare" class="text-white/80 hover:text-white transition-colors">Compare</a>
-                    <a href="#garage" class="text-white/80 hover:text-white transition-colors">My Garage</a>
-                    <a href="#about" class="text-white/80 hover:text-white transition-colors">About</a>
+            <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-3 p-4 rounded-lg">
+                <div class="flex flex-col space-y-3">
+                    <a href="#hero" class="text-white/80 hover:text-white transition-colors py-2">Home</a>
+                    <a href="#explore" class="text-white/80 hover:text-white transition-colors py-2">Explore</a>
+                    <a href="#compare" class="text-white/80 hover:text-white transition-colors py-2">Compare</a>
+                    <a href="#garage" class="text-white/80 hover:text-white transition-colors py-2">My Garage</a>
+                    <a href="#about" class="text-white/80 hover:text-white transition-colors py-2">About</a>
                 </div>
             </div>
         </nav>
@@ -652,24 +677,24 @@
                 <!-- Hero Section -->
                 <section id="hero" class="sticky-section">
                     <div class="hero-glass-card">
-                        <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
+                        <h1 class="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4 md:mb-6">
                             <span class="title-highlight">Where Passion</span> 
                             <span class="text-red-500"> Meets </span>
                             <span class="title-highlight">Performance</span>
                         </h1>
-                        <p class="text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed">
+                        <p class="text-base md:text-xl text-gray-300 mb-6 md:mb-10 max-w-2xl leading-relaxed">
                             Cars are more than machines; they're the embodiment of human ingenuity, 
                             a testament to our relentless pursuit of speed, design, and freedom. 
                             From the roar of the engine to the sleek lines of a masterpiece on wheels.
                         </p>
-                        <div class="flex flex-wrap gap-4">
+                        <div class="flex flex-wrap gap-3 md:gap-4">
                             <a href="#explore" class="button">
                                 <svg class="svgIcon" viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path>
                                 </svg>
                                 Explore
                             </a>
-                            <a href="#compare" class="px-8 py-3 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all hover:bg-white/10">
+                            <a href="#compare" class="px-6 py-2 md:px-8 md:py-3 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all hover:bg-white/10 text-sm md:text-base">
                                 Compare Cars
                             </a>
                         </div>
@@ -680,24 +705,28 @@
                 <section id="explore" class="sticky-section">
                     <div class="outer-glass-card">
                         <div class="inner-cards-container">
-                            <!-- Text card on left - UPDATED FOR GLASS EFFECT -->
+                            <!-- Text card on left -->
                             <div class="text-card">
-                                <h2 class="text-4xl font-bold mb-4">Explore Legends</h2>
-                                <p class="text-gray-300 mb-6 text-lg">
+                                <h2 class="text-2xl md:text-4xl font-bold mb-3 md:mb-4">Explore Legends</h2>
+                                <p class="text-gray-300 mb-4 md:mb-6 text-base md:text-lg">
                                     Discover the most iconic models from the world's greatest manufacturers. 
                                     From timeless classics to cutting-edge hypercars, immerse yourself in 
                                     automotive excellence.
                                 </p>
-                                <a href="explore.html" class="mt-auto px-6 py-3 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-semibold rounded-full transition-all transform hover:scale-105 inline-block w-fit">
+                                <a href="explore.html" class="mt-auto px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-semibold rounded-full transition-all transform hover:scale-105 inline-block w-fit text-sm md:text-base">
                                     Start Exploring
                                 </a>
                             </div>
                             
-                            <!-- Image card on right - UPDATED FOR GLASS EFFECT -->
+                            <!-- Image card on right -->
                             <div class="image-card">
-                                <img src=".\assets\images\Ferrari-LaFerrari.jpg" 
+                                <img src="./assets/images/Ferrari-LaFerrari.jpg" 
                                      alt="Supercar Collection" 
-                                     class="section-image">
+                                     class="section-image"
+                                     loading="lazy"
+                                     decoding="async"
+                                     width="800"
+                                     height="600">
                             </div>
                         </div>
                     </div>
@@ -707,22 +736,26 @@
                 <section id="compare" class="sticky-section compare-section">
                     <div class="outer-glass-card">
                         <div class="inner-cards-container">
-                            <!-- Image card on LEFT - UPDATED FOR GLASS EFFECT -->
-                            <div class="image-card">
-                                <img src=".\assets\images\918Spyder.jpg" 
+                            <!-- Image card on LEFT -->
+                            <div class="image-card order-2 md:order-1">
+                                <img src="./assets/images/918Spyder.jpg" 
                                      alt="Car Comparison" 
-                                     class="section-image">
+                                     class="section-image"
+                                     loading="lazy"
+                                     decoding="async"
+                                     width="800"
+                                     height="600">
                             </div>
                             
-                            <!-- Text card on RIGHT - UPDATED FOR GLASS EFFECT -->
-                            <div class="text-card">
-                                <h2 class="text-4xl font-bold mb-4">Compare Titans</h2>
-                                <p class="text-gray-300 mb-6 text-lg">
+                            <!-- Text card on RIGHT -->
+                            <div class="text-card order-1 md:order-2">
+                                <h2 class="text-2xl md:text-4xl font-bold mb-3 md:mb-4">Compare Titans</h2>
+                                <p class="text-gray-300 mb-4 md:mb-6 text-base md:text-lg">
                                     Pit the greatest machines against each other. See how they stack up 
                                     in performance, design, and innovation. Make informed decisions about 
                                     automotive excellence.
                                 </p>
-                                <a href="compare.html" class="mt-auto px-6 py-3 border-2 border-white hover:bg-white/10 text-white font-semibold rounded-full transition-all transform hover:scale-105 inline-block w-fit">
+                                <a href="compare.html" class="mt-auto px-4 py-2 md:px-6 md:py-3 border-2 border-white hover:bg-white/10 text-white font-semibold rounded-full transition-all transform hover:scale-105 inline-block w-fit text-sm md:text-base">
                                     Compare Now
                                 </a>
                             </div>
@@ -734,24 +767,28 @@
                 <section id="garage" class="sticky-section">
                     <div class="outer-glass-card">
                         <div class="inner-cards-container">
-                            <!-- Text card on left - UPDATED FOR GLASS EFFECT -->
+                            <!-- Text card on left -->
                             <div class="text-card">
-                                <h2 class="text-4xl font-bold mb-4">My Dream Garage</h2>
-                                <p class="text-gray-300 mb-6 text-lg">
+                                <h2 class="text-2xl md:text-4xl font-bold mb-3 md:mb-4">My Dream Garage</h2>
+                                <p class="text-gray-300 mb-4 md:mb-6 text-base md:text-lg">
                                     A curated collection of automotive perfection. My personal favorites 
                                     and ultimate dream cars that represent the pinnacle of engineering 
                                     and design.
                                 </p>
-                                <a href="my-garage.html" class="mt-auto px-6 py-3 bg-gradient-to-r from-yellow-600 to-orange-500 hover:from-yellow-700 hover:to-orange-600 text-white font-semibold rounded-full transition-all transform hover:scale-105 inline-block w-fit">
+                                <a href="my-garage.html" class="mt-auto px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-yellow-600 to-orange-500 hover:from-yellow-700 hover:to-orange-600 text-white font-semibold rounded-full transition-all transform hover:scale-105 inline-block w-fit text-sm md:text-base">
                                     Visit Garage
                                 </a>
                             </div>
                             
-                            <!-- Image card on right - UPDATED FOR GLASS EFFECT -->
+                            <!-- Image card on right -->
                             <div class="image-card">
-                                <img src=".\assets\images\mclarenP1.jpg" 
+                                <img src="./assets/images/mclarenP1.jpg" 
                                      alt="Dream Garage" 
-                                     class="section-image">
+                                     class="section-image"
+                                     loading="lazy"
+                                     decoding="async"
+                                     width="800"
+                                     height="600">
                             </div>
                         </div>
                     </div>
@@ -762,25 +799,25 @@
         <!-- About Section (Separate) -->
         <section id="about" class="about-section">
             <div class="max-w-4xl mx-auto">
-                <h2 class="text-4xl font-bold text-white text-center mb-12">A Little Something About Me</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-8 md:mb-12">A Little Something About Me</h2>
                 <div class="outer-glass-card">
-                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                    <p class="text-gray-300 text-base md:text-lg leading-relaxed mb-4 md:mb-6">
                         Ever since I was a child, the sound of a roaring engine could quiet the world around me. My mother introduced me to cars, taught me to sketch them, and unknowingly planted the spark that would become a lifelong obsession.
                     </p>
 
-                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        In 2018, I discovered Formula 1—and everything changed. Watching Max Verstappen race didn’t just deepen my love for cars; it taught me something bigger. Determination, consistency, and refusing to give up even when the odds are impossible. His drive became a blueprint for how I approach both passion and life.
+                    <p class="text-gray-300 text-base md:text-lg leading-relaxed mb-4 md:mb-6">
+                        In 2018, I discovered Formula 1—and everything changed. Watching Max Verstappen race didn't just deepen my love for cars; it taught me something bigger. Determination, consistency, and refusing to give up even when the odds are impossible. His drive became a blueprint for how I approach both passion and life.
                     </p>
 
-                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        I built Slipstream to share that passion. This place is a tribute to the machines that push boundaries, redefine performance, and spark dreams. Whether it’s the violent precision of a supercar or the timeless elegance of a classic, every machine carries a story worth telling.
+                    <p class="text-gray-300 text-base md:text-lg leading-relaxed mb-4 md:mb-6">
+                        I built Slipstream to share that passion. This place is a tribute to the machines that push boundaries, redefine performance, and spark dreams. Whether it's the violent precision of a supercar or the timeless elegance of a classic, every machine carries a story worth telling.
                     </p>
 
-                    <p class="text-gray-300 text-lg leading-relaxed">
+                    <p class="text-gray-300 text-base md:text-lg leading-relaxed">
                         Explore. Compare. Dream. Slipstream is more than a collection—it's a celebration of automotive excellence, crafted for those who feel alive behind a revving engine.
                     </p>
 
-                    <div class="mt-10 pt-8 border-t border-white/10">
+                    <div class="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-white/10">
                         <p class="text-gray-400 italic">
                             "Speed isn't just about going fast. It's about the clarity you find when the world blurs away." 
                         </p>
@@ -790,14 +827,14 @@
         </section>
 
         <!-- Footer -->
-        <footer class="bg-black text-white py-12 px-6 border-t border-gray-800">
+        <footer class="bg-black text-white py-8 md:py-12 px-4 md:px-6 border-t border-gray-800">
             <div class="max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="mb-6 md:mb-0">
-                        <h3 class="caesar-font text-3xl font-bold mb-4">SLIPSTREAM</h3>
+                    <div class="mb-6 md:mb-0 text-center md:text-left">
+                        <h3 class="caesar-font text-2xl md:text-3xl font-bold mb-3 md:mb-4">SLIPSTREAM</h3>
                         <p class="text-gray-400">For the love of automotive excellence ~ By Siddhesh Khankhoje</p>
                     </div>
-                    <div class="flex space-x-6">
+                    <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-6 md:mb-0">
                         <a href="#hero" class="nav-link text-gray-400 hover:text-white transition-colors">Home</a>
                         <a href="explore.html" class="nav-link text-gray-400 hover:text-white transition-colors">Explore</a>
                         <a href="compare.html" class="nav-link text-gray-400 hover:text-white transition-colors">Compare</a>
@@ -805,7 +842,22 @@
                         <a href="#about" class="nav-link text-gray-400 hover:text-white transition-colors">About</a>
                     </div>
                 </div>
-                <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                
+                <!-- GitHub Link -->
+                <div class="mt-6 md:mt-8 flex justify-center">
+                    <a href="https://github.com/SiddheshK1704/Slipstream-CarProject" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="github-link">
+                        <!-- White GitHub SVG -->
+                        <svg class="github-logo" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        <span>View on GitHub</span>
+                    </a>
+                </div>
+                
+                <div class="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
                     <p>© Slipstream 2025. Built with passion for automotive enthusiasts worldwide, by Siddhesh Khankhoje.</p>
                     <p class="mt-2">All images are for demonstration purposes.</p>
                 </div>
@@ -834,7 +886,7 @@
             
             // Water effect variables
             const drops = [];
-            const dropCount = 100;
+            const dropCount = Math.min(50, Math.floor(window.innerWidth * window.innerHeight / 20000));
             
             // Create water drops
             for (let i = 0; i < dropCount; i++) {
@@ -932,16 +984,17 @@
             // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                    if (this.getAttribute('href') !== '#') {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
                     }
                 });
             });
@@ -959,94 +1012,60 @@
                     
                     if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
                         indicators.forEach(indicator => indicator.classList.remove('active'));
-                        indicators[index].classList.add('active');
+                        if (indicators[index]) {
+                            indicators[index].classList.add('active');
+                        }
                     }
                 });
                 
                 // Special case for About section
                 const aboutSection = document.getElementById('about');
-                const aboutTop = aboutSection.offsetTop;
-                
-                if (scrollPosition >= aboutTop - window.innerHeight / 2) {
-                    indicators.forEach(indicator => indicator.classList.remove('active'));
+                if (aboutSection) {
+                    const aboutTop = aboutSection.offsetTop;
+                    
+                    if (scrollPosition >= aboutTop - window.innerHeight / 2) {
+                        indicators.forEach(indicator => indicator.classList.remove('active'));
+                    }
                 }
             }
             
             // Update indicator on scroll
-            window.addEventListener('scroll', updateIndicator);
-            window.addEventListener('resize', updateIndicator);
-            updateIndicator(); // Initial call
-            
-            // Click indicator to scroll to section
-            indicators.forEach((indicator, index) => {
-                indicator.addEventListener('click', () => {
-                    sections[index].scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
+            if (window.innerWidth >= 768) {
+                window.addEventListener('scroll', updateIndicator);
+                window.addEventListener('resize', updateIndicator);
+                updateIndicator(); // Initial call
+                
+                // Click indicator to scroll to section
+                indicators.forEach((indicator, index) => {
+                    if (sections[index]) {
+                        indicator.addEventListener('click', () => {
+                            sections[index].scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center'
+                            });
+                        });
+                    }
                 });
+            }
+            
+            // Optimize image loading
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                // Skip loading screen image
+                if (!img.classList.contains('loading-image')) {
+                    img.loading = 'lazy';
+                    img.decoding = 'async';
+                }
             });
             
-            // Image cycling for cards
-            // const sectionImages = [
-            //     // Explore section images
-            //     [
-            //         ".\assets\images\Ferrari-LaFerrari.jpg"
-            //     ],
-            //     // Compare section images
-            //     [
-            //         ".\assets\images\918Spyder.jpg"
-            //     ],
-            //     // Garage section images
-            //     [
-            //         "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-            //         "https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-            //         "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
-            //     ]
-            // ];
-            
-            // let currentImageIndexes = [0, 0, 0];
-            // const imageCards = document.querySelectorAll('.image-card');
-            
-            // function cycleImage(sectionIndex) {
-            //     currentImageIndexes[sectionIndex] = 
-            //         (currentImageIndexes[sectionIndex] + 1) % sectionImages[sectionIndex].length;
-                
-            //     const imgElement = imageCards[sectionIndex].querySelector('.section-image');
-            //     imgElement.style.opacity = '0';
-                
-            //     setTimeout(() => {
-            //         imgElement.src = sectionImages[sectionIndex][currentImageIndexes[sectionIndex]];
-            //         imgElement.style.opacity = '1';
-            //     }, 300);
-            // }
-            
-            // Auto-cycle images every 5 seconds
-            // setInterval(() => {
-            //     sections.forEach((section, index) => {
-            //         if (index > 0) { // Skip hero section (index 0)
-            //             const rect = section.getBoundingClientRect();
-            //             if (rect.top >= 0 && rect.top <= window.innerHeight) {
-            //                 cycleImage(index - 1);
-            //             }
-            //         }
-            //     });
-            // }, 5000);
-            
-            // Manual cycling on image hover
-            // imageCards.forEach((card, index) => {
-            //     let cycleTimeout;
-                
-            //     card.addEventListener('mouseenter', () => {
-            //         cycleTimeout = setTimeout(() => {
-            //             cycleImage(index);
-            //         }, 2000);
-            //     });
-                
-            //     card.addEventListener('mouseleave', () => {
-            //         clearTimeout(cycleTimeout);
-            //     });
-            // });
+            // Reduce motion preference
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) {
+                document.querySelectorAll('*').forEach(element => {
+                    element.style.animationDuration = '0.01ms';
+                    element.style.transitionDuration = '0.01ms';
+                });
+            }
         });
     </script>
 </body>

@@ -10,6 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Caesar+Dressing&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Preload critical images -->
+    <link rel="preload" href="./assets/images/VintageP911.jpg" as="image">
+    <link rel="preload" href="./assets/images/VintageF40.png" as="image">
+    <link rel="preload" href="./assets/images/VintageLDiablo.png" as="image">
+    <link rel="preload" href="./assets/images/VintageMF1.png" as="image">
+    <link rel="preload" href="./assets/images/VintageBEB110.png" as="image">
+    <link rel="preload" href="./assets/images/VintageKCC8S.png" as="image">
     <style>
         * {
             margin: 0;
@@ -26,7 +33,7 @@
         
         .caesar-font {
             font-family: 'Caesar Dressing', cursive;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
         
         /* Brand Background */
@@ -45,7 +52,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.25; /* Vintage feel with low opacity */
+            opacity: 0.25;
             filter: sepia(0.3) contrast(1.1);
         }
         
@@ -68,7 +75,7 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 1.5rem;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
@@ -92,8 +99,8 @@
         
         /* Hover effect with slight tilt */
         .car-card:hover {
-            transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             border-color: rgba(255, 255, 255, 0.4);
             background: rgba(255, 255, 255, 0.15);
         }
@@ -127,7 +134,7 @@
         
         .logo-img {
             width: 100%;
-            height: 40px; /* Fixed height for consistency */
+            height: 40px;
             object-fit: contain;
             object-position: center;
         }
@@ -136,21 +143,21 @@
             display: none;
         }
         
-        /* Section headers - UPDATED: No underline, consistent color, centered */
+        /* Section headers */
         .section-title {
             display: block;
             text-align: center;
-            margin-bottom: 3rem;
-            color: #ffffff; /* Consistent white color for all brands */
+            margin-bottom: 2rem;
+            color: #ffffff;
             font-weight: 600;
-            font-size: 2.5rem; /* Slightly larger for emphasis */
+            font-size: 2rem;
             letter-spacing: 1px;
         }
         
         /* Card image styling */
         .card-image {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             border-radius: 12px;
             margin-bottom: 1rem;
@@ -195,6 +202,74 @@
         .main-subtitle {
             font-family: 'Space Grotesk', sans-serif;
         }
+        
+        /* GitHub link styles */
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .github-logo {
+            width: 20px;
+            height: 20px;
+            color: white; /* For SVG */
+        }
+        
+        /* Mobile optimizations */
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+                margin-bottom: 3rem;
+            }
+            
+            .car-card {
+                border-radius: 20px;
+                padding: 1.5rem;
+            }
+            
+            .card-image {
+                height: 200px;
+            }
+            
+            .car-card:hover {
+                transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .card-image {
+                height: 220px;
+            }
+        }
+        
+        /* Optimize image loading */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Ensure smooth animations */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -202,46 +277,46 @@
     <div class="brand-background" id="brandBackground">
         <!-- Porsche Background -->
         <div class="brand-bg-content active" data-brand="porsche">
-            <img src="./assets/images/VintageP911.jpg" alt="Vintage Porsche" class="brand-bg-image">
+            <img src="./assets/images/VintageP911.jpg" alt="Vintage Porsche" class="brand-bg-image" loading="lazy" decoding="async">
             <div class="brand-overlay"></div>
         </div>
         
         <!-- Ferrari Background -->
         <div class="brand-bg-content" data-brand="ferrari">
-            <img src="./assets/images/VintageF40.png" alt="Vintage Ferrari" class="brand-bg-image">
+            <img src="./assets/images/VintageF40.png" alt="Vintage Ferrari" class="brand-bg-image" loading="lazy" decoding="async">
             <div class="brand-overlay"></div>
         </div>
         
         <!-- Lamborghini Background -->
         <div class="brand-bg-content" data-brand="lamborghini">
-            <img src="./assets/images/VintageLDiablo.png" alt="Vintage Lamborghini" class="brand-bg-image">
+            <img src="./assets/images/VintageLDiablo.png" alt="Vintage Lamborghini" class="brand-bg-image" loading="lazy" decoding="async">
             <div class="brand-overlay"></div>
         </div>
         
         <!-- McLaren Background -->
         <div class="brand-bg-content" data-brand="mclaren">
-            <img src="./assets/images/VintageMF1.png" alt="Vintage McLaren" class="brand-bg-image">
+            <img src="./assets/images/VintageMF1.png" alt="Vintage McLaren" class="brand-bg-image" loading="lazy" decoding="async">
             <div class="brand-overlay"></div>
         </div>
         
         <!-- Bugatti Background -->
         <div class="brand-bg-content" data-brand="bugatti">
-            <img src="./assets/images/VintageBEB110.png" alt="Vintage Bugatti" class="brand-bg-image">
+            <img src="./assets/images/VintageBEB110.png" alt="Vintage Bugatti" class="brand-bg-image" loading="lazy" decoding="async">
             <div class="brand-overlay"></div>
         </div>
         
         <!-- Koenigsegg Background -->
         <div class="brand-bg-content" data-brand="koenigsegg">
-            <img src="./assets/images/VintageKCC8S.png" alt="Vintage Koenigsegg" class="brand-bg-image">
+            <img src="./assets/images/VintageKCC8S.png" alt="Vintage Koenigsegg" class="brand-bg-image" loading="lazy" decoding="async">
             <div class="brand-overlay"></div>
         </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50 px-6 py-4">
+    <nav class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-sm z-50 px-4 py-3 md:px-6 md:py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="index.html" class="caesar-font text-3xl text-white font-bold">SLIPSTREAM</a>
-            <div class="hidden md:flex items-center space-x-8">
+            <a href="index.html" class="caesar-font text-2xl md:text-3xl text-white font-bold">SLIPSTREAM</a>
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
                 <a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a>
                 <a href="explore.html" class="text-white font-semibold">Explore</a>
                 <a href="compare.html" class="text-white/80 hover:text-white transition-colors">Compare</a>
@@ -249,172 +324,172 @@
                 <a href="index.html#about" class="text-white/80 hover:text-white transition-colors">About</a>
             </div>
             <!-- Mobile menu button -->
-            <button id="mobileMenuBtn" class="md:hidden text-white">
+            <button id="mobileMenuBtn" class="md:hidden text-white p-1">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
         </div>
         <!-- Mobile menu -->
-        <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-4 p-4 rounded-lg">
-            <div class="flex flex-col space-y-4">
-                <a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a>
-                <a href="explore.html" class="text-white font-semibold">Explore</a>
-                <a href="compare.html" class="text-white/80 hover:text-white transition-colors">Compare</a>
-                <a href="my-garage.html" class="text-white/80 hover:text-white transition-colors">My Garage</a>
-                <a href="index.html#about" class="text-white/80 hover:text-white transition-colors">About</a>
+        <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-3 p-4 rounded-lg">
+            <div class="flex flex-col space-y-3">
+                <a href="index.html" class="text-white/80 hover:text-white transition-colors py-2">Home</a>
+                <a href="explore.html" class="text-white font-semibold py-2">Explore</a>
+                <a href="compare.html" class="text-white/80 hover:text-white transition-colors py-2">Compare</a>
+                <a href="my-garage.html" class="text-white/80 hover:text-white transition-colors py-2">My Garage</a>
+                <a href="index.html#about" class="text-white/80 hover:text-white transition-colors py-2">About</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-12 px-6 relative z-10">
+    <section class="pt-24 pb-8 px-4 md:pt-32 md:pb-12 md:px-6 relative z-10">
         <div class="max-w-7xl mx-auto">
-            <h1 class="text-5xl md:text-6xl font-bold text-center mb-6 main-title">Explore Automotive Legends</h1>
-            <p class="text-xl text-gray-300 text-center max-w-3xl mx-auto mb-8 main-subtitle">
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-4 md:mb-6 main-title">Explore Automotive Legends</h1>
+            <p class="text-base md:text-xl text-gray-300 text-center max-w-3xl mx-auto mb-6 md:mb-8 main-subtitle">
                 Dive into the world's most iconic car brands. Select a brand to explore their legendary models.
             </p>
             
             <!-- Brand Selector -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 mb-8 md:mb-12">
                 <button class="brand-logo active" data-brand="porsche">
-                    <img src="./assets/logos/Porsche.png" alt="Porsche" class="logo-img">
-                    <p class="text-center mt-2 text-sm font-medium">Porsche</p>
+                    <img src="./assets/logos/Porsche.png" alt="Porsche" class="logo-img" loading="lazy" decoding="async" width="80" height="40">
+                    <p class="text-center mt-1 md:mt-2 text-xs md:text-sm font-medium">Porsche</p>
                 </button>
                 <button class="brand-logo" data-brand="ferrari">
-                    <img src="./assets/logos/Ferrari.png" alt="Ferrari" class="logo-img">
-                    <p class="text-center mt-2 text-sm font-medium">Ferrari</p>
+                    <img src="./assets/logos/Ferrari.png" alt="Ferrari" class="logo-img" loading="lazy" decoding="async" width="80" height="40">
+                    <p class="text-center mt-1 md:mt-2 text-xs md:text-sm font-medium">Ferrari</p>
                 </button>
                 <button class="brand-logo" data-brand="lamborghini">
-                    <img src="./assets/logos/Lamborghini.png" alt="Lamborghini" class="logo-img">
-                    <p class="text-center mt-2 text-sm font-medium">Lamborghini</p>
+                    <img src="./assets/logos/Lamborghini.png" alt="Lamborghini" class="logo-img" loading="lazy" decoding="async" width="80" height="40">
+                    <p class="text-center mt-1 md:mt-2 text-xs md:text-sm font-medium">Lamborghini</p>
                 </button>
                 <button class="brand-logo" data-brand="mclaren">
-                    <img src="./assets/logos/Mclaren.png" alt="McLaren" class="logo-img">
-                    <p class="text-center mt-2 text-sm font-medium">McLaren</p>
+                    <img src="./assets/logos/Mclaren.png" alt="McLaren" class="logo-img" loading="lazy" decoding="async" width="80" height="40">
+                    <p class="text-center mt-1 md:mt-2 text-xs md:text-sm font-medium">McLaren</p>
                 </button>
                 <button class="brand-logo" data-brand="bugatti">
-                    <img src="./assets/logos/Bugatti.png" alt="Bugatti" class="logo-img">
-                    <p class="text-center mt-2 text-sm font-medium">Bugatti</p>
+                    <img src="./assets/logos/Bugatti.png" alt="Bugatti" class="logo-img" loading="lazy" decoding="async" width="80" height="40">
+                    <p class="text-center mt-1 md:mt-2 text-xs md:text-sm font-medium">Bugatti</p>
                 </button>
                 <button class="brand-logo" data-brand="koenigsegg">
-                    <img src="./assets/logos/Koenigsegg.png" alt="Koenigsegg" class="logo-img">
-                    <p class="text-center mt-2 text-sm font-medium">Koenigsegg</p>
+                    <img src="./assets/logos/Koenigsegg.png" alt="Koenigsegg" class="logo-img" loading="lazy" decoding="async" width="80" height="40">
+                    <p class="text-center mt-1 md:mt-2 text-xs md:text-sm font-medium">Koenigsegg</p>
                 </button>
             </div>
         </div>
     </section>
 
     <!-- Cars Grid -->
-    <section class="pb-20 px-6 relative z-10">
+    <section class="pb-12 md:pb-20 px-4 md:px-6 relative z-10">
         <div class="max-w-7xl mx-auto">
             <!-- Porsche Section (Default) -->
             <div id="porsche" class="cars-section">
                 <h2 class="section-title">Porsche</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                     <!-- Car 1 -->
                     <div class="car-card">
-                        <img src="./assets/images/porsche-911-turbo-s.png" alt="911 Turbo S" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">911 Turbo S</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/porsche-911-turbo-s.png" alt="911 Turbo S" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">911 Turbo S</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2026</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2026</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">701 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">701 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$272,100</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$272,100</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The ultimate expression of the 911 philosophy, combining everyday usability with track performance.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The ultimate expression of the 911 philosophy, combining everyday usability with track performance.</p>
                     </div>
                     
                     <!-- Car 2 -->
                     <div class="car-card">
-                        <img src="./assets/images/porsche-gt3.png" alt="911 GT3 RS" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">911 GT3 RS</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/porsche-gt3.png" alt="911 GT3 RS" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">911 GT3 RS</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2025</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2025</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">518 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">518 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$250,300</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$250,300</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">Track-focused masterpiece with motorsport-derived technology for ultimate performance.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">Track-focused masterpiece with motorsport-derived technology for ultimate performance.</p>
                     </div>
                     
                     <!-- Car 3 -->
                     <div class="car-card">
-                        <img src="./assets/images/porsche-taycan-t.png" alt="Taycan Turbo S" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Taycan Turbo GT</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/porsche-taycan-t.png" alt="Taycan Turbo S" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Taycan Turbo GT</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2025</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2025</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1092 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1092 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$239,400</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$239,400</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The electric sports car that proves zero emissions can still deliver heart-pounding performance.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The electric sports car that proves zero emissions can still deliver heart-pounding performance.</p>
                     </div>
                     
                     <!-- Car 4 -->
                     <div class="car-card">
-                        <img src="./assets/images/porsche-panamera-t.png" alt="Panamera Turbo S" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Panamera Turbo</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/porsche-panamera-t.png" alt="Panamera Turbo S" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Panamera Turbo</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2025</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2025</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">493 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">493 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$226,500</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$226,500</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">Luxury sports sedan that combines executive comfort with supercar performance.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">Luxury sports sedan that combines executive comfort with supercar performance.</p>
                     </div>
                     
                     <!-- Car 5 -->
                     <div class="car-card">
-                        <img src="./assets/images/porsche-cayman.png" alt="718 Cayman GT4 RS" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">718 Cayman GT4 RS</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/porsche-cayman.png" alt="718 Cayman GT4 RS" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">718 Cayman GT4 RS</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2023</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">500 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">500 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$145,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$145,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The most extreme mid-engine Porsche, with motorsport DNA in every component.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The most extreme mid-engine Porsche, with motorsport DNA in every component.</p>
                     </div>
                 </div>
             </div>
@@ -422,110 +497,110 @@
             <!-- Ferrari Section -->
             <div id="ferrari" class="cars-section hidden">
                 <h2 class="section-title">Ferrari</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                     <!-- Car 1 -->
                     <div class="car-card">
-                        <img src="./assets/images/ferrari-sf90.png" alt="SF90 Stradale" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">SF90 Stradale</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/ferrari-sf90.png" alt="SF90 Stradale" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">SF90 Stradale</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2025</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2025</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">986 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">986 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$594,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$594,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">Ferrari's first series-production PHEV, blending V8 power with electric motors.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">Ferrari's first series-production PHEV, blending V8 power with electric motors.</p>
                     </div>
                     
                     <!-- Car 2 -->
                     <div class="car-card">
-                        <img src="./assets/images/ferrari-296.png" alt="296 GTB" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">296 GTB</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/ferrari-296.png" alt="296 GTB" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">296 GTB</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2025</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2025</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">818 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">818 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$346,950</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$346,950</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The new V6 hybrid supercar that redefines driving pleasure and performance.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The new V6 hybrid supercar that redefines driving pleasure and performance.</p>
                     </div>
                     
                     <!-- Car 3 -->
                     <div class="car-card">
-                        <img src="./assets/images/ferrari-roma.png" alt="Roma" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Roma</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/ferrari-roma.png" alt="Roma" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Roma</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2024</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">612 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">612 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$260,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$260,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">A front-engined V8 coupe that celebrates la dolce vita with timeless elegance.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">A front-engined V8 coupe that celebrates la dolce vita with timeless elegance.</p>
                     </div>
                     
                     <!-- Car 4 -->
                     <div class="car-card">
-                        <img src="./assets/images/ferrari-f8.png" alt="F8 Tributo" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">F8 Tributo</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/ferrari-f8.png" alt="F8 Tributo" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">F8 Tributo</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2023</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">711 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">711 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$300,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$300,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The most powerful V8 Ferrari ever, paying tribute to the legendary V8 engine.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The most powerful V8 Ferrari ever, paying tribute to the legendary V8 engine.</p>
                     </div>
                     
                     <!-- Car 5 -->
                     <div class="car-card">
-                        <img src="./assets/images/ferrari-812s.png" alt="Portofino M" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">812 Superfast</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/ferrari-812s.png" alt="Portofino M" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">812 Superfast</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2023</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">789 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">789 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$340,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$340,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The Ferrari 812 Superfast is a front-engine V12 grand tourer delivering extreme power, razor-sharp handling, and unmistakable Italian design.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The Ferrari 812 Superfast is a front-engine V12 grand tourer delivering extreme power, razor-sharp handling, and unmistakable Italian design.</p>
                     </div>
                 </div>
             </div>
@@ -533,110 +608,110 @@
             <!-- Lamborghini Section -->
             <div id="lamborghini" class="cars-section hidden">
                 <h2 class="section-title">Lamborghini</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                     <!-- Car 1 -->
                     <div class="car-card">
-                        <img src="./assets/images/lambo-huracan.png" alt="Huracán STO" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Huracán STO</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/lambo-huracan.png" alt="Huracán STO" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Huracán STO</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2024</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">631 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">631 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$344,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$344,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">Street-legal race car derived from Lamborghini's Super Trofeo and GT3 race cars.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">Street-legal race car derived from Lamborghini's Super Trofeo and GT3 race cars.</p>
                     </div>
                     
                     <!-- Car 2 -->
                     <div class="car-card">
-                        <img src="./assets/images/lambo-revuelto.png" alt="Revuelto" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Revuelto</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/lambo-revuelto.png" alt="Revuelto" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Revuelto</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2024</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,001 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,001 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$608,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$608,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The first V12 hybrid super sports car, ushering in a new era for Lamborghini.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The first V12 hybrid super sports car, ushering in a new era for Lamborghini.</p>
                     </div>
                     
                     <!-- Car 3 -->
                     <div class="car-card">
-                        <img src="./assets/images/lambo-aventador.png" alt="Aventador SVJ" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Aventador SVJ</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/lambo-aventador.png" alt="Aventador SVJ" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Aventador SVJ</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2022</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2022</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">759 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">759 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$517,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$517,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The ultimate Aventador, holding the Nürburgring production car lap record.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The ultimate Aventador, holding the Nürburgring production car lap record.</p>
                     </div>
                     
                     <!-- Car 4 -->
                     <div class="car-card">
-                        <img src="./assets/images/lambo-huracanp.png" alt="Huracán Tecnica" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Huracán Performante</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/lambo-huracanp.png" alt="Huracán Tecnica" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Huracán Performante</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2022</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2022</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">631 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">631 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$274,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$274,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The perfect balance between lifestyle and track-focused performance.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The perfect balance between lifestyle and track-focused performance.</p>
                     </div>
                     
                     <!-- Car 5 -->
                     <div class="car-card">
-                        <img src="./assets/images/lambo-urus.png" alt="Urus S" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Urus S</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/lambo-urus.png" alt="Urus S" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Urus S</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2024</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">657 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">657 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$235,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$235,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The world's first Super SUV, combining super sports car DNA with everyday versatility.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The world's first Super SUV, combining super sports car DNA with everyday versatility.</p>
                     </div>
                 </div>
             </div>
@@ -644,110 +719,110 @@
             <!-- McLaren Section -->
             <div id="mclaren" class="cars-section hidden">
                 <h2 class="section-title">McLaren</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                     <!-- Car 1 -->
                     <div class="car-card">
-                        <img src="./assets/images/mclaren-artura.png" alt="Artura" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Artura</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/mclaren-artura.png" alt="Artura" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Artura</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2024</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">671 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">671 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$237,500</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$237,500</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">McLaren's next-generation supercar with all-new V6 hybrid powertrain.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">McLaren's next-generation supercar with all-new V6 hybrid powertrain.</p>
                     </div>
                     
                     <!-- Car 2 -->
                     <div class="car-card">
-                        <img src="./assets/images/mclaren-720s.png" alt="720S" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">720S</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/mclaren-720s.png" alt="720S" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">720S</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2024</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">710 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">710 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$305,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$305,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The definitive super-series model, combining extreme performance with day-to-day usability.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The definitive super-series model, combining extreme performance with day-to-day usability.</p>
                     </div>
                     
                     <!-- Car 3 -->
                     <div class="car-card">
-                        <img src="./assets/images/mclaren-765lt.png" alt="765LT" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">765LT</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/mclaren-765lt.png" alt="765LT" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">765LT</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2023</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">755 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">755 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$358,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$358,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The most extreme and engaging LT model ever, focused on track performance.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The most extreme and engaging LT model ever, focused on track performance.</p>
                     </div>
                     
                     <!-- Car 4 -->
                     <div class="car-card">
-                        <img src="./assets/images/mclaren-senna.png" alt="Senna" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Senna</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/mclaren-senna.png" alt="Senna" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Senna</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2023</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">789 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">789 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$1,000,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$1,000,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The ultimate track-focused hypercar, designed without compromise for circuit performance.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The ultimate track-focused hypercar, designed without compromise for circuit performance.</p>
                     </div>
                     
                     <!-- Car 5 -->
                     <div class="car-card">
-                        <img src="./assets/images/mclaren-p1.png" alt="P1" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">P1</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/mclaren-p1.png" alt="P1" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">P1</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2015</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2015</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">903 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">903 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$1,350,000</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$1,350,000</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The groundbreaking hypercar that defined a generation, part of the legendary "Holy Trinity".</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The groundbreaking hypercar that defined a generation, part of the legendary "Holy Trinity".</p>
                     </div>
                 </div>
             </div>
@@ -755,110 +830,110 @@
             <!-- Bugatti Section -->
             <div id="bugatti" class="cars-section hidden">
                 <h2 class="section-title">Bugatti</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                     <!-- Car 1 -->
                     <div class="car-card">
-                        <img src="./assets/images/bugatti-chiron.png" alt="Chiron Super Sport" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Chiron Super Sport</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/bugatti-chiron.png" alt="Chiron Super Sport" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Chiron Super Sport</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2024</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,577 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,577 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$3.9M</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$3.9M</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The ultimate hyper sports car, focused on extreme speed and luxury.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The ultimate hyper sports car, focused on extreme speed and luxury.</p>
                     </div>
                     
                     <!-- Car 2 -->
                     <div class="car-card">
-                        <img src="./assets/images/bugatti-divo.png" alt="Divo" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Divo</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/bugatti-divo.png" alt="Divo" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Divo</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2023</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,479 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,479 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$5.8M</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$5.8M</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">A handling-focused hypercar with extreme aerodynamic capabilities.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">A handling-focused hypercar with extreme aerodynamic capabilities.</p>
                     </div>
                     
                     <!-- Car 3 -->
                     <div class="car-card">
-                        <img src="./assets/images/bugatti-bolide.png" alt="Bolide" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Bolide</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/bugatti-bolide.png" alt="Bolide" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Bolide</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2024</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,824 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,824 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$4.7M</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$4.7M</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">Track-only hypercar pushing the boundaries of performance and technology.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">Track-only hypercar pushing the boundaries of performance and technology.</p>
                     </div>
                     
                     <!-- Car 4 -->
                     <div class="car-card">
-                        <img src="./assets/images/bugatti-veyron.png" alt="Veyron 16.4" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Veyron 16.4</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/bugatti-veyron.png" alt="Veyron 16.4" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Veyron 16.4</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2015</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2015</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,184 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,184 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$2.5M</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$2.5M</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The car that redefined hypercars, first to break 400 km/h barrier.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The car that redefined hypercars, first to break 400 km/h barrier.</p>
                     </div>
                     
                     <!-- Car 5 -->
                     <div class="car-card">
-                        <img src="./assets/images/bugatti-centodieci.png" alt="Centodieci" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Centodieci</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/bugatti-centodieci.png" alt="Centodieci" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Centodieci</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2022</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2022</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,577 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,577 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$9.0M</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$9.0M</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">Exclusive limited edition paying homage to the legendary EB110.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">Exclusive limited edition paying homage to the legendary EB110.</p>
                     </div>
                 </div>
             </div>
@@ -866,110 +941,110 @@
             <!-- Koenigsegg Section -->
             <div id="koenigsegg" class="cars-section hidden">
                 <h2 class="section-title">Koenigsegg</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                     <!-- Car 1 -->
                     <div class="car-card">
-                        <img src="./assets/images/koenigsegg-jesko.png" alt="Jesko Absolut" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Jesko Absolut</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/koenigsegg-jesko.png" alt="Jesko Absolut" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Jesko Absolut</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2024</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,600 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,600 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$3.0M</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$3.0M</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The ultimate speed machine, designed to break the 500 km/h barrier.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The ultimate speed machine, designed to break the 500 km/h barrier.</p>
                     </div>
                     
                     <!-- Car 2 -->
                     <div class="car-card">
-                        <img src="./assets/images/koenigsegg-gemera.png" alt="Gemera" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Gemera</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/koenigsegg-gemera.png" alt="Gemera" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Gemera</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2024</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2024</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,700 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,700 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$1.7M</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$1.7M</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The world's first Mega-GT, seating four adults in hypercar luxury.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The world's first Mega-GT, seating four adults in hypercar luxury.</p>
                     </div>
                     
                     <!-- Car 3 -->
                     <div class="car-card">
-                        <img src="./assets/images/koenigsegg-regera.png" alt="Regera" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Regera</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/koenigsegg-regera.png" alt="Regera" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Regera</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2023</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,500 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,500 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$2.0M</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$2.0M</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">Revolutionary hypercar without gearbox, using direct drive technology.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">Revolutionary hypercar without gearbox, using direct drive technology.</p>
                     </div>
                     
                     <!-- Car 4 -->
                     <div class="car-card">
-                        <img src="./assets/images/koenigsegg-agera.png" alt="Agera RS" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">Agera RS</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/koenigsegg-agera.png" alt="Agera RS" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">Agera RS</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2017</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2017</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,160 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,160 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$2.5M</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$2.5M</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">The record-breaking hypercar that set multiple world speed records.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">The record-breaking hypercar that set multiple world speed records.</p>
                     </div>
                     
                     <!-- Car 5 -->
                     <div class="car-card">
-                        <img src="./assets/images/koenigsegg-cc850.png" alt="CC850" class="card-image">
-                        <h3 class="text-2xl font-bold mb-2">CC850</h3>
-                        <div class="mb-4">
+                        <img src="./assets/images/koenigsegg-cc850.png" alt="CC850" class="card-image" loading="lazy" decoding="async" width="400" height="300">
+                        <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">CC850</h3>
+                        <div class="mb-3 md:mb-4">
                             <div class="stat-item">
-                                <span class="text-gray-400">Year:</span>
-                                <span class="font-semibold">2023</span>
+                                <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                                <span class="font-semibold text-sm md:text-base">2023</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Power:</span>
-                                <span class="power-indicator">1,185 HP</span>
+                                <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                                <span class="power-indicator text-sm md:text-base">1,185 HP</span>
                             </div>
                             <div class="stat-item">
-                                <span class="text-gray-400">Price:</span>
-                                <span class="price-indicator">$3.6M</span>
+                                <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                                <span class="price-indicator text-sm md:text-base">$3.6M</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 text-sm">Celebrating 20 years of Koenigsegg with manual gearbox option on a hypercar.</p>
+                        <p class="text-gray-300 text-xs md:text-sm">Celebrating 20 years of Koenigsegg with manual gearbox option on a hypercar.</p>
                     </div>
                 </div>
             </div>
@@ -977,21 +1052,36 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-black/90 backdrop-blur-sm text-white py-12 px-6 border-t border-gray-800 relative z-10">
+    <footer class="bg-black/90 backdrop-blur-sm text-white py-8 md:py-12 px-4 md:px-6 border-t border-gray-800 relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="caesar-font text-3xl font-bold mb-4">SLIPSTREAM</h3>
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <h3 class="caesar-font text-2xl md:text-3xl font-bold mb-3 md:mb-4">SLIPSTREAM</h3>
                     <p class="text-gray-400">For the love of automotive excellence ~ By Siddhesh Khankhoje</p>
                 </div>
-                <div class="flex space-x-6">
+                <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-6 md:mb-0">
                     <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
                     <a href="explore.html" class="text-white">Explore</a>
                     <a href="compare.html" class="text-gray-400 hover:text-white transition-colors">Compare</a>
                     <a href="my-garage.html" class="text-gray-400 hover:text-white transition-colors">My Garage</a>
                 </div>
             </div>
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+            
+            <!-- GitHub Link -->
+                <div class="mt-6 md:mt-8 flex justify-center">
+                    <a href="https://github.com/SiddheshK1704/Slipstream-CarProject" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="github-link">
+                        <!-- White GitHub SVG -->
+                        <svg class="github-logo" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        <span>View on GitHub</span>
+                    </a>
+                </div>
+            
+            <div class="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
                 <p>© Slipstream 2025. Built with passion for automotive enthusiasts worldwide, by Siddhesh Khankhoje.</p>
                 <p class="mt-2">All images are for demonstration purposes.</p>
             </div>
@@ -1102,6 +1192,22 @@
                     this.style.zIndex = '1';
                 });
             });
+            
+            // Optimize image loading
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.loading = 'lazy';
+                img.decoding = 'async';
+            });
+            
+            // Reduce motion preference
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) {
+                document.querySelectorAll('*').forEach(element => {
+                    element.style.animationDuration = '0.01ms';
+                    element.style.transitionDuration = '0.01ms';
+                });
+            }
         });
     </script>
 </body>

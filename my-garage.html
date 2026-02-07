@@ -66,8 +66,8 @@
         }
         
         .shape:nth-child(1) {
-            width: 300px;
-            height: 150px;
+            width: 200px;
+            height: 100px;
             top: 10%;
             left: 5%;
             animation-delay: 0s;
@@ -75,8 +75,8 @@
         }
         
         .shape:nth-child(2) {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             top: 20%;
             right: 10%;
             animation-delay: 5s;
@@ -84,8 +84,8 @@
         }
         
         .shape:nth-child(3) {
-            width: 250px;
-            height: 100px;
+            width: 180px;
+            height: 80px;
             bottom: 30%;
             left: 15%;
             animation-delay: 10s;
@@ -93,8 +93,8 @@
         }
         
         .shape:nth-child(4) {
-            width: 150px;
-            height: 250px;
+            width: 120px;
+            height: 200px;
             bottom: 20%;
             right: 5%;
             animation-delay: 15s;
@@ -115,10 +115,10 @@
                 transform: translateY(0) rotate(0deg);
             }
             33% {
-                transform: translateY(-30px) rotate(5deg);
+                transform: translateY(-20px) rotate(5deg);
             }
             66% {
-                transform: translateY(15px) rotate(-5deg);
+                transform: translateY(10px) rotate(-5deg);
             }
         }
         
@@ -130,7 +130,7 @@
         
         .caesar-font {
             font-family: 'Caesar Dressing', cursive;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
         
         /* Glass theme cards */
@@ -138,7 +138,7 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
@@ -162,14 +162,14 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border-radius: 16px;
             transition: all 0.3s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
         
         .garage-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
             border-color: rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.15);
         }
@@ -178,7 +178,7 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 1.5rem;
             transition: all 0.3s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -187,7 +187,7 @@
         .stat-card:hover {
             background: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
         
         .brand-badge {
@@ -220,7 +220,7 @@
         /* Car image styling */
         .car-image {
             width: 100%;
-            height: 240px;
+            height: 200px;
             object-fit: cover;
             border-radius: 12px;
             margin-bottom: 1.5rem;
@@ -284,7 +284,7 @@
         
         /* Number animations */
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             background: linear-gradient(45deg, #ff6b00, #ff0000, #ffd700);
             -webkit-background-clip: text;
@@ -302,8 +302,110 @@
             }
         }
         
+        /* GitHub link styles */
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .github-logo {
+            width: 20px;
+            height: 20px;
+            color: white; /* For SVG */
+        }
+        
         .hidden {
             display: none;
+        }
+        
+        /* Mobile optimizations */
+        @media (min-width: 768px) {
+            .car-image {
+                height: 240px;
+            }
+            
+            .garage-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+            
+            .glass-card {
+                border-radius: 20px;
+            }
+            
+            .garage-card {
+                border-radius: 20px;
+            }
+            
+            .stat-card {
+                border-radius: 16px;
+                padding: 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+            
+            .shape:nth-child(1) {
+                width: 300px;
+                height: 150px;
+            }
+            
+            .shape:nth-child(2) {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .shape:nth-child(3) {
+                width: 250px;
+                height: 100px;
+            }
+            
+            .shape:nth-child(4) {
+                width: 150px;
+                height: 250px;
+            }
+            
+            @keyframes float {
+                0%, 100% {
+                    transform: translateY(0) rotate(0deg);
+                }
+                33% {
+                    transform: translateY(-30px) rotate(5deg);
+                }
+                66% {
+                    transform: translateY(15px) rotate(-5deg);
+                }
+            }
+        }
+        
+        /* Optimize image loading */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Ensure smooth animations */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
@@ -320,10 +422,10 @@
     </div>
     
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4">
+    <nav class="fixed top-0 left-0 w-full z-50 px-4 py-3 md:px-6 md:py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="index.html" class="caesar-font text-3xl text-white font-bold">SLIPSTREAM</a>
-            <div class="hidden md:flex items-center space-x-8">
+            <a href="index.html" class="caesar-font text-2xl md:text-3xl text-white font-bold">SLIPSTREAM</a>
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
                 <a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a>
                 <a href="explore.html" class="text-white/80 hover:text-white transition-colors">Explore</a>
                 <a href="compare.html" class="text-white/80 hover:text-white transition-colors">Compare</a>
@@ -331,62 +433,62 @@
                 <a href="index.html#about" class="text-white/80 hover:text-white transition-colors">About</a>
             </div>
             <!-- Mobile menu button -->
-            <button id="mobileMenuBtn" class="md:hidden text-white">
+            <button id="mobileMenuBtn" class="md:hidden text-white p-1">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
         </div>
         <!-- Mobile menu -->
-        <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-4 p-4 rounded-lg">
-            <div class="flex flex-col space-y-4">
-                <a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a>
-                <a href="explore.html" class="text-white/80 hover:text-white transition-colors">Explore</a>
-                <a href="compare.html" class="text-white/80 hover:text-white transition-colors">Compare</a>
-                <a href="my-garage.html" class="text-white font-semibold">My Garage</a>
-                <a href="index.html#about" class="text-white/80 hover:text-white transition-colors">About</a>
+        <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-3 p-4 rounded-lg">
+            <div class="flex flex-col space-y-3">
+                <a href="index.html" class="text-white/80 hover:text-white transition-colors py-2">Home</a>
+                <a href="explore.html" class="text-white/80 hover:text-white transition-colors py-2">Explore</a>
+                <a href="compare.html" class="text-white/80 hover:text-white transition-colors py-2">Compare</a>
+                <a href="my-garage.html" class="text-white font-semibold py-2">My Garage</a>
+                <a href="index.html#about" class="text-white/80 hover:text-white transition-colors py-2">About</a>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
     <div class="content-overlay">
-        <section class="pt-32 pb-20 px-6">
+        <section class="pt-24 pb-12 px-4 md:pt-32 md:pb-20 md:px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-12">
-                    <h1 class="text-5xl md:text-6xl font-bold mb-6 main-title">My Dream Garage</h1>
-                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                <div class="text-center mb-8 md:mb-12">
+                    <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 main-title">My Dream Garage</h1>
+                    <p class="text-base md:text-xl text-gray-300 max-w-3xl mx-auto">
                         A curated collection of automotive perfection. These are the machines that fuel my passion and represent the pinnacle of automotive engineering.
                     </p>
                 </div>
                 
                 <!-- Developer Intro -->
-                <div class="developer-intro rounded-2xl p-8 mb-12 glass-card">
-                    <div class="flex flex-col md:flex-row items-center mb-6">
-                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center mr-6 mb-4 md:mb-0">
-                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <div class="developer-intro rounded-xl md:rounded-2xl p-6 md:p-8 mb-8 md:mb-12 glass-card">
+                    <div class="flex flex-col md:flex-row items-center mb-4 md:mb-6">
+                        <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center mr-0 md:mr-6 mb-4 md:mb-0">
+                            <svg class="w-8 h-8 md:w-10 md:h-10 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                             </svg>
                         </div>
                         <div class="text-center md:text-left">
-                            <h3 class="text-2xl font-bold">The Developer's Collection</h3>
+                            <h3 class="text-xl md:text-2xl font-bold">The Developer's Collection</h3>
                             <p class="text-gray-400">Personally selected by the creator of Slipstream</p>
                         </div>
                     </div>
-                    <p class="text-gray-300 text-lg leading-relaxed text-center md:text-left">
+                    <p class="text-gray-300 text-base md:text-lg leading-relaxed text-center md:text-left">
                         Each car in this garage represents a milestone in automotive history, a perfect blend of art and engineering that pushes the boundaries of what's possible. From track-focused monsters to luxurious grand tourers, these are the cars that define excellence.
                     </p>
                 </div>
                 
                 <!-- Cars Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16" id="garageCars">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16" id="garageCars">
                     <!-- Cars will be loaded here by JavaScript -->
                 </div>
                 
                 <!-- Garage Stats -->
-                <div class="mt-12">
-                    <h2 class="text-3xl font-bold text-center mb-8 main-title">Garage Statistics</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="garageStats">
+                <div class="mt-8 md:mt-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8 main-title">Garage Statistics</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6" id="garageStats">
                         <!-- Stats will be loaded here by JavaScript -->
                     </div>
                 </div>
@@ -394,21 +496,36 @@
         </section>
 
         <!-- Footer -->
-        <footer class="py-12 px-6">
+        <footer class="py-8 md:py-12 px-4 md:px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="mb-6 md:mb-0">
-                        <h3 class="caesar-font text-3xl font-bold mb-4">SLIPSTREAM</h3>
+                    <div class="mb-6 md:mb-0 text-center md:text-left">
+                        <h3 class="caesar-font text-2xl md:text-3xl font-bold mb-3 md:mb-4">SLIPSTREAM</h3>
                         <p class="text-gray-400">For the love of automotive excellence</p>
                     </div>
-                    <div class="flex space-x-6">
+                    <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-6 md:mb-0">
                         <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
                         <a href="explore.html" class="text-gray-400 hover:text-white transition-colors">Explore</a>
                         <a href="compare.html" class="text-gray-400 hover:text-white transition-colors">Compare</a>
                         <a href="my-garage.html" class="text-white">My Garage</a>
                     </div>
                 </div>
-                <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                
+                <!-- GitHub Link -->
+                <div class="mt-6 md:mt-8 flex justify-center">
+                    <a href="https://github.com/SiddheshK1704/Slipstream-CarProject" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="github-link">
+                        <!-- White GitHub SVG -->
+                        <svg class="github-logo" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        <span>View on GitHub</span>
+                    </a>
+                </div>
+                
+                <div class="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
                     <p>© Slipstream 2025. Built with passion for automotive enthusiasts worldwide, by Siddhesh Khankhoje.</p>
                     <p class="mt-2">This garage represents my personal automotive dreams and aspirations.</p>
                     <p>All images are for demonstration purposes.</p>
@@ -517,42 +634,42 @@
             // Populate cars grid
             const garageCars = document.getElementById('garageCars');
             garageCars.innerHTML = dreamCars.map(car => `
-                <div class="garage-card p-6">
-                    <div class="relative mb-6">
-                        <span class="brand-badge ${car.brand.toLowerCase()}-badge absolute top-4 left-4 z-10">${car.brand}</span>
-                        <img src="${car.image}" alt="${car.name}" class="car-image">
+                <div class="garage-card p-4 md:p-6">
+                    <div class="relative mb-4 md:mb-6">
+                        <span class="brand-badge ${car.brand.toLowerCase()}-badge absolute top-3 md:top-4 left-3 md:left-4 z-10">${car.brand}</span>
+                        <img src="${car.image}" alt="${car.name}" class="car-image" loading="lazy" decoding="async" width="400" height="300">
                     </div>
-                    <h3 class="text-2xl font-bold mb-3">${car.name}</h3>
+                    <h3 class="text-xl md:text-2xl font-bold mb-2 md:mb-3">${car.name}</h3>
                     
-                    <div class="mb-4">
+                    <div class="mb-3 md:mb-4">
                         <div class="stat-item">
-                            <span class="text-gray-400">Year:</span>
-                            <span class="font-semibold">${car.year}</span>
+                            <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                            <span class="font-semibold text-sm md:text-base">${car.year}</span>
                         </div>
                         <div class="stat-item">
-                            <span class="text-gray-400">Power:</span>
-                            <span class="power-text">${car.power} ${car.powerUnit}</span>
+                            <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                            <span class="power-text text-sm md:text-base">${car.power} ${car.powerUnit}</span>
                         </div>
                         <div class="stat-item">
-                            <span class="text-gray-400">Price:</span>
-                            <span class="price-text">${formatPrice(car.price)}</span>
+                            <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                            <span class="price-text text-sm md:text-base">${formatPrice(car.price)}</span>
                         </div>
                     </div>
                     
-                    <p class="text-gray-300 mb-4">${car.description}</p>
+                    <p class="text-gray-300 mb-3 md:mb-4 text-sm md:text-base">${car.description}</p>
                     
-                    <div class="mt-4 pt-4 border-t border-white/10">
-                        <h4 class="font-semibold text-orange-500 mb-2">Why This Car:</h4>
-                        <p class="text-gray-400 text-sm">${car.whyChosen}</p>
+                    <div class="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10">
+                        <h4 class="font-semibold text-orange-500 mb-1 md:mb-2 text-sm md:text-base">Why This Car:</h4>
+                        <p class="text-gray-400 text-xs md:text-sm">${car.whyChosen}</p>
                     </div>
                     
-                    <div class="mt-4 pt-4 border-t border-white/10">
-                        <h4 class="font-semibold mb-2 text-sm text-gray-400 uppercase tracking-wider">Key Specs:</h4>
+                    <div class="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10">
+                        <h4 class="font-semibold mb-1 md:mb-2 text-xs md:text-sm text-gray-400 uppercase tracking-wider">Key Specs:</h4>
                         <div class="grid grid-cols-2 gap-2">
                             ${Object.entries(car.specs).slice(0, 4).map(([key, value]) => `
-                                <div class="text-center p-2 bg-white/5 rounded-lg">
+                                <div class="text-center p-1.5 md:p-2 bg-white/5 rounded-lg">
                                     <div class="text-xs text-gray-400">${key}</div>
-                                    <div class="font-semibold text-sm">${value}</div>
+                                    <div class="font-semibold text-xs md:text-sm">${value}</div>
                                 </div>
                             `).join('')}
                         </div>
@@ -565,26 +682,26 @@
             garageStats.innerHTML = `
                 <div class="stat-card text-center">
                     <div class="stat-number">${stats.totalPower}</div>
-                    <div class="text-gray-400 mt-2">Total Power (HP)</div>
-                    <div class="text-sm text-gray-500 mt-1">Combined output</div>
+                    <div class="text-gray-400 mt-2 text-sm md:text-base">Total Power (HP)</div>
+                    <div class="text-xs text-gray-500 mt-1">Combined output</div>
                 </div>
                 
                 <div class="stat-card text-center">
                     <div class="stat-number">${formatPrice(stats.totalPrice)}</div>
-                    <div class="text-gray-400 mt-2">Total Value</div>
-                    <div class="text-sm text-gray-500 mt-1">Dream garage worth</div>
+                    <div class="text-gray-400 mt-2 text-sm md:text-base">Total Value</div>
+                    <div class="text-xs text-gray-500 mt-1">Dream garage worth</div>
                 </div>
                 
                 <div class="stat-card text-center">
                     <div class="stat-number">${stats.avgPower}</div>
-                    <div class="text-gray-400 mt-2">Average Power (HP)</div>
-                    <div class="text-sm text-gray-500 mt-1">Per car</div>
+                    <div class="text-gray-400 mt-2 text-sm md:text-base">Average Power (HP)</div>
+                    <div class="text-xs text-gray-500 mt-1">Per car</div>
                 </div>
                 
                 <div class="stat-card text-center">
                     <div class="stat-number">${stats.carCount}</div>
-                    <div class="text-gray-400 mt-2">Cars in Garage</div>
-                    <div class="text-sm text-gray-500 mt-1">Curated collection</div>
+                    <div class="text-gray-400 mt-2 text-sm md:text-base">Cars in Garage</div>
+                    <div class="text-xs text-gray-500 mt-1">Curated collection</div>
                 </div>
             `;
             
@@ -603,6 +720,22 @@
                     menu.classList.add('hidden');
                 }
             });
+            
+            // Optimize image loading
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.loading = 'lazy';
+                img.decoding = 'async';
+            });
+            
+            // Reduce motion preference
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) {
+                document.querySelectorAll('*').forEach(element => {
+                    element.style.animationDuration = '0.01ms';
+                    element.style.transitionDuration = '0.01ms';
+                });
+            }
         });
     </script>
 </body>

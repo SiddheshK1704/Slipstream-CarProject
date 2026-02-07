@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Caesar+Dressing&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Preload critical images -->
+    <link rel="preload" href="./assets/images/nissan-gtr.png" as="image">
     <style>
         * {
             margin: 0;
@@ -32,7 +34,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.2; /* Adjust this value for desired opacity */
+            opacity: 0.2;
             filter: brightness(0.8) contrast(1.1);
         }
         
@@ -67,7 +69,7 @@
         
         .caesar-font {
             font-family: 'Caesar Dressing', cursive;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
         
         /* Glass theme */
@@ -75,7 +77,7 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -84,7 +86,7 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border-radius: 16px;
             transition: all 0.3s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
@@ -100,7 +102,7 @@
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
             border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border-radius: 16px;
             transition: all 0.3s ease;
         }
         
@@ -111,7 +113,7 @@
         }
         
         .progress-bar {
-            height: 8px;
+            height: 6px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             overflow: hidden;
@@ -129,14 +131,14 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: linear-gradient(45deg, #ff0000, #ff6b00);
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             z-index: 10;
             box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
             backdrop-filter: blur(4px);
@@ -150,14 +152,14 @@
         
         .car-image {
             width: 100%;
-            height: 180px;
+            height: 150px;
             object-fit: cover;
             border-radius: 12px;
             margin-bottom: 1rem;
         }
         
         .modal-glass {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(20px);
         }
         
@@ -165,7 +167,7 @@
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
+            border-radius: 12px;
             transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -185,13 +187,13 @@
         
         .brand-badge {
             position: absolute;
-            top: 12px;
-            left: 12px;
+            top: 8px;
+            left: 8px;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(4px);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -215,7 +217,7 @@
         
         /* Modal scrollbar */
         #carsGrid::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
         }
         
         #carsGrid::-webkit-scrollbar-track {
@@ -265,21 +267,99 @@
         .vs-badge {
             animation: pulse 2s infinite ease-in-out;
         }
+        
+        /* GitHub link styles */
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .github-logo {
+            width: 20px;
+            height: 20px;
+            color: white; /* For SVG */
+        }
+        
+        /* Mobile optimizations */
+        @media (min-width: 768px) {
+            .car-image {
+                height: 180px;
+            }
+            
+            .vs-badge {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .glass-card {
+                border-radius: 20px;
+            }
+            
+            .car-selector {
+                border-radius: 20px;
+            }
+            
+            .car-item {
+                border-radius: 16px;
+            }
+            
+            .brand-badge {
+                top: 12px;
+                left: 12px;
+                padding: 4px 12px;
+                font-size: 0.75rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .car-image {
+                height: 200px;
+            }
+        }
+        
+        /* Optimize image loading */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Ensure smooth animations */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen">
     <!-- Background Image -->
     <div class="page-background">
-        <!-- ADD YOUR IMAGE HERE: Replace 'compare-bg.jpg' with your image filename -->
-        <img src="./assets/images/nissan-gtr.png" alt="Background" class="bg-image">
+        <img src="./assets/images/nissan-gtr.png" alt="Background" class="bg-image" loading="lazy" decoding="async">
         <div class="bg-overlay"></div>
     </div>
     
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4">
+    <nav class="fixed top-0 left-0 w-full z-50 px-4 py-3 md:px-6 md:py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="index.html" class="caesar-font text-3xl text-white font-bold">SLIPSTREAM</a>
-            <div class="hidden md:flex items-center space-x-8">
+            <a href="index.html" class="caesar-font text-2xl md:text-3xl text-white font-bold">SLIPSTREAM</a>
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
                 <a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a>
                 <a href="explore.html" class="text-white/80 hover:text-white transition-colors">Explore</a>
                 <a href="compare.html" class="text-white font-semibold">Compare</a>
@@ -287,42 +367,42 @@
                 <a href="index.html#about" class="text-white/80 hover:text-white transition-colors">About</a>
             </div>
             <!-- Mobile menu button -->
-            <button id="mobileMenuBtn" class="md:hidden text-white">
+            <button id="mobileMenuBtn" class="md:hidden text-white p-1">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
         </div>
         <!-- Mobile menu -->
-        <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-4 p-4 rounded-lg">
-            <div class="flex flex-col space-y-4">
-                <a href="index.html" class="text-white/80 hover:text-white transition-colors">Home</a>
-                <a href="explore.html" class="text-white/80 hover:text-white transition-colors">Explore</a>
-                <a href="compare.html" class="text-white font-semibold">Compare</a>
-                <a href="my-garage.html" class="text-white/80 hover:text-white transition-colors">My Garage</a>
-                <a href="index.html#about" class="text-white/80 hover:text-white transition-colors">About</a>
+        <div id="mobileMenu" class="md:hidden hidden bg-black/95 backdrop-blur-sm mt-3 p-4 rounded-lg">
+            <div class="flex flex-col space-y-3">
+                <a href="index.html" class="text-white/80 hover:text-white transition-colors py-2">Home</a>
+                <a href="explore.html" class="text-white/80 hover:text-white transition-colors py-2">Explore</a>
+                <a href="compare.html" class="text-white font-semibold py-2">Compare</a>
+                <a href="my-garage.html" class="text-white/80 hover:text-white transition-colors py-2">My Garage</a>
+                <a href="index.html#about" class="text-white/80 hover:text-white transition-colors py-2">About</a>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
     <div class="content-wrapper">
-        <section class="pt-32 pb-20 px-6">
+        <section class="pt-24 pb-16 px-4 md:pt-32 md:pb-20 md:px-6">
             <div class="max-w-7xl mx-auto">
-                <h1 class="text-5xl md:text-6xl font-bold text-center mb-6 main-title">Explore Head-to-Head Comparisons</h1>
-                <p class="text-xl text-gray-300 text-center max-w-3xl mx-auto mb-12">
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-4 md:mb-6 main-title">Explore Head-to-Head Comparisons</h1>
+                <p class="text-base md:text-xl text-gray-300 text-center max-w-3xl mx-auto mb-8 md:mb-12">
                     Compare the world's greatest cars against each other. See how they stack up in performance, design, and innovation.
                 </p>
                 
                 <!-- Car Selection -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-16">
                     <!-- Car 1 Selector -->
-                    <div class="car-selector rounded-2xl p-6 cursor-pointer" id="car1Selector">
-                        <div class="flex flex-col items-center justify-center h-64" id="car1Placeholder">
-                            <svg class="w-16 h-16 text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <div class="car-selector rounded-xl md:rounded-2xl p-4 md:p-6 cursor-pointer" id="car1Selector">
+                        <div class="flex flex-col items-center justify-center h-48 md:h-64" id="car1Placeholder">
+                            <svg class="w-12 h-12 md:w-16 md:h-16 text-gray-500 mb-3 md:mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
-                            <p class="text-gray-400 text-lg">Click to select first car</p>
+                            <p class="text-gray-400 text-sm md:text-lg">Click to select first car</p>
                         </div>
                         <div class="hidden" id="car1Selected">
                             <!-- Car 1 content will be loaded here -->
@@ -330,12 +410,12 @@
                     </div>
                     
                     <!-- Car 2 Selector -->
-                    <div class="car-selector rounded-2xl p-6 cursor-pointer" id="car2Selector">
-                        <div class="flex flex-col items-center justify-center h-64" id="car2Placeholder">
-                            <svg class="w-16 h-16 text-gray-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <div class="car-selector rounded-xl md:rounded-2xl p-4 md:p-6 cursor-pointer" id="car2Selector">
+                        <div class="flex flex-col items-center justify-center h-48 md:h-64" id="car2Placeholder">
+                            <svg class="w-12 h-12 md:w-16 md:h-16 text-gray-500 mb-3 md:mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
-                            <p class="text-gray-400 text-lg">Click to select second car</p>
+                            <p class="text-gray-400 text-sm md:text-lg">Click to select second car</p>
                         </div>
                         <div class="hidden" id="car2Selected">
                             <!-- Car 2 content will be loaded here -->
@@ -344,19 +424,19 @@
                 </div>
                 
                 <!-- VS Badge -->
-                <div class="relative mb-20">
+                <div class="relative mb-12 md:mb-20">
                     <div class="vs-badge">VS</div>
                 </div>
                 
                 <!-- Comparison Results -->
-                <div class="mt-12" id="comparisonResults">
+                <div class="mt-8 md:mt-12" id="comparisonResults">
                     <!-- Results will be loaded here -->
-                    <div class="text-center text-gray-400 py-12 glass-card p-8">
-                        <svg class="w-20 h-20 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <div class="text-center text-gray-400 py-8 md:py-12 glass-card p-6 md:p-8">
+                        <svg class="w-16 h-16 md:w-20 md:h-20 mx-auto text-gray-600 mb-3 md:mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <p class="text-xl">Select two cars to compare their specifications</p>
-                        <p class="text-gray-500 mt-2">Choose from our collection of 30+ legendary cars</p>
+                        <p class="text-lg md:text-xl">Select two cars to compare their specifications</p>
+                        <p class="text-gray-500 mt-2 text-sm md:text-base">Choose from our collection of 30+ legendary cars</p>
                     </div>
                 </div>
             </div>
@@ -364,32 +444,32 @@
 
         <!-- Car Selection Modal -->
         <div id="carModal" class="fixed inset-0 bg-black/90 z-50 hidden overflow-y-auto modal-glass">
-            <div class="min-h-screen px-4 pt-24 pb-12">
+            <div class="min-h-screen px-4 pt-20 pb-8 md:pt-24 md:pb-12">
                 <div class="max-w-6xl mx-auto">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-3xl font-bold">Select a Car for Comparison</h2>
-                        <button id="closeModal" class="text-white hover:text-gray-300 text-2xl bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                    <div class="flex justify-between items-center mb-6 md:mb-8">
+                        <h2 class="text-2xl md:text-3xl font-bold">Select a Car for Comparison</h2>
+                        <button id="closeModal" class="text-white hover:text-gray-300 text-2xl bg-white/10 hover:bg-white/20 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all">
                             &times;
                         </button>
                     </div>
                     
                     <!-- Search and Filter -->
-                    <div class="mb-8">
-                        <input type="text" id="carSearch" placeholder="Search cars by name, brand, or specifications..." class="w-full px-6 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
+                    <div class="mb-6 md:mb-8">
+                        <input type="text" id="carSearch" placeholder="Search cars by name, brand, or specifications..." class="w-full px-4 py-2 md:px-6 md:py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all text-sm md:text-base">
                     </div>
                     
                     <!-- Stats -->
-                    <div class="mb-6 flex items-center justify-between">
-                        <p class="text-gray-400">Showing <span id="carCount">30</span> legendary cars</p>
-                        <div class="flex space-x-4">
-                            <button id="filterAll" class="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium">All</button>
-                            <button id="filterSuper" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-medium transition-all">Supercars</button>
-                            <button id="filterHyper" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-medium transition-all">Hypercars</button>
+                    <div class="mb-4 md:mb-6 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                        <p class="text-gray-400 text-sm md:text-base">Showing <span id="carCount">30</span> legendary cars</p>
+                        <div class="flex space-x-2 md:space-x-4">
+                            <button id="filterAll" class="px-3 py-1.5 md:px-4 md:py-2 bg-orange-500 text-white rounded-lg text-xs md:text-sm font-medium">All</button>
+                            <button id="filterSuper" class="px-3 py-1.5 md:px-4 md:py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs md:text-sm font-medium transition-all">Supercars</button>
+                            <button id="filterHyper" class="px-3 py-1.5 md:px-4 md:py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs md:text-sm font-medium transition-all">Hypercars</button>
                         </div>
                     </div>
                     
                     <!-- Cars Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="carsGrid">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" id="carsGrid">
                         <!-- Cars will be loaded here by JavaScript -->
                     </div>
                 </div>
@@ -397,23 +477,39 @@
         </div>
 
         <!-- Footer -->
-        <footer class="py-12 px-6">
+        <footer class="py-8 md:py-12 px-4 md:px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="mb-6 md:mb-0">
-                        <h3 class="caesar-font text-3xl font-bold mb-4">SLIPSTREAM</h3>
+                    <div class="mb-6 md:mb-0 text-center md:text-left">
+                        <h3 class="caesar-font text-2xl md:text-3xl font-bold mb-3 md:mb-4">SLIPSTREAM</h3>
                         <p class="text-gray-400">For the love of automotive excellence ~ By Siddhesh Khankhoje</p>
                     </div>
-                    <div class="flex space-x-6">
+                    <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-6 md:mb-0">
                         <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
                         <a href="explore.html" class="text-gray-400 hover:text-white transition-colors">Explore</a>
                         <a href="compare.html" class="text-white">Compare</a>
                         <a href="my-garage.html" class="text-gray-400 hover:text-white transition-colors">My Garage</a>
                     </div>
                 </div>
-                <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                
+                
+                <!-- GitHub Link -->
+                <div class="mt-6 md:mt-8 flex justify-center">
+                    <a href="https://github.com/SiddheshK1704/Slipstream-CarProject" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="github-link">
+                        <!-- White GitHub SVG -->
+                        <svg class="github-logo" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        <span>View on GitHub</span>
+                    </a>
+                </div>
+                
+                <div class="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
                     <p>© Slipstream 2025. Built with passion for automotive enthusiasts worldwide, by Siddhesh Khankhoje.</p>
-                    <p>All images are for demonstration purposes.</p>
+                    <p class="mt-2">All images are for demonstration purposes.</p>
                 </div>
             </div>
         </footer>
@@ -1035,6 +1131,22 @@
                     menu.classList.add('hidden');
                 }
             });
+            
+            // Optimize image loading
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.loading = 'lazy';
+                img.decoding = 'async';
+            });
+            
+            // Reduce motion preference
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) {
+                document.querySelectorAll('*').forEach(element => {
+                    element.style.animationDuration = '0.01ms';
+                    element.style.transitionDuration = '0.01ms';
+                });
+            }
         });
 
         // Populate cars grid
@@ -1044,29 +1156,29 @@
             
             filteredCars.forEach(car => {
                 const carItem = document.createElement('div');
-                carItem.className = 'car-item p-4';
+                carItem.className = 'car-item p-3 md:p-4';
                 carItem.dataset.id = car.id;
                 carItem.innerHTML = `
                     <div class="relative">
                         <span class="brand-badge">${car.brand}</span>
-                        <img src="${car.image}" alt="${car.name}" class="car-image">
+                        <img src="${car.image}" alt="${car.name}" class="car-image" loading="lazy" decoding="async" width="300" height="200">
                     </div>
-                    <h3 class="font-bold text-lg mb-2">${car.name}</h3>
-                    <div class="space-y-2 mb-3">
+                    <h3 class="font-bold text-base md:text-lg mb-1 md:mb-2">${car.name}</h3>
+                    <div class="space-y-1 md:space-y-2 mb-2 md:mb-3">
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Year:</span>
-                            <span class="font-semibold">${car.year}</span>
+                            <span class="text-gray-400 text-xs md:text-sm">Year:</span>
+                            <span class="font-semibold text-xs md:text-sm">${car.year}</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Power:</span>
-                            <span class="power-text">${car.power} ${car.powerUnit}</span>
+                            <span class="text-gray-400 text-xs md:text-sm">Power:</span>
+                            <span class="power-text text-xs md:text-sm">${car.power} ${car.powerUnit}</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Price:</span>
-                            <span class="price-text">${formatPrice(car.price)}</span>
+                            <span class="text-gray-400 text-xs md:text-sm">Price:</span>
+                            <span class="price-text text-xs md:text-sm">${formatPrice(car.price)}</span>
                         </div>
                     </div>
-                    <p class="text-gray-300 text-sm">${car.description}</p>
+                    <p class="text-gray-300 text-xs md:text-sm">${car.description}</p>
                 `;
                 
                 carItem.addEventListener('click', () => selectCar(car));
@@ -1125,26 +1237,26 @@
             
             selectedDiv.innerHTML = `
                 <div class="flex flex-col h-full">
-                    <div class="relative mb-4">
+                    <div class="relative mb-3 md:mb-4">
                         <span class="brand-badge">${car.brand}</span>
-                        <img src="${car.image}" alt="${car.name}" class="w-full h-48 object-cover rounded-lg">
+                        <img src="${car.image}" alt="${car.name}" class="w-full h-36 md:h-48 object-cover rounded-lg" loading="lazy" decoding="async" width="400" height="300">
                     </div>
-                    <h3 class="text-2xl font-bold mb-2">${car.name}</h3>
-                    <div class="space-y-2 mb-3">
+                    <h3 class="text-xl md:text-2xl font-bold mb-1 md:mb-2">${car.name}</h3>
+                    <div class="space-y-1 md:space-y-2 mb-2 md:mb-3">
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Year:</span>
-                            <span class="font-semibold">${car.year}</span>
+                            <span class="text-gray-400 text-sm md:text-base">Year:</span>
+                            <span class="font-semibold text-sm md:text-base">${car.year}</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Power:</span>
-                            <span class="power-text">${car.power} ${car.powerUnit}</span>
+                            <span class="text-gray-400 text-sm md:text-base">Power:</span>
+                            <span class="power-text text-sm md:text-base">${car.power} ${car.powerUnit}</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Price:</span>
-                            <span class="price-text">${formatPrice(car.price)}</span>
+                            <span class="text-gray-400 text-sm md:text-base">Price:</span>
+                            <span class="price-text text-sm md:text-base">${formatPrice(car.price)}</span>
                         </div>
                     </div>
-                    <button class="mt-auto px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-all" onclick="openCarModal('${position}')">
+                    <button class="mt-auto px-3 py-1.5 md:px-4 md:py-2 bg-white/10 hover:bg-white/20 rounded-lg text-xs md:text-sm transition-all" onclick="openCarModal('${position}')">
                         Change Car
                     </button>
                 </div>
@@ -1170,105 +1282,105 @@
             const pricePercentage = Math.round((priceDiff / avgPrice) * 100);
             
             comparisonResults.innerHTML = `
-                <div class="glass-card p-8">
-                    <h2 class="text-3xl font-bold mb-8 text-center">Head-to-Head Comparison</h2>
+                <div class="glass-card p-6 md:p-8">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center">Head-to-Head Comparison</h2>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-12">
                         <div class="text-center">
-                            <div class="text-4xl font-bold mb-2 text-orange-500">${powerPercentage}%</div>
-                            <div class="text-gray-400">Power Difference</div>
+                            <div class="text-2xl md:text-4xl font-bold mb-1 md:mb-2 text-orange-500">${powerPercentage}%</div>
+                            <div class="text-gray-400 text-xs md:text-sm">Power Difference</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-4xl font-bold mb-2 ${priceWinner === 'car1' ? 'text-green-500' : 'text-red-500'}">${formatPrice(Math.abs(priceDiff))}</div>
-                            <div class="text-gray-400">Price Difference</div>
+                            <div class="text-2xl md:text-4xl font-bold mb-1 md:mb-2 ${priceWinner === 'car1' ? 'text-green-500' : 'text-red-500'}">${formatPrice(Math.abs(priceDiff))}</div>
+                            <div class="text-gray-400 text-xs md:text-sm">Price Difference</div>
                         </div>
-                        <div class="text-center">
-                            <div class="text-4xl font-bold mb-2">${Math.abs(parseInt(selectedCar1.year) - parseInt(selectedCar2.year))}</div>
-                            <div class="text-gray-400">Year Difference</div>
+                        <div class="text-center md:col-span-1 col-span-2">
+                            <div class="text-2xl md:text-4xl font-bold mb-1 md:mb-2">${Math.abs(parseInt(selectedCar1.year) - parseInt(selectedCar2.year))}</div>
+                            <div class="text-gray-400 text-xs md:text-sm">Year Difference</div>
                         </div>
                     </div>
                     
-                    <div class="space-y-6">
+                    <div class="space-y-4 md:space-y-6">
                         <!-- Power Comparison -->
                         <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-semibold">Power (${selectedCar1.powerUnit})</span>
-                                <span class="text-gray-400">Higher is better</span>
+                            <div class="flex justify-between mb-1 md:mb-2">
+                                <span class="font-semibold text-sm md:text-base">Power (${selectedCar1.powerUnit})</span>
+                                <span class="text-gray-400 text-xs md:text-sm">Higher is better</span>
                             </div>
                             <div class="relative">
                                 <div class="progress-bar">
                                     <div class="progress-fill bg-gradient-to-r from-red-500 to-orange-500" style="width: ${(parseInt(selectedCar1.power) / 2000) * 100}%"></div>
                                 </div>
-                                <div class="progress-bar mt-2">
+                                <div class="progress-bar mt-1 md:mt-2">
                                     <div class="progress-fill bg-gradient-to-r from-red-500 to-orange-500" style="width: ${(parseInt(selectedCar2.power) / 2000) * 100}%"></div>
                                 </div>
-                                <div class="flex justify-between mt-2">
-                                    <span class="${powerWinner === 'car1' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${selectedCar1.power} ${selectedCar1.powerUnit}</span>
-                                    <span class="${powerWinner === 'car2' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${selectedCar2.power} ${selectedCar2.powerUnit}</span>
+                                <div class="flex justify-between mt-1 md:mt-2">
+                                    <span class="${powerWinner === 'car1' ? 'winner px-2 py-0.5 md:px-3 md:py-1 rounded text-xs md:text-sm' : ''}">${selectedCar1.power} ${selectedCar1.powerUnit}</span>
+                                    <span class="${powerWinner === 'car2' ? 'winner px-2 py-0.5 md:px-3 md:py-1 rounded text-xs md:text-sm' : ''}">${selectedCar2.power} ${selectedCar2.powerUnit}</span>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Price Comparison -->
                         <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-semibold">Price</span>
-                                <span class="text-gray-400">Lower is better</span>
+                            <div class="flex justify-between mb-1 md:mb-2">
+                                <span class="font-semibold text-sm md:text-base">Price</span>
+                                <span class="text-gray-400 text-xs md:text-sm">Lower is better</span>
                             </div>
                             <div class="relative">
                                 <div class="progress-bar">
                                     <div class="progress-fill bg-gradient-to-r from-green-500 to-blue-500" style="width: ${Math.min(100, (parseInt(selectedCar1.price) / 10000000) * 100)}%"></div>
                                 </div>
-                                <div class="progress-bar mt-2">
+                                <div class="progress-bar mt-1 md:mt-2">
                                     <div class="progress-fill bg-gradient-to-r from-green-500 to-blue-500" style="width: ${Math.min(100, (parseInt(selectedCar2.price) / 10000000) * 100)}%"></div>
                                 </div>
-                                <div class="flex justify-between mt-2">
-                                    <span class="${priceWinner === 'car1' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${formatPrice(selectedCar1.price)}</span>
-                                    <span class="${priceWinner === 'car2' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${formatPrice(selectedCar2.price)}</span>
+                                <div class="flex justify-between mt-1 md:mt-2">
+                                    <span class="${priceWinner === 'car1' ? 'winner px-2 py-0.5 md:px-3 md:py-1 rounded text-xs md:text-sm' : ''}">${formatPrice(selectedCar1.price)}</span>
+                                    <span class="${priceWinner === 'car2' ? 'winner px-2 py-0.5 md:px-3 md:py-1 rounded text-xs md:text-sm' : ''}">${formatPrice(selectedCar2.price)}</span>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Year Comparison -->
                         <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-semibold">Year</span>
-                                <span class="text-gray-400">Newer is better</span>
+                            <div class="flex justify-between mb-1 md:mb-2">
+                                <span class="font-semibold text-sm md:text-base">Year</span>
+                                <span class="text-gray-400 text-xs md:text-sm">Newer is better</span>
                             </div>
                             <div class="relative">
                                 <div class="progress-bar">
                                     <div class="progress-fill bg-gradient-to-r from-purple-500 to-pink-500" style="width: ${((parseInt(selectedCar1.year) - 2015) / 15) * 100}%"></div>
                                 </div>
-                                <div class="progress-bar mt-2">
+                                <div class="progress-bar mt-1 md:mt-2">
                                     <div class="progress-fill bg-gradient-to-r from-purple-500 to-pink-500" style="width: ${((parseInt(selectedCar2.year) - 2015) / 15) * 100}%"></div>
                                 </div>
-                                <div class="flex justify-between mt-2">
-                                    <span class="${yearWinner === 'car1' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${selectedCar1.year}</span>
-                                    <span class="${yearWinner === 'car2' ? 'winner px-3 py-1 rounded-lg text-sm' : ''}">${selectedCar2.year}</span>
+                                <div class="flex justify-between mt-1 md:mt-2">
+                                    <span class="${yearWinner === 'car1' ? 'winner px-2 py-0.5 md:px-3 md:py-1 rounded text-xs md:text-sm' : ''}">${selectedCar1.year}</span>
+                                    <span class="${yearWinner === 'car2' ? 'winner px-2 py-0.5 md:px-3 md:py-1 rounded text-xs md:text-sm' : ''}">${selectedCar2.year}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Detailed Specs -->
-                    <div class="mt-12">
-                        <h3 class="text-2xl font-bold mb-6">Detailed Specifications</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="space-y-4">
-                                <h4 class="text-xl font-semibold text-orange-500">${selectedCar1.name}</h4>
+                    <div class="mt-8 md:mt-12">
+                        <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">Detailed Specifications</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                            <div class="space-y-3 md:space-y-4">
+                                <h4 class="text-lg md:text-xl font-semibold text-orange-500">${selectedCar1.name}</h4>
                                 ${Object.entries(selectedCar1.specs || {}).map(([key, value]) => `
-                                    <div class="flex justify-between py-2 border-b border-white/10">
-                                        <span class="text-gray-400">${key}:</span>
-                                        <span class="font-semibold">${value}</span>
+                                    <div class="flex justify-between py-1.5 md:py-2 border-b border-white/10">
+                                        <span class="text-gray-400 text-sm md:text-base">${key}:</span>
+                                        <span class="font-semibold text-sm md:text-base">${value}</span>
                                     </div>
                                 `).join('')}
                             </div>
-                            <div class="space-y-4">
-                                <h4 class="text-xl font-semibold text-orange-500">${selectedCar2.name}</h4>
+                            <div class="space-y-3 md:space-y-4">
+                                <h4 class="text-lg md:text-xl font-semibold text-orange-500">${selectedCar2.name}</h4>
                                 ${Object.entries(selectedCar2.specs || {}).map(([key, value]) => `
-                                    <div class="flex justify-between py-2 border-b border-white/10">
-                                        <span class="text-gray-400">${key}:</span>
-                                        <span class="font-semibold">${value}</span>
+                                    <div class="flex justify-between py-1.5 md:py-2 border-b border-white/10">
+                                        <span class="text-gray-400 text-sm md:text-base">${key}:</span>
+                                        <span class="font-semibold text-sm md:text-base">${value}</span>
                                     </div>
                                 `).join('')}
                             </div>
@@ -1276,9 +1388,9 @@
                     </div>
                     
                     <!-- Overall Verdict -->
-                    <div class="mt-12 p-6 bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-xl border border-orange-500/20">
-                        <h3 class="text-2xl font-bold mb-4">Overall Verdict</h3>
-                        <p class="text-gray-300">
+                    <div class="mt-8 md:mt-12 p-4 md:p-6 bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-lg md:rounded-xl border border-orange-500/20">
+                        <h3 class="text-xl md:text-2xl font-bold mb-2 md:mb-4">Overall Verdict</h3>
+                        <p class="text-gray-300 text-sm md:text-base">
                             ${getVerdict(selectedCar1, selectedCar2, powerWinner, priceWinner, yearWinner)}
                         </p>
                     </div>
